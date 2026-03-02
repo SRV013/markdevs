@@ -1,0 +1,10 @@
+.footer {
+    padding: 3rem 0;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.copyright {
+    font-weight: 500;
+}
