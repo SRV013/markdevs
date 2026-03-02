@@ -19,13 +19,34 @@ const Header = () => {
         { label: 'Contacto', href: '/#contacto' }
     ];
 
-    const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-    const toggleTheme = () => setTheme(theme === 'light' ? 'dark' : 'light');
+    const scrollToSection = (id) => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+            setIsMenuOpen(false);
+        }
+    };
+
+    const handleNavClick = (e, item) => {
+        // Si estamos en Home y el link es un ancla del Home o es Inicio
+        if (location.pathname === '/' && (item.href.includes('#') || item.href === '/')) {
+            if (item.href === '/') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                setIsMenuOpen(false);
+            } else {
+                const anchorId = item.href.split('#')[1];
+                scrollToSection(anchorId);
+            }
+            e.preventDefault();
+        } else {
+            setIsMenuOpen(false);
+        }
+    };
 
     return (
         <div className={styles.headerContent}>
             <div className={styles.left}>
-                <Link to="/" className={styles.logo}>
+                <Link to="/" className={styles.logo} onClick={(e) => handleNavClick(e, { href: '/' })}>
                     <span className={styles.logoBracket}>{`</>`}</span>
                     <span className={styles.logoText}>markdevs</span>
                 </Link>
@@ -36,8 +57,8 @@ const Header = () => {
                     <Link
                         key={item.label}
                         to={item.href}
-                        className={`${styles.navLink} ${location.pathname === item.href ? styles.active : ''}`}
-                        onClick={() => setIsMenuOpen(false)}
+                        className={`${styles.navLink} ${(location.pathname === item.href || (location.pathname === '/' && item.href.includes('#'))) ? styles.active : ''}`}
+                        onClick={(e) => handleNavClick(e, item)}
                     >
                         {item.label}
                     </Link>
