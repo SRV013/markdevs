@@ -1,17 +1,15 @@
 import React from 'react';
 import styles from './Home.module.css';
+import { Link } from 'react-router-dom';
 import Button from '../../components/UI/Button/Button';
 import Card from '../../components/UI/Card/Card';
 import { FrontendIcon, BackendIcon, FullStackIcon } from '../../components/Icons/Icons';
 import ProjectCard from '../../components/UI/ProjectCard/ProjectCard';
-
-// Importar imágenes de proyectos
-import imgProyecto1 from '../../assets/projects/proyecto1.jpg';
-import imgProyecto2 from '../../assets/projects/proyecto2.jpg';
-import imgProyecto3 from '../../assets/projects/proyecto3.jpg';
+import { projects } from '../../data/projects';
 
 const Home = () => {
     const services = [
+        // ... (this part can stay or be moved, but since it's only for Home, staying is fine)
         {
             title: 'Desarrollo Frontend',
             description: 'Creación de interfaces de usuario responsivas, interactivas y de alto rendimiento usando React y CSS moderno.',
@@ -29,32 +27,8 @@ const Home = () => {
         }
     ];
 
-    const projects = [
-        {
-            title: 'YaMiPC',
-            category: 'E-commerce',
-            description: 'Tienda online especializada en hardware y servicios técnicos personalizados.',
-            tags: ['JavaScript', 'Node.js', 'React', 'MySQL'],
-            image: imgProyecto1,
-            link: 'https://yamipc.com'
-        },
-        {
-            title: 'Provemix',
-            category: 'Catálogo & Institucional',
-            description: 'Plataforma institucional y catálogo completo para servicios de veterinaria.',
-            tags: ['React', 'JavaScript', 'CSS Modules'],
-            image: imgProyecto2,
-            link: 'https://provemix.com.ar'
-        },
-        {
-            title: 'Estudio Contable RDB',
-            category: 'Institucional',
-            description: 'Sitio institucional profesional para estudio contable y asesoría integral.',
-            tags: ['Astro', 'Tailwind'],
-            image: imgProyecto3,
-            link: 'https://estudiordb.com.ar'
-        }
-    ];
+    // Mostrar solo los primeros 3 proyectos en el Home
+    const featuredProjects = projects.slice(0, 3);
 
     return (
         <div className={styles.home}>
@@ -92,7 +66,7 @@ const Home = () => {
                 </div>
 
                 <div className={styles.projectsGrid}>
-                    {projects.map((project, index) => (
+                    {featuredProjects.map((project, index) => (
                         <ProjectCard
                             key={index}
                             {...project}
@@ -101,7 +75,9 @@ const Home = () => {
                 </div>
 
                 <div className={styles.viewMoreContainer}>
-                    <Button variant="primary">Ver todos los proyectos</Button>
+                    <Link to="/proyectos">
+                        <Button variant="primary">Ver todos los proyectos</Button>
+                    </Link>
                 </div>
             </section>
         </div>

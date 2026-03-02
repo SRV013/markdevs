@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import styles from './Header.module.css';
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+    const location = useLocation();
 
     useEffect(() => {
         document.documentElement.setAttribute('data-theme', theme);
@@ -11,10 +13,10 @@ const Header = () => {
     }, [theme]);
 
     const navItems = [
-        { label: 'Inicio', href: '#' },
-        { label: 'Proyectos', href: '#' },
-        { label: 'Sobre mí', href: '#' },
-        { label: 'Contacto', href: '#' }
+        { label: 'Inicio', href: '/' },
+        { label: 'Proyectos', href: '/proyectos' },
+        { label: 'Sobre mí', href: '/sobre-mi' },
+        { label: 'Contacto', href: '/contacto' }
     ];
 
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -23,17 +25,22 @@ const Header = () => {
     return (
         <div className={styles.headerContent}>
             <div className={styles.left}>
-                <a href="/" className={styles.logo}>
+                <Link to="/" className={styles.logo}>
                     <span className={styles.logoBracket}>{`</>`}</span>
                     <span className={styles.logoText}>markdevs</span>
-                </a>
+                </Link>
             </div>
 
             <nav className={`${styles.nav} ${isMenuOpen ? styles.navOpen : ''}`}>
                 {navItems.map((item) => (
-                    <a key={item.label} href={item.href} className={styles.navLink} onClick={() => setIsMenuOpen(false)}>
+                    <Link
+                        key={item.label}
+                        to={item.href}
+                        className={`${styles.navLink} ${location.pathname === item.href ? styles.active : ''}`}
+                        onClick={() => setIsMenuOpen(false)}
+                    >
                         {item.label}
-                    </a>
+                    </Link>
                 ))}
             </nav>
 
