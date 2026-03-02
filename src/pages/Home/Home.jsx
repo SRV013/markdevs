@@ -38,7 +38,7 @@ const Home = () => {
     };
 
     return (
-        <div className={styles.home}>
+        <div id="inicio" className={styles.home}>
             <section className={styles.hero}>
                 <h1 className={styles.title}>
                     Creando Experiencias Digitales <span className={styles.accent}>No Solo Sitios Web.</span>

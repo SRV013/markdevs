@@ -110,3 +110,111 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Contact Section Styles */
+.contact {
+  padding: 8rem 1rem;
+  background-color: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sectionSubtitle {
+  font-size: 1.15rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  line-height: 1.6;
+  margin-top: -0.5rem;
+}
+
+.contactGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem;
+  max-width: 1200px;
+  width: 100%;
+  margin-bottom: 4rem;
+}
+
+.contactCard {
+  background: var(--bg-color);
+  padding: 3rem 2rem;
+  border-radius: 24px;
+  text-align: center;
+  border: 1px solid var(--border-color);
+  transition: all var(--transition-speed) ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.contactCard:hover {
+  transform: translateY(-8px);
+  border-color: var(--accent-color);
+  box-shadow: var(--shadow-neon);
+}
+
+.contactIcon {
+  width: 60px;
+  height: 60px;
+  background: var(--bg-secondary);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-color);
+  border: 1px solid var(--border-color);
+  transition: all var(--transition-speed) ease;
+}
+
+.contactCard:hover .contactIcon {
+  background: var(--accent-color);
+  color: var(--bg-color);
+  box-shadow: var(--shadow-neon);
+}
+
+.contactCard h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.contactCard p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+.contactAction {
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 1000px) {
+  .contactGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .contact {
+    padding: 5rem 1rem;
+  }
+
+  .contactGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .contactCard {
+    padding: 2.5rem 1.5rem;
+  }
+}
