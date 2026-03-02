@@ -26,6 +26,6 @@ export const projects = [
         description: 'Sitio institucional profesional para estudio contable y asesoría integral.',
         tags: ['Astro', 'Tailwind'],
         image: imgProyecto3,
-        link: 'https://estudiosrdb.com.ar'
+        link: 'https://estudiordb.com.ar'
     }
 ];
