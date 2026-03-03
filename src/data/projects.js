@@ -1,10 +1,10 @@
 // src/data/projects.js
-import imgProyecto1 from '../assets/projects/proyecto1.jpg';
-import imgProyecto2 from '../assets/projects/proyecto2.jpg';
-import imgProyecto3 from '../assets/projects/proyecto3.jpg';
-import imgProyecto4 from '../assets/projects/proyecto4.jpg';
-import imgProyecto5 from '../assets/projects/proyecto5.jpg';
-import imgProyecto6 from '../assets/projects/proyecto6.jpg';
+import imgProyecto1 from '@/assets/projects/proyecto1.jpg';
+import imgProyecto2 from '@/assets/projects/proyecto2.jpg';
+import imgProyecto3 from '@/assets/projects/proyecto3.jpg';
+import imgProyecto4 from '@/assets/projects/proyecto4.jpg';
+import imgProyecto5 from '@/assets/projects/proyecto5.jpg';
+import imgProyecto6 from '@/assets/projects/proyecto6.png';
 
 export const projects = [
     {
@@ -53,6 +53,6 @@ export const projects = [
         description: 'Generador de códigos QR para eventos.',
         tags: ['JavaScript', 'React'],
         image: imgProyecto6,
-        link: 'https://mark-devs.vercel.app/proyectos/qr'
+        link: '/proyectos/qr'
     }
 ];

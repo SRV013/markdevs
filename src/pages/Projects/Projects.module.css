@@ -1,12 +1,116 @@
+/* Search */
+
+.searchWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.searchIcon {
+    position: absolute;
+    left: 1rem;
+    color: var(--text-secondary);
+    pointer-events: none;
+}
+
+.searchInput {
+    width: 100%;
+    padding: 0.85rem 1rem 0.85rem 2.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.searchInput::placeholder {
+    color: var(--text-secondary);
+}
+
+.searchInput:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-color) 15%, transparent);
+}
+
+.clearBtn {
+    position: absolute;
+    right: 0.75rem;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 0.25rem;
+    border-radius: 50%;
+    transition: color 0.2s;
+}
+
+.clearBtn:hover {
+    color: var(--text-primary);
+}
+
+/* Categories */
+
+.categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.categoryTag {
+    padding: 0.4rem 1rem;
+    border-radius: 2rem;
+    border: 1px solid var(--border-color);
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.categoryTag:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+.categoryActive {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+    color: var(--bg-secondary);
+}
+
+/* Grid */
+
 .projectsGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 3.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 370px));
+    justify-content: start;
+    gap: 2rem;
+}
+
+/* Empty state */
+
+.empty {
+    text-align: center;
+    padding: 4rem 1rem;
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+.empty strong {
+    color: var(--text-primary);
 }
 
 @media (max-width: 900px) {
     .projectsGrid {
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 2rem;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.5rem;
     }
 }
