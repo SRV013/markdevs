@@ -11,7 +11,6 @@
   --border-color-hover: #bababa;
   --accent-color: #8c00ff;
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
-  --shadow-neon: 0 0 15px rgba(0, 0, 0, 0.1);
   --transition-speed: 0.3s;
 }
 
@@ -27,7 +26,6 @@
   --accent-color: #00ffc8;
   /* Neon Teal */
   --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.5);
-  --shadow-neon: 0 0 20px rgba(0, 255, 204, 0.4), 0 0 40px rgba(0, 255, 204, 0.1);
 }
 
 * {

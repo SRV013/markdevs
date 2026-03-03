@@ -16,8 +16,11 @@ const Header = () => {
         { label: 'Inicio', href: '/' },
         { label: 'Proyectos', href: '/#proyectos' },
         { label: 'Sobre mí', href: '/sobre-mi' },
-        { label: 'Contacto', href: '/#contacto' }
+        { label: 'Contacto', href: '/contacto' }
     ];
+
+    const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+    const toggleTheme = () => setTheme(theme === 'light' ? 'dark' : 'light');
 
     const scrollToSection = (id) => {
         const element = document.getElementById(id);
@@ -28,15 +31,14 @@ const Header = () => {
     };
 
     const handleNavClick = (e, item) => {
-        // Si estamos en Home y el link es un ancla del Home o es Inicio
-        if (location.pathname === '/' && (item.href.includes('#') || item.href === '/')) {
-            if (item.href === '/') {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                setIsMenuOpen(false);
-            } else {
-                const anchorId = item.href.split('#')[1];
-                scrollToSection(anchorId);
-            }
+        // Solo anclas del Home
+        if (location.pathname === '/' && item.href.includes('#')) {
+            const anchorId = item.href.split('#')[1];
+            scrollToSection(anchorId);
+            e.preventDefault();
+        } else if (item.href === '/' && location.pathname === '/') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setIsMenuOpen(false);
             e.preventDefault();
         } else {
             setIsMenuOpen(false);

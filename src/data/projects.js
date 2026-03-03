@@ -14,7 +14,7 @@ export const projects = [
     },
     {
         title: 'Provemix',
-        category: 'Catálogo & Institucional',
+        category: 'Web',
         description: 'Plataforma institucional y catálogo completo para servicios de veterinaria.',
         tags: ['React', 'JavaScript', 'CSS Modules'],
         image: imgProyecto2,
@@ -22,7 +22,7 @@ export const projects = [
     },
     {
         title: 'Estudio Contable RDB',
-        category: 'Institucional',
+        category: 'Web',
         description: 'Sitio institucional profesional para estudio contable y asesoría integral.',
         tags: ['Astro', 'Tailwind'],
         image: imgProyecto3,

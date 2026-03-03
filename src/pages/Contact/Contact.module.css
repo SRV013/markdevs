@@ -1,0 +1,127 @@
+/* Page specific layout */
+.twoColumnLayout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+}
+
+.leftCol,
+.rightCol {
+    display: flex;
+    flex-direction: column;
+}
+
+.infoList {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.infoItem {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    border-radius: 16px;
+    /* Keeping specific radius if needed, though Card uses 24px by default */
+}
+
+.iconWrapper {
+    width: 45px;
+    height: 45px;
+    background: var(--bg-color);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-color);
+    border: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+.infoText h3 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    margin-bottom: 0.25rem;
+}
+
+.infoText p {
+    font-size: 1rem;
+    color: var(--text-primary);
+}
+
+.rightCol {
+    position: sticky;
+    top: 120px;
+}
+
+.contactForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.formGroup label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.formGroup input,
+.formGroup textarea {
+    padding: 1rem;
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.formGroup input:focus,
+.formGroup textarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(var(--accent-rgb), 0.1);
+}
+
+.submitBtn {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+@media (max-width: 900px) {
+    .twoColumnLayout {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+
+    .formSide {
+        padding: 2rem;
+    }
+
+    .infoText p {
+        font-size: 1.25rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .infoItem {
+        padding: 1.5rem;
+        gap: 1.25rem;
+    }
+
+    .iconWrapper {
+        width: 50px;
+        height: 50px;
+    }
+}

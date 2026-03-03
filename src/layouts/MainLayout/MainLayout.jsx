@@ -1,6 +1,5 @@
 import React from 'react';
-import Header from '../../components/Header/Header';
-import Footer from '../../components/Footer/Footer';
+import { Header, Footer } from '@/components';
 import styles from './MainLayout.module.css';
 
 const MainLayout = ({ children }) => {
@@ -12,9 +11,7 @@ const MainLayout = ({ children }) => {
                 </div>
             </header>
             <main className={styles.main}>
-                <div className={styles.container}>
-                    {children}
-                </div>
+                {children}
             </main>
             <footer className={styles.footerWrapper}>
                 <div className={styles.container}>

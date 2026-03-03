@@ -1,0 +1,41 @@
+.header {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-bottom: 3.5rem;
+    width: 100%;
+}
+
+.centered {
+    text-align: center;
+    align-items: center;
+}
+
+.title {
+    font-size: clamp(2.25rem, 6vw, 3.5rem);
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+}
+
+.divider {
+    width: 60px;
+    height: 4px;
+    background-color: var(--accent-color);
+    border-radius: 100px;
+}
+
+.subtitle {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: var(--text-secondary);
+    max-width: 650px;
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .header {
+        gap: 1rem;
+        margin-bottom: 2.5rem;
+    }
+}

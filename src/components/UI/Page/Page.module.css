@@ -1,0 +1,24 @@
+.page {
+    padding: 8rem 1rem;
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.container {
+    max-width: 1200px;
+    width: 100%;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .page {
+        padding: 4rem 1rem;
+    }
+}
