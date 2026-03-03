@@ -9,4 +9,4 @@ const Tag = ({ children, className }) => {
     );
 };
 
-export default Tag;
+export { Tag };

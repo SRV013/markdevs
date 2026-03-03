@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './ProjectCard.module.css';
-import Button from '../Button/Button';
-import Tag from '../Tag/Tag';
-import Card from '../Card/Card';
+import { Button } from '../Button/Button';
+import { Tag } from '../Tag/Tag';
+import { Card } from '../Card/Card';
 
 const ProjectCard = ({ image, category, title, description, tags = [], link = '#' }) => {
     return (
@@ -27,4 +27,4 @@ const ProjectCard = ({ image, category, title, description, tags = [], link = '#
     );
 };
 
-export default ProjectCard;
+export { ProjectCard };

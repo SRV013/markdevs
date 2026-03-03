@@ -2,6 +2,9 @@
 import imgProyecto1 from '../assets/projects/proyecto1.jpg';
 import imgProyecto2 from '../assets/projects/proyecto2.jpg';
 import imgProyecto3 from '../assets/projects/proyecto3.jpg';
+import imgProyecto4 from '../assets/projects/proyecto4.jpg';
+import imgProyecto5 from '../assets/projects/proyecto5.jpg';
+import imgProyecto6 from '../assets/projects/proyecto6.jpg';
 
 export const projects = [
     {
@@ -27,5 +30,29 @@ export const projects = [
         tags: ['Astro', 'Tailwind'],
         image: imgProyecto3,
         link: 'https://estudiordb.com.ar'
+    },
+    {
+        title: 'Padel Mach',
+        category: 'E-commerce',
+        description: 'Tienda online especializada en hardware y servicios técnicos personalizados.',
+        tags: ['JavaScript', 'Node.js', 'React', 'MySQL'],
+        image: imgProyecto4,
+        link: 'https://padelmach.com.ar'
+    },
+    {
+        title: 'Costa Pigmento',
+        category: 'E-commerce',
+        description: 'Tienda online especializada en hardware y servicios técnicos personalizados.',
+        tags: ['JavaScript', 'Node.js', 'React', 'MySQL'],
+        image: imgProyecto5,
+        link: 'https://costapigmento.com.ar'
+    },
+    {
+        title: 'Generador QR',
+        category: 'App',
+        description: 'Generador de códigos QR para eventos.',
+        tags: ['JavaScript', 'React'],
+        image: imgProyecto6,
+        link: 'https://mark-devs.vercel.app/proyectos/qr'
     }
 ];

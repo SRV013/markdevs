@@ -17,4 +17,4 @@ const SectionHeader = ({
     );
 };
 
-export default SectionHeader;
+export { SectionHeader };

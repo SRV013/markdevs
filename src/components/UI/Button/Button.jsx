@@ -11,4 +11,4 @@ const Button = ({ children, variant = 'primary', onClick, className = '', ...pro
     );
 };
 
-export default Button;
+export { Button };

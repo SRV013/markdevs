@@ -13,4 +13,4 @@ const Page = ({ children, className = '', containerClassName = '', contentClassN
     );
 };
 
-export default Page;
+export { Page };
