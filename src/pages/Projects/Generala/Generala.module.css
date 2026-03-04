@@ -137,7 +137,6 @@
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    max-width: 1000px;
     margin: 0 auto;
     width: 100%;
 }
@@ -157,13 +156,14 @@
     border: none;
     background: transparent;
     color: var(--text-secondary);
-    font-size: 0.9rem;
+    font-size: 1.2rem;
     font-weight: 600;
     cursor: pointer;
-    border-bottom: 2px solid transparent;
+    border-bottom: 4px solid transparent;
     margin-bottom: -1px;
     transition: color 0.2s, border-color 0.2s;
     white-space: nowrap;
+    text-transform: capitalize;
 }
 
 .tab:hover {
@@ -200,13 +200,13 @@
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    position: relative;
 }
 
 .sideCol {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    position: relative;
 }
 
 /* Custom Turn Card Styling (Matches "Desarrollo Frontend" aesthetic) */
@@ -329,50 +329,57 @@
     justify-content: space-between;
     align-items: center;
     background: var(--bg-color);
-    padding: 0.5rem 0.6rem;
+    padding: 0.6rem 0.85rem;
     border-radius: 0.5rem;
     border: 1px solid var(--border-color);
-    transition: opacity 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.interactiveRow {
+    cursor: pointer;
+    position: relative;
+}
+
+.interactiveRow:hover {
+    border-color: var(--accent-color);
+}
+
+.interactiveRow:hover .addScoreHint {
+    opacity: 1;
 }
 
 .catLeft {
     display: flex;
     align-items: center;
+    flex: 1;
+}
+
+.catCenter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0.5rem;
 }
 
 .catRight {
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    flex: 1;
 }
 
 .catInputName {
-    font-weight: 600;
+    font-weight: 700;
     font-size: 0.85rem;
     color: var(--text-primary);
 }
 
-.actionGroup {
-    display: flex;
-    align-items: center;
-}
-
-.selectInput {
-    padding: 0.35rem;
-    border-radius: 4px;
-    border: 1px solid var(--border-color);
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
-    cursor: pointer;
+.addScoreHint {
+    font-size: 0.75rem;
+    color: var(--accent-color);
     font-weight: 600;
-    font-size: 0.8rem;
-    min-width: 95px;
-    outline: none;
-    text-align: center;
-}
-
-.selectInput:focus {
-    border-color: var(--accent-color);
+    opacity: 0.4;
+    transition: opacity 0.2s;
 }
 
 .scoredOpacity {
@@ -392,32 +399,95 @@
 
 .scoreResult {
     font-weight: 800;
-    font-size: 0.95rem;
-    color: var(--text-primary);
-}
-
-.modifyBtn {
-    background: none;
-    border: 1px solid var(--accent-color);
+    font-size: 1rem;
     color: var(--accent-color);
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
-    font-size: 0.7rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
 }
 
-.modifyBtn:hover {
-    background-color: var(--accent-color);
-    color: var(--bg-color);
+.deleteIconBtn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.25rem;
+}
+
+.deleteIconBtn:hover {
+    color: #ff4d4f;
 }
 
 .emptyScoreLabel {
     color: var(--text-muted);
     font-size: 0.85rem;
     font-weight: bold;
-    padding-right: 0.5rem;
+}
+
+/* Score Popover Classes */
+.scorePopover {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    background: var(--bg-color);
+    border: 1px solid var(--accent-color);
+    border-radius: 8px;
+    padding: 0.75rem;
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    /* z-index: 19; */
+}
+
+.scoreOptionsGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.scoreOptionBtn {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    border-radius: 4px;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.15s;
+    text-align: center;
+    flex: 1 1 auto;
+}
+
+.scoreOptionBtn:hover {
+    border-color: var(--accent-color);
+    color: var(--bg-color);
+    background: var(--accent-color);
+}
+
+.scoreOptionCross {
+    background: transparent;
+    border: 1px dashed #ff4d4f;
+    color: #ff4d4f;
+}
+
+.scoreOptionCross:hover {
+    background: #ff4d4f;
+    border-color: #ff4d4f;
+    color: #ffffff;
+}
+
+.scoreOptionServida {
+    border-color: #eab308;
+    color: #eab308;
+}
+
+.scoreOptionServida:hover {
+    background: #eab308;
+    color: #fff;
+    border-color: #eab308;
 }
 
 /* Right Column Points Box */
