@@ -5,6 +5,7 @@ import imgProyecto3 from '@/assets/projects/proyecto3.jpg';
 import imgProyecto4 from '@/assets/projects/proyecto4.jpg';
 import imgProyecto5 from '@/assets/projects/proyecto5.jpg';
 import imgProyecto6 from '@/assets/projects/proyecto6.png';
+import imgProyecto7 from '@/assets/projects/proyecto7.png';
 
 export const projects = [
     {
@@ -54,5 +55,13 @@ export const projects = [
         tags: ['JavaScript', 'React'],
         image: imgProyecto6,
         link: '/proyectos/qr'
+    },
+    {
+        title: 'Anotador Generala',
+        category: 'App',
+        description: 'Aplicación para llevar la cuenta de la Generala.',
+        tags: ['JavaScript', 'React'],
+        image: imgProyecto7,
+        link: '/proyectos/generala'
     }
 ];
