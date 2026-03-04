@@ -32,6 +32,7 @@ const About = () => {
                                 <div key={index} className={styles.experienceItem}>
                                     <span className={styles.role}>{item.role}</span>
                                     <span className={styles.period}>{item.period}</span>
+                                    <span className={styles.detail}>{item.detail}</span>
                                 </div>
                             ))}
                         </div>

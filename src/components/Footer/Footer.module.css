@@ -1,10 +1,53 @@
 .footer {
-    padding: 3rem 0;
-    text-align: center;
+    padding: 1.75rem 0;
+    border-top: 1px solid var(--border-color);
     color: var(--text-secondary);
     font-size: 0.9rem;
 }
 
+.inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
 .copyright {
-    font-weight: 500;
+    font-weight: 600;
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+}
+
+.slogan {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+.social {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.socialLink {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    transition: color 0.2s, transform 0.2s;
+}
+
+.socialLink:hover {
+    color: var(--accent-color);
+    transform: translateY(-2px);
 }

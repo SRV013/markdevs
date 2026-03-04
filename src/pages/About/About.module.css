@@ -68,8 +68,14 @@
     color: var(--text-primary);
 }
 
+.detail {
+    margin-top: 0.5rem;
+    font-size: .9rem;
+    color: var(--text-secondary);
+}
+
 .period {
-    font-size: 0.9rem;
+    font-size: 1rem;
     color: var(--text-secondary);
 }
 

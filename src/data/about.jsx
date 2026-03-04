@@ -6,9 +6,9 @@ export const aboutData = {
         "Mi experiencia combina un profundo conocimiento de las tecnologías tradicionales y modernas, lo que me permite abordar proyectos desde una perspectiva integral y orientada a la solución de problemas."
     ],
     experience: [
-        { role: 'Senior Frontend Dev', period: '2019 - Presente' },
-        { role: 'Full Stack Developer', period: '2019 - 2022' },
-        { role: 'Freelance Developer', period: '2019 - 2020' }
+        { role: 'Senior Frontend Engineer', detail: "Diseño y construcción de interfaces escalables con foco en performance, arquitectura de componentes y experiencia de usuario.", period: '2023 - Presente' },
+        { role: 'Full Stack Developer', detail: "Implementación de soluciones web end-to-end, integrando frontend, APIs y bases de datos. Trabajo con JavaScript/TypeScript, Node.js y MySQL en arquitecturas orientadas a servicios.", period: '2020 - 2023' },
+        { role: 'Freelance Software Developer', detail: "Creación de sistemas a medida y aplicaciones de escritorio/web utilizando C++, Visual Basic, Delphi, PHP y MySQL.", period: '2008 - 2020' }
     ],
     skills: [
         'React', 'Next.js', 'Node.js', 'TypeScript',
