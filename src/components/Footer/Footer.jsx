@@ -19,7 +19,7 @@ const Footer = () => {
             <div className={styles.inner}>
                 <div className={styles.info}>
                     <p className={styles.copyright}>
-                        © {new Date().getFullYear()} markdevs — Desarrollo de Software Profesional
+                        Markdevs — Desarrollo de Software
                     </p>
                     <p className={styles.slogan}>Transformando ideas en experiencias digitales.</p>
                 </div>

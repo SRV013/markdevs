@@ -338,20 +338,27 @@
 .interactiveRow {
     cursor: pointer;
     position: relative;
+    height: 60px;
+    width: 140px;
+    background-color: rgb(100, 153, 51);
 }
 
 .interactiveRow:hover {
     border-color: var(--accent-color);
+    background-color: rgb(63, 18, 199);
+
 }
 
-.interactiveRow:hover .addScoreHint {
+/* .interactiveRow:hover .addScoreHint {
     opacity: 1;
-}
+    } */
 
 .catLeft {
     display: flex;
     align-items: center;
-    flex: 1;
+    /* flex: 1; */
+    font-size: 1.3rem;
+    background-color: rgb(63, 18, 199);
 }
 
 .catCenter {
@@ -363,9 +370,10 @@
 
 .catRight {
     display: flex;
-    align-items: center;
-    justify-content: flex-end;
+    /* align-items: center; */
+    /* justify-content: flex-end; */
     flex: 1;
+    background-color: red;
 }
 
 .catInputName {

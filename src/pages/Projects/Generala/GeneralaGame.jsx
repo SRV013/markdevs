@@ -14,7 +14,7 @@ export const CATEGORIES = [
     { id: 'full', name: 'Full', options: [0, 30, 35] },
     { id: 'poker', name: 'Póker', options: [0, 40, 45] },
     { id: 'generala', name: 'Generala', options: [0, 50] },
-    { id: 'generala_doble', name: 'Generala Doble', options: [0, 60, 100] },
+    { id: 'generala_doble', name: 'Generala II', options: [0, 100] },
 ];
 
 export const GeneralaGame = ({

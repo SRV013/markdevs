@@ -39,17 +39,17 @@ export const ScoreItem = ({ cat, scoreValue, onSave, onModify, isViewingOther })
                     <span className={`${styles.catInputName} ${scoreValue === 0 ? styles.crossedText : ''}`}>{cat.name}</span>
                 </div>
 
-                <div className={styles.catCenter}>
+                {/* <div className={styles.catCenter}>
                     {!isViewingOther && (
                         <button className={styles.deleteIconBtn} onClick={() => onModify(cat.id)} title="Modificar/Eliminar jugada">
                             <XCircleIcon size={16} />
                         </button>
                     )}
-                </div>
+                </div> */}
 
                 <div className={styles.catRight}>
                     <span className={styles.scoreResult}>
-                        {scoreValue === 0 ? 'Tachado' : scoreValue}
+                        {scoreValue === 0 ? 'Tachar' : scoreValue}
                     </span>
                 </div>
             </div>
@@ -74,9 +74,9 @@ export const ScoreItem = ({ cat, scoreValue, onSave, onModify, isViewingOther })
             <div className={styles.catLeft}>
                 <span className={styles.catInputName}>{cat.name}</span>
             </div>
-            <div className={styles.catRight}>
+            {/* <div className={styles.catRight}>
                 <span className={styles.addScoreHint}>Anotar...</span>
-            </div>
+            </div> */}
 
             {isOpen && (
                 <div className={styles.scorePopover} onClick={(e) => e.stopPropagation()}>
@@ -92,13 +92,13 @@ export const ScoreItem = ({ cat, scoreValue, onSave, onModify, isViewingOther })
                             if (opt === 0) {
                                 label = 'Tachar';
                             } else if (cat.id === 'escalera' && opt === 25) {
-                                label = '25 (Servida)';
+                                label = '25 | Servida';
                                 isServida = true;
                             } else if (cat.id === 'full' && opt === 35) {
-                                label = '35 (Servida)';
+                                label = '35 | Servida';
                                 isServida = true;
                             } else if (cat.id === 'poker' && opt === 45) {
-                                label = '45 (Servida)';
+                                label = '45 | Servida';
                                 isServida = true;
                             }
 
