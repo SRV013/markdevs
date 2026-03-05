@@ -138,42 +138,23 @@ function JugasGrid({
   handleModifyScore,
   isViewingOtherPlayer,
 }) {
-  const number = jugadas.slice(0, 6);
-  const text = jugadas.slice(6, 11);
   return (
-    <div className={styles.categoriesGridNew}>
-      <div>
-        {number.map((cat) => (
-          <ScoreItem
-            key={cat.id}
-            cat={cat}
-            scoreValue={activePlayer.scores[cat.id]}
-            onSave={(id, val) => handleSaveScore(activePlayer.id, id, val)}
-            onModify={
-              !isViewingOtherPlayer
-                ? (id) => handleModifyScore(activePlayer.id, id)
-                : undefined
-            }
-            isViewingOther={isViewingOtherPlayer}
-          />
-        ))}
-      </div>
-      <div>
-        {text.map((cat) => (
-          <ScoreItem
-            key={cat.id}
-            cat={cat}
-            scoreValue={activePlayer.scores[cat.id]}
-            onSave={(id, val) => handleSaveScore(activePlayer.id, id, val)}
-            onModify={
-              !isViewingOtherPlayer
-                ? (id) => handleModifyScore(activePlayer.id, id)
-                : undefined
-            }
-            isViewingOther={isViewingOtherPlayer}
-          />
-        ))}
-      </div>
+    <div className={styles.categoriesGridNewB} >
+      {jugadas.map((e) => (
+        <ScoreItem
+          key={e.id}
+          id={e.id}
+          cat={e}
+          scoreValue={activePlayer.scores[e.id]}
+          onSave={(id, val) => handleSaveScore(activePlayer.id, id, val)}
+          onModify={
+            !isViewingOtherPlayer
+              ? (id) => handleModifyScore(activePlayer.id, id)
+              : undefined
+          }
+          isViewingOther={isViewingOtherPlayer}
+        />
+      ))}
     </div>
   );
 }

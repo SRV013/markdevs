@@ -1,21 +1,36 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./Generala.module.css";
 
-export const ScoreItem = ({ cat, scoreValue, onSave, onModify }) => {
-  const isScored = scoreValue ;
+export const ScoreItem = ({ cat, id, scoreValue, onSave, onModify }) => {
+  const isScored = scoreValue;
   const [isOpen, setIsOpen] = useState(false);
   const contentRef = useRef(null);
 
-  // Close on click outside
+  const gridMap = {
+    "1": "one",
+    "2": "two",
+    "3": "three",
+    "4": "four",
+    "5": "five",
+    "6": "six",
+    escalera: "escalera",
+    full: "full",
+    poker: "poker",
+    generala: "generala",
+    generala_doble: "generala_doble",
+  };
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (contentRef.current && !contentRef.current.contains(event.target)) {
         setIsOpen(false);
       }
     };
+
     if (isOpen) {
       document.addEventListener("mousedown", handleClickOutside);
     }
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
@@ -34,8 +49,9 @@ export const ScoreItem = ({ cat, scoreValue, onSave, onModify }) => {
   if (isScored) {
     return (
       <div
+        style={{ gridArea: gridMap[id] }}
         className={`${styles.interactiveRow} ${styles.scoredOpacity}`}
-        onClick={() => onModify(cat.id)}
+        onClick={() => onModify?.(cat.id)}
       >
         <span className={styles.jugada}>{cat.name}</span>
         <span className={styles.jugadaResult}>
@@ -47,14 +63,16 @@ export const ScoreItem = ({ cat, scoreValue, onSave, onModify }) => {
 
   return (
     <div
+      style={{ gridArea: gridMap[id] }}
       className={styles.interactiveRow}
       ref={contentRef}
       onClick={toggleOpen}
     >
       <span className={styles.jugada}>{cat.name}</span>
-          <span className={styles.jugadaResult}>
-          {scoreValue === 0 ? "X" : scoreValue}
-        </span>
+      <span className={styles.jugadaResult}>
+        {scoreValue === 0 ? "X" : scoreValue}
+      </span>
+
       {isOpen && (
         <div
           className={styles.scorePopover}
@@ -87,7 +105,9 @@ export const ScoreItem = ({ cat, scoreValue, onSave, onModify }) => {
                 return (
                   <button
                     key={opt}
-                    className={`${styles.scoreOptionBtn} ${opt === 0 ? styles.scoreOptionCross : ""} ${isServida ? styles.scoreOptionServida : ""}`}
+                    className={`${styles.scoreOptionBtn} ${
+                      opt === 0 ? styles.scoreOptionCross : ""
+                    } ${isServida ? styles.scoreOptionServida : ""}`}
                     onClick={(e) => handleSelect(opt, e)}
                   >
                     {label}
