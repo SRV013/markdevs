@@ -2,17 +2,17 @@ import React, { useState, useRef, useEffect } from "react";
 import styles from "./Generala.module.css";
 
 export const ScoreItem = ({ cat, id, scoreValue, onSave, onModify }) => {
-  const isScored = scoreValue;
+  const isScored = scoreValue != null;
   const [isOpen, setIsOpen] = useState(false);
   const contentRef = useRef(null);
 
   const gridMap = {
-    "1": "one",
-    "2": "two",
-    "3": "three",
-    "4": "four",
-    "5": "five",
-    "6": "six",
+    1: "one",
+    2: "two",
+    3: "three",
+    4: "four",
+    5: "five",
+    6: "six",
     escalera: "escalera",
     full: "full",
     poker: "poker",
