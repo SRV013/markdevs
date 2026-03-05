@@ -339,7 +339,9 @@
   transition: all 0.3s ease;
   height: 80px;
   width: 100%;
-  min-width: 180px;
+  @media (width > 500px) {
+    min-width: 180px;
+  }
 }
 
 .interactiveRow:hover {
@@ -471,7 +473,6 @@
 
 .scoreOptionServida {
   background-color: #eae608;
-
 }
 
 .scoreOptionServida:hover {
@@ -646,15 +647,37 @@
     "generala_doble generala_doble";
   gap: 1rem;
 }
-.one { grid-area: one; }
-.two { grid-area: two; }
-.three { grid-area: three; }
-.four { grid-area: four; }
-.five { grid-area: five; }
-.six { grid-area: six; }
+.one {
+  grid-area: one;
+}
+.two {
+  grid-area: two;
+}
+.three {
+  grid-area: three;
+}
+.four {
+  grid-area: four;
+}
+.five {
+  grid-area: five;
+}
+.six {
+  grid-area: six;
+}
 
-.escalera { grid-area: escalera; }
-.full { grid-area: full; }
-.poker { grid-area: poker; }
-.generala { grid-area: generala; }
-.generala_doble { grid-area: generala_doble; }
+.escalera {
+  grid-area: escalera;
+}
+.full {
+  grid-area: full;
+}
+.poker {
+  grid-area: poker;
+}
+.generala {
+  grid-area: generala;
+}
+.generala_doble {
+  grid-area: generala_doble;
+}
