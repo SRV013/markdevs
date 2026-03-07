@@ -78,9 +78,16 @@ export const Generala = () => {
     setPlayers(newPlayers);
   };
 
-  const sortedPlayers = [...players].sort(
-    (a, b) => calculateTotal(b.scores) - calculateTotal(a.scores),
-  );
+
+const activePlayer = players.find((p) => p.id === activeTabId);
+
+const activeTotal = activePlayer
+  ? calculateTotal(activePlayer.scores)
+  : 0;
+
+const playedMoves = activePlayer
+  ? Object.keys(activePlayer.scores).length
+  : 0;
 
   return (
     <Page>
@@ -113,7 +120,8 @@ export const Generala = () => {
             handleModifyScore={handleModifyScore}
             handleResetGame={handleResetGame}
             handleAbandonGame={handleAbandonGame}
-            calculateTotal={calculateTotal}
+            activeTotal={activeTotal}
+            playedMoves={playedMoves}
           />
         )}
 
@@ -121,7 +129,7 @@ export const Generala = () => {
           <Card className={styles.finishedCard}>
             <h2 className={styles.rankingTitle}>¡Partida Terminada!</h2>
             <div className={styles.rankingList}>
-              {sortedPlayers.map((player, index) => (
+              {activePlayer.map((player, index) => (
                 <div key={player.id} className={styles.rankingRow}>
                   <span className={styles.rankBadge}>{index + 1}</span>
                   <span className={styles.rankName}>

@@ -8,20 +8,16 @@ export const GeneralaGame = ({
   players,
   turnIndex,
   activeTabId,
+  activeTotal,
+  playedMoves,
   setActiveTabId,
   handleSaveScore,
   handleModifyScore,
   handleResetGame,
   handleAbandonGame,
-  calculateTotal,
 }) => {
   const activePlayer = players.find((p) => p.id === activeTabId) || players[0];
   const playerWithTurn = players[turnIndex];
-
-  const isViewingOtherPlayer =
-    playerWithTurn && activePlayer
-      ? playerWithTurn.id !== activePlayer.id
-      : false;
 
   return (
     <div className={styles.gameArea}>
@@ -41,23 +37,11 @@ export const GeneralaGame = ({
       <div className={styles.grid}>
         {/* Column 1: Play Form */}
         <div className={styles.controlsCol}>
-          {isViewingOtherPlayer && (
-            <div className={styles.viewingWarning}>
-              Estás viendo el tablero de {activePlayer.name}.
-              <button
-                onClick={() => setActiveTabId(playerWithTurn.id)}
-                className={styles.returnToTurnBtn}
-              >
-                Volver turnos
-              </button>
-            </div>
-          )}
           <JugasGrid
             jugadas={jugadas}
             activePlayer={activePlayer}
             handleSaveScore={handleSaveScore}
             handleModifyScore={handleModifyScore}
-            isViewingOtherPlayer={isViewingOtherPlayer}
           />
         </div>
         {/* Column 2: Turn Info and Actions */}
@@ -72,30 +56,14 @@ export const GeneralaGame = ({
             <div className={styles.turnContent}>
               <div className={styles.turnName}>
                 <span className={styles.activePlayerName}>
-                  Turno: {playerWithTurn?.name}
+                  {playerWithTurn?.name}, jugada  Nº  {playedMoves} 
                 </span>
               </div>
               <div className={styles.turnPointsBox}>
                 <div className={styles.turnPointsLabel}>Pts</div>
-                <div className={styles.turnPointsData}>
-                  {calculateTotal(playerWithTurn?.scores)}
-                </div>
+                <div className={styles.turnPointsData}>{activeTotal}</div>
               </div>
             </div>
-
-            {isViewingOtherPlayer && (
-              <div className={styles.activeScoreBox}>
-                <div className={styles.turnPointsLabel}>
-                  Pts de {activePlayer.name}
-                </div>
-                <div
-                  className={styles.turnPointsData}
-                  style={{ fontSize: "1.5rem", color: "var(--text-primary)" }}
-                >
-                  {calculateTotal(activePlayer.scores)}
-                </div>
-              </div>
-            )}
           </div>
           <div className={styles.configCardWrapper}>
             <div className={styles.configHeader}>
@@ -139,7 +107,7 @@ function JugasGrid({
   isViewingOtherPlayer,
 }) {
   return (
-    <div className={styles.categoriesGridNewB} >
+    <div className={styles.categoriesGridNewB}>
       {jugadas.map((e) => (
         <ScoreItem
           key={e.id}
