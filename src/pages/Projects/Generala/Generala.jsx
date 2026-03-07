@@ -89,6 +89,9 @@ const playedMoves = activePlayer
   ? Object.keys(activePlayer.scores).length
   : 0;
 
+  const sortedPlayers = [...players].sort(
+  (a, b) => calculateTotal(b.scores) - calculateTotal(a.scores)
+);
   return (
     <Page>
       <div className={styles.wrapper}>
@@ -129,7 +132,7 @@ const playedMoves = activePlayer
           <Card className={styles.finishedCard}>
             <h2 className={styles.rankingTitle}>¡Partida Terminada!</h2>
             <div className={styles.rankingList}>
-              {activePlayer.map((player, index) => (
+              {sortedPlayers.map((player, index) => (
                 <div key={player.id} className={styles.rankingRow}>
                   <span className={styles.rankBadge}>{index + 1}</span>
                   <span className={styles.rankName}>
