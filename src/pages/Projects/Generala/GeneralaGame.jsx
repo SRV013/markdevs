@@ -56,8 +56,9 @@ export const GeneralaGame = ({
             <div className={styles.turnContent}>
               <div className={styles.turnName}>
                 <span className={styles.activePlayerName}>
-                  {playerWithTurn?.name}, jugada  Nº  {playedMoves} 
+                  {playerWithTurn?.name}
                 </span>
+                <span className={styles.activePlayerGame}> {playedMoves} / 11 jugadas</span>
               </div>
               <div className={styles.turnPointsBox}>
                 <div className={styles.turnPointsLabel}>Pts</div>

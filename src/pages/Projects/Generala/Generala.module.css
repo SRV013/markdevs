@@ -270,14 +270,19 @@
 .turnName {
   font-size: 1.25rem;
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
   gap: 6px;
   margin-bottom: 1.5rem;
+  flex-direction: column;
 }
 
 .activePlayerName {
   font-weight: 800;
+  color: var(--text-primary);
+  text-transform: capitalize;
+}
+.activePlayerGame {
+  font-size: 1rem;
+  font-weight: 400;
   color: var(--text-primary);
   text-transform: capitalize;
 }
