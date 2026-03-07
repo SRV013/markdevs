@@ -120,7 +120,22 @@
   font-weight: bold;
   padding: 0.2rem 0.5rem;
 }
-
+.iconWrapper {
+  width: 45px;
+  height: 45px;
+  background: var(--bg-color);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-color);
+  border: 1px solid var(--border-color);
+  flex-shrink: 0;
+  transition: border-color 0.2s;
+}
+.iconWrapper:hover {
+  border-color: #ff4d4f;
+}
 .warningText {
   color: var(--text-muted);
   font-size: 0.9rem;
@@ -334,7 +349,7 @@
   align-items: center;
   background: var(--bg-color);
   padding: 0.6rem 0.85rem;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   border: 1px solid var(--border-color);
   transition: all 0.3s ease;
   height: 80px;
