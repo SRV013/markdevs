@@ -483,24 +483,25 @@
 
 .scoreOptionCross {
   background: transparent;
-  border: 1px dashed #ff4d4f;
+  border: 1px solid #ff4d4f;
   color: #ff4d4f;
 }
 
 .scoreOptionCross:hover {
-  background: #ff4d4f;
+  background: rgba(255, 77, 79, 0.1);
   border-color: #ff4d4f;
-  color: #ffffff;
+  color: #ff4d4f;
 }
 
 .scoreOptionServida {
-  background-color: #eae608;
+  border-color: #eae608;
 }
 
 .scoreOptionServida:hover {
-  background: #efeb12;
+  background-color: transparent;
   color: unset;
-  border-color: #eab308;
+  border-color: #eae608;
+  background: rgba(219, 255, 77, 0.1);
 }
 
 /* Right Column Points Box */

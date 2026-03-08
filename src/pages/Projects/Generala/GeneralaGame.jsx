@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./Generala.module.css";
 import { UserIcon, RefreshIcon, XCircleIcon, SettingsIcon } from "@/components";
 import { ScoreItem } from "./ScoreItem";
-import { jugadas } from "./data";
+import { jugadas } from "./util/data";
 
 export const GeneralaGame = ({
   players,

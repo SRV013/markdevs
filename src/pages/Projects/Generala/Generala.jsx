@@ -1,97 +1,27 @@
-import React, { useState } from "react";
 import styles from "./Generala.module.css";
 import { Page, Card, Button, UserIcon } from "@/components";
 import { GeneralaSetup } from "./GeneralaSetup";
 import { GeneralaGame } from "./GeneralaGame";
-import { jugadas } from "./data";
-
+import { useGeneralaGame } from "./util/hook";
 export const Generala = () => {
-  const [players, setPlayers] = useState([]);
-  const [gameState, setGameState] = useState("setup");
-  const [turnIndex, setTurnIndex] = useState(0);
-  const [activeTabId, setActiveTabId] = useState("");
+  const {
+    players,
+    setPlayers,
+    gameState,
+    turnIndex,
+    activeTabId,
+    setActiveTabId,
+    activeTotal,
+    playedMoves,
+    sortedPlayers,
+    handleStartGame,
+    handleResetGame,
+    handleAbandonGame,
+    handleSaveScore,
+    handleModifyScore,
+    calculateTotal,
+  } = useGeneralaGame();
 
-  const handleStartGame = () => {
-    setGameState("playing");
-    setTurnIndex(0);
-    setActiveTabId(players[0].id);
-  };
-
-  const handleResetGame = () => {
-    if (
-      window.confirm(
-        "¿Estás seguro de reiniciar los puntos? La partida volverá a empezar con los mismos jugadores.",
-      )
-    ) {
-      const resetPlayers = players.map((p) => ({ ...p, scores: {} }));
-      setPlayers(resetPlayers);
-      setTurnIndex(0);
-      setActiveTabId(players[0].id);
-      setGameState("playing");
-    }
-  };
-
-  const handleAbandonGame = () => {
-    if (
-      window.confirm(
-        "¿Estás seguro de abandonar el juego entero? Perderás todos los puntos y jugadores.",
-      )
-    ) {
-      setGameState("setup");
-      setPlayers([]);
-      setTurnIndex(0);
-      setActiveTabId("");
-    }
-  };
-
-  const calculateTotal = (scores) => {
-    return Object.values(scores).reduce((acc, val) => acc + (val || 0), 0);
-  };
-
-  const handleSaveScore = (playerId, categoryId, value) => {
-    const scoreValue = Number(value);
-    const newPlayers = [...players];
-    const playerIndex = newPlayers.findIndex((p) => p.id === playerId);
-
-    newPlayers[playerIndex].scores[categoryId] = scoreValue;
-    setPlayers(newPlayers);
-
-    const isGameFinished = newPlayers.every(
-      (p) => Object.keys(p.scores).length === jugadas.length,
-    );
-
-    if (isGameFinished) {
-      setGameState("finished");
-    } else {
-      if (playerId === players[turnIndex].id) {
-        const nextTurn = (turnIndex + 1) % newPlayers.length;
-        setTurnIndex(nextTurn);
-        setActiveTabId(newPlayers[nextTurn].id);
-      }
-    }
-  };
-
-  const handleModifyScore = (playerId, categoryId) => {
-    const newPlayers = [...players];
-    const playerIndex = newPlayers.findIndex((p) => p.id === playerId);
-    delete newPlayers[playerIndex].scores[categoryId];
-    setPlayers(newPlayers);
-  };
-
-
-const activePlayer = players.find((p) => p.id === activeTabId);
-
-const activeTotal = activePlayer
-  ? calculateTotal(activePlayer.scores)
-  : 0;
-
-const playedMoves = activePlayer
-  ? Object.keys(activePlayer.scores).length
-  : 0;
-
-  const sortedPlayers = [...players].sort(
-  (a, b) => calculateTotal(b.scores) - calculateTotal(a.scores)
-);
   return (
     <Page>
       <div className={styles.wrapper}>
