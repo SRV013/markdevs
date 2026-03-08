@@ -347,31 +347,9 @@
   gap: 0.6rem;
 }
 
-.interactiveRow {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: var(--bg-color);
-  padding: 0.6rem 0.85rem;
-  border-radius: 0.5rem;
-  border: 1px solid var(--border-color);
-  transition: all 0.3s ease;
-  height: 80px;
-  width: 100%;
-  @media (width > 500px) {
-    min-width: 100px;
-  }
-}
-
-.interactiveRow:hover {
-  border-color: var(--border-color-hover);
-  cursor: pointer;
-}
-
 .jugada {
   position: absolute;
-  top: 0.5rem;
+  top: 2.5rem;
   left: 0.5rem;
   font-size: 1.5rem;
   font-size: 0.9rem;
@@ -384,7 +362,14 @@
   font-weight: 600;
   color: var(--accent-color);
 }
-
+.jugadaIcon {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  color: var(--accent-color);
+  display: flex;
+  align-items: center;
+}
 .catInputName {
   font-weight: 700;
   font-size: 0.85rem;
@@ -658,37 +643,42 @@
   color: var(--accent-color);
 }
 
-.categoriesGridNewB {
+.jugadasGrid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-areas:
-    "one escalera"
-    "two poker"
-    "three full"
-    "four generala"
-    "five generala_doble"
-    "six generala_doble";
+  grid-template-columns: repeat(6, 1fr);
   gap: 1rem;
-}
-.one {
-  grid-area: one;
-}
-.two {
-  grid-area: two;
-}
-.three {
-  grid-area: three;
-}
-.four {
-  grid-area: four;
-}
-.five {
-  grid-area: five;
-}
-.six {
-  grid-area: six;
+  grid-template-areas:
+    "uno uno dos dos tres tres"
+    "cuatro cuatro cinco cinco seis seis"
+    "escalera escalera escalera full full full"
+    "poker poker poker generala generala generala"
+    "generala_doble generala_doble generala_doble generala_doble generala_doble generala_doble";
 }
 
+.uno {
+  grid-area: uno;
+  max-height: 95px;
+}
+.dos {
+  grid-area: dos;
+  max-height: 95px;
+}
+.tres {
+  grid-area: tres;
+  max-height: 95px;
+}
+.cuatro {
+  grid-area: cuatro;
+  max-height: 95px;
+}
+.cinco {
+  grid-area: cinco;
+  max-height: 95px;
+}
+.seis {
+  grid-area: seis;
+  max-height: 95px;
+}
 .escalera {
   grid-area: escalera;
 }
@@ -703,4 +693,111 @@
 }
 .generala_doble {
   grid-area: generala_doble;
+}
+
+.interactiveRow {
+  position: relative;
+  background-color: var(--bg-color);
+  color: var(--text-secondary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  border-radius: 0.7rem;
+  border: 1px solid transparent;
+  padding: 0.5rem 0;
+  cursor: pointer;
+  overflow: hidden;
+  min-height: 80px;
+}
+.interactiveRowTrue {
+  box-shadow: 0 0 4px var(--accent-color);
+}
+.interactiveRowFalse {
+  box-shadow: 0 0 4px var(--accent-error);
+}
+.gameName {
+  color: var(--text-secondary);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.gameIcon {
+  color: var(--border-color-hover);
+}
+.gameIconTrue {
+  color: var(--accent-color);
+}
+.gameIconTrue svg {
+  filter: drop-shadow(0 0 10px var(--accent-color));
+}
+.gameIconFalse {
+  color: var(--accent-error);
+}
+.gameIconFalse svg {
+  filter: drop-shadow(0 0 4px var(--accent-error));
+}
+
+.gameNameFalse {
+  color: var(--accent-error);
+}
+.gameOptionTrue {
+  font-weight: 800;
+  color: var(--text-secondary);
+}
+.gameOptionFalse {
+  font-weight: 800;
+  color: var(--accent-error);
+}
+
+/* Popover */
+.gamePopover {
+  position: absolute;
+  inset: 0;
+  background: var(--bg-secondary);
+  border-radius: 1rem;
+  padding: 0.4rem;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gamePopeverGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.3rem;
+  width: 100%;
+}
+.gamePoeverBtn {
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  border-radius: 6px;
+  padding: 0.35rem 0.2rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s;
+}
+.gamePoeverBtn:hover {
+  background: var(--accent-color);
+  border-color: var(--accent-color);
+  color: var(--bg-color);
+}
+.gamePoeverBtnTacha {
+  background: transparent;
+  border: 1px solid var(--accent-error);
+  color: var(--accent-error);
+  border-radius: 6px;
+  padding: 0.35rem 0.2rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s;
+}
+.gamePoeverBtnTacha:hover {
+  background: rgba(255, 77, 79, 0.1);
 }

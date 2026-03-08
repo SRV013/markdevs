@@ -58,7 +58,10 @@ export const GeneralaGame = ({
                 <span className={styles.activePlayerName}>
                   {playerWithTurn?.name}
                 </span>
-                <span className={styles.activePlayerGame}> {playedMoves} / 11 jugadas</span>
+                <span className={styles.activePlayerGame}>
+                  {" "}
+                  {playedMoves} / 11 jugadas
+                </span>
               </div>
               <div className={styles.turnPointsBox}>
                 <div className={styles.turnPointsLabel}>Pts</div>
@@ -108,7 +111,7 @@ function JugasGrid({
   isViewingOtherPlayer,
 }) {
   return (
-    <div className={styles.categoriesGridNewB}>
+    <div className={styles.jugadasGrid}>
       {jugadas.map((e) => (
         <ScoreItem
           key={e.id}

@@ -1,24 +1,22 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./Generala.module.css";
 
-export const ScoreItem = ({ cat, id, scoreValue, onSave, onModify }) => {
+const idToClass = {
+  1: "uno",
+  2: "dos",
+  3: "tres",
+  4: "cuatro",
+  5: "cinco",
+  6: "seis",
+};
+
+export const ScoreItem = ({ cat, scoreValue, onSave, onModify }) => {
+  const areaClass = idToClass[cat.id] ?? cat.id;
   const isScored = scoreValue != null;
+  const isTrue = isScored && scoreValue > 0;
+  const isFalse = isScored && scoreValue === 0;
   const [isOpen, setIsOpen] = useState(false);
   const contentRef = useRef(null);
-
-  const gridMap = {
-    1: "one",
-    2: "two",
-    3: "three",
-    4: "four",
-    5: "five",
-    6: "six",
-    escalera: "escalera",
-    full: "full",
-    poker: "poker",
-    generala: "generala",
-    generala_doble: "generala_doble",
-  };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -42,43 +40,36 @@ export const ScoreItem = ({ cat, id, scoreValue, onSave, onModify }) => {
     setIsOpen(false);
   };
 
-  const toggleOpen = () => {
+  const toggleOpen = (id) => {
     if (!isOpen) setIsOpen(true);
+    onModify?.(id);
   };
-
-  if (isScored) {
-    return (
-      <div
-        style={{ gridArea: gridMap[id] }}
-        className={`${styles.interactiveRow} ${styles.scoredOpacity}`}
-        onClick={() => onModify?.(cat.id)}
-      >
-        <span className={styles.jugada}>{cat.name}</span>
-        <span className={styles.jugadaResult}>
-          {scoreValue === 0 ? "X" : scoreValue}
-        </span>
-      </div>
-    );
-  }
 
   return (
     <div
-      style={{ gridArea: gridMap[id] }}
-      className={styles.interactiveRow}
+      key={cat.id}
+      className={`${styles.interactiveRow} ${styles[areaClass]} ${isFalse ? styles.interactiveRowFalse : isTrue ? styles.interactiveRowTrue : ""}`}
       ref={contentRef}
-      onClick={toggleOpen}
+      onClick={() => toggleOpen(cat.id)}
     >
-      <span className={styles.jugada}>{cat.name}</span>
-      <span className={styles.jugadaResult}>
-        {scoreValue === 0 ? "X" : scoreValue}
+      {cat.icon && (
+        <span className={`${styles.gameIcon} ${isTrue ? styles.gameIconTrue : isFalse ? styles.gameIconFalse : ""}`}>
+          <cat.icon />
+        </span>
+      )}
+      <span className={`${styles.gameName} ${isTrue ? styles.gameNameTrue : isFalse ? styles.gameNameFalse : ""}`}>
+        {cat.name}
+      </span>
+      <span className={`${styles.gameOption} ${isTrue ? styles.gameOptionTrue : isFalse ? styles.gameOptionFalse : ""}`}>
+        {isFalse ? "X" : isTrue ? scoreValue : cat.options[1]}
       </span>
 
       {isOpen && (
         <div
-          className={styles.scorePopover}
+          className={styles.gamePopover}
           onClick={(e) => e.stopPropagation()}
         >
-          <div className={styles.scoreOptionsGrid}>
+          <div className={styles.gamePopeverGrid}>
             {[...cat.options]
               .sort((a, b) => {
                 if (a === 0) return 1;
@@ -87,27 +78,24 @@ export const ScoreItem = ({ cat, id, scoreValue, onSave, onModify }) => {
               })
               .map((opt) => {
                 let label = opt;
-                let isServida = false;
 
                 if (opt === 0) {
-                  label = "Tachar X";
+                  label = "0";
                 } else if (cat.id === "escalera" && opt === 25) {
-                  label = "25 | Servida";
-                  isServida = true;
+                  label = "25";
                 } else if (cat.id === "full" && opt === 35) {
-                  label = "35 | Servida";
-                  isServida = true;
+                  label = "35";
                 } else if (cat.id === "poker" && opt === 45) {
-                  label = "45 | Servida";
-                  isServida = true;
+                  label = "45";
                 }
-
                 return (
                   <button
                     key={opt}
-                    className={`${styles.scoreOptionBtn} ${
-                      opt === 0 ? styles.scoreOptionCross : ""
-                    } ${isServida ? styles.scoreOptionServida : ""}`}
+                    className={
+                      opt === 0
+                        ? styles.gamePoeverBtnTacha
+                        : styles.gamePoeverBtn
+                    }
                     onClick={(e) => handleSelect(opt, e)}
                   >
                     {label}

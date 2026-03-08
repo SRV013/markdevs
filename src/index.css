@@ -1,5 +1,5 @@
 :root {
-  --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-main: "Inter", system-ui, -apple-system, sans-serif;
 
   /* Ligh Mode - Grays & Whites */
   --bg-color: #ffffff;
@@ -10,11 +10,12 @@
   --border-color: #eeeeee;
   --border-color-hover: #bababa;
   --accent-color: #8c00ff;
+  --accent-error:#ff4d4f;
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
   --transition-speed: 0.3s;
 }
 
-[data-theme='dark'] {
+[data-theme="dark"] {
   /* Dark Mode - Deep Blacks & Neon */
   --bg-color: #080808;
   --bg-secondary: #111111;
@@ -24,7 +25,7 @@
   --border-color: #222222;
   --border-color-hover: #4d4d4d;
   --accent-color: #00ffc8;
-
+  --accent-error: #ff4d4f;
   --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
@@ -45,7 +46,9 @@ body {
   min-width: 320px;
   min-height: 100vh;
   width: 100%;
-  transition: background-color var(--transition-speed), color var(--transition-speed);
+  transition:
+    background-color var(--transition-speed),
+    color var(--transition-speed);
 }
 
 #root {
