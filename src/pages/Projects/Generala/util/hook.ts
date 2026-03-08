@@ -3,6 +3,7 @@ import {
   calculateTotal,
   resetPlayersScores,
   checkGameFinished,
+  hasRemainingMoves,
   saveScore,
   removeScore,
   sortPlayers,
@@ -65,14 +66,31 @@ export const useGeneralaGame = () => {
   };
 
   const handleNextTurn = () => {
-    const nextTurn = (turnIndex + 1) % players.length;
-    setTurnIndex(nextTurn);
-    setActiveTabId(players[nextTurn].id);
+    const total = players.length;
+    let next = (turnIndex + 1) % total;
+    let skipped = 0;
+
+    while (skipped < total && !hasRemainingMoves(players[next])) {
+      next = (next + 1) % total;
+      skipped++;
+    }
+
+    if (skipped >= total || !hasRemainingMoves(players[next])) {
+      setGameState("finished");
+      return;
+    }
+
+    setTurnIndex(next);
+    setActiveTabId(players[next].id);
   };
 
   const handleModifyScore = (playerId, categoryId) => {
     const newPlayers = removeScore(players, playerId, categoryId);
     setPlayers(newPlayers);
+  };
+
+  const handleRestoreScores = (playerId: string, scores: Record<string, number>) => {
+    setPlayers((prev) => prev.map((p) => (p.id === playerId ? { ...p, scores } : p)));
   };
 
   const activePlayer = players.find((p) => p.id === activeTabId);
@@ -100,6 +118,7 @@ export const useGeneralaGame = () => {
     handleAbandonGame,
     handleSaveScore,
     handleModifyScore,
+    handleRestoreScores,
     handleNextTurn,
     calculateTotal,
   };

@@ -20,6 +20,7 @@ export const Generala = () => {
     handleAbandonGame,
     handleSaveScore,
     handleModifyScore,
+    handleRestoreScores,
     handleNextTurn,
     calculateTotal,
   } = useGeneralaGame();
@@ -53,6 +54,7 @@ export const Generala = () => {
             setActiveTabId={setActiveTabId}
             handleSaveScore={handleSaveScore}
             handleModifyScore={handleModifyScore}
+            handleRestoreScores={handleRestoreScores}
             handleNextTurn={handleNextTurn}
             handleResetGame={handleResetGame}
             handleAbandonGame={handleAbandonGame}

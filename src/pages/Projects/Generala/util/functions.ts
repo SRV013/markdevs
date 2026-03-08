@@ -23,6 +23,10 @@ export const checkGameFinished = (players) => {
   );
 };
 
+export const hasRemainingMoves = (player): boolean => {
+  return Object.keys(player.scores).length < getMaxScorableCount(player.scores);
+};
+
 export const saveScore = (players, playerId, categoryId, value) => {
   const scoreValue = Number(value);
 

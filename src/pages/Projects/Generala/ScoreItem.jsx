@@ -18,7 +18,13 @@ const SERVIDA_VALUE = {
   generala_doble: 100,
 };
 
-export const ScoreItem = ({ cat, scoreValue, isDisabled, onSave, onModify }) => {
+export const ScoreItem = ({
+  cat,
+  scoreValue,
+  isDisabled,
+  onSave,
+  onDelete,
+}) => {
   const areaClass = idToClass[cat.id] ?? cat.id;
   const isScored = scoreValue != null;
   const isTrue = isScored && scoreValue > 0;
@@ -46,35 +52,60 @@ export const ScoreItem = ({ cat, scoreValue, isDisabled, onSave, onModify }) => 
   const toggleOpen = () => {
     if (isDisabled) return;
     if (!isOpen) setIsOpen(true);
-    if (isScored) onModify?.(cat.id);
+  };
+
+ 
+  // Clears the score and closes popover
+  const handleDelete = (e) => {
+    e.stopPropagation();
+    onDelete?.(cat.id);
+    setIsOpen(false);
   };
 
   const rowClass = [
     styles.interactiveRow,
     styles[areaClass],
-    isServida ? styles.interactiveRowServida
-      : isFalse ? styles.interactiveRowFalse
-      : isTrue ? styles.interactiveRowTrue
-      : "",
+    isServida
+      ? styles.interactiveRowServida
+      : isFalse
+        ? styles.interactiveRowFalse
+        : isTrue
+          ? styles.interactiveRowTrue
+          : "",
     isDisabled ? styles.interactiveRowDisabled : "",
   ].join(" ");
 
   return (
     <div className={rowClass} ref={contentRef} onClick={toggleOpen}>
       {cat.icon && (
-        <span className={`${styles.gameIcon} ${isServida ? styles.gameIconServida : isTrue ? styles.gameIconTrue : isFalse ? styles.gameIconFalse : ""}`}>
+        <span
+          className={`${styles.gameIcon} ${isServida ? styles.gameIconServida : isTrue ? styles.gameIconTrue : isFalse ? styles.gameIconFalse : ""}`}
+        >
           <cat.icon />
         </span>
       )}
-      <span className={`${styles.gameName} ${isServida ? styles.gameNameServida : isTrue ? styles.gameNameTrue : isFalse ? styles.gameNameFalse : ""}`}>
+      <span
+        className={`${styles.gameName} ${isServida ? styles.gameNameServida : isTrue ? styles.gameNameTrue : isFalse ? styles.gameNameFalse : ""}`}
+      >
         {cat.name}
       </span>
-      <span className={`${styles.gameOption} ${isServida ? styles.gameOptionServida : isTrue ? styles.gameOptionTrue : isFalse ? styles.gameOptionFalse : ""}`}>
+      <span
+        className={`${styles.gameOption} ${isServida ? styles.gameOptionServida : isTrue ? styles.gameOptionTrue : isFalse ? styles.gameOptionFalse : ""}`}
+      >
         {isFalse ? "X" : isTrue ? scoreValue : cat.options[1]}
       </span>
 
+
       {isOpen && (
-        <div className={styles.gamePopover} onClick={(e) => e.stopPropagation()}>
+        <div
+          className={styles.gamePopover}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <button className={styles.close} onClick={() => setIsOpen(false)}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M18 6l-12 12" /><path d="M6 6l12 12" />
+            </svg>
+          </button>
           {[...cat.options]
             .sort((a, b) => {
               if (a === 0) return 1;
@@ -97,9 +128,16 @@ export const ScoreItem = ({ cat, scoreValue, isDisabled, onSave, onModify }) => 
                 </button>
               );
             })}
-          <button className={styles.close} onClick={() => setIsOpen(false)}>
-            Cancelar
-          </button>
+          {isScored && (
+            <button className={styles.delete} onClick={handleDelete}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" />
+                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+              </svg>
+            </button>
+          )}
         </div>
       )}
     </div>

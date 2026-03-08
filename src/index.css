@@ -11,7 +11,7 @@
   --border-color-hover: #bababa;
   --accent-color: #8c00ff;
   --accent-error: #ff4d4f;
-  --accent-warning: #ffd700;
+  --accent-warning: #c2a500;
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
   --transition-speed: 0.3s;
 }

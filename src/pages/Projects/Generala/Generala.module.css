@@ -211,7 +211,7 @@
 .removeBtn {
   background: none;
   border: none;
-  color: #ff4d4f;
+  color: var(--accent-error);
   cursor: pointer;
   font-weight: bold;
   padding: 0.2rem 0.5rem;
@@ -232,7 +232,7 @@
 }
 
 .iconWrapper:hover {
-  border-color: #ff4d4f;
+  border-color: var(--accent-error);
 }
 
 .warningText {
@@ -248,21 +248,21 @@
 /* Mobile config bar (hidden on desktop) */
 .mobileConfigBar {
   display: none;
-  justify-content: flex-end;
   position: relative;
+  margin-left: auto;
+  flex-shrink: 0;
 }
 
 .mobileConfigBtn {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.4rem 0.85rem;
-  border-radius: 2rem;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 0.75rem;
   border: 1px solid var(--border-color);
   background: var(--bg-secondary);
   color: var(--text-secondary);
-  font-size: 0.8rem;
-  font-weight: 600;
   cursor: pointer;
   transition:
     border-color 0.15s,
@@ -274,21 +274,24 @@
   color: var(--accent-color);
 }
 
-/* Dropdown positioned below the Opciones button */
+/* Dropdown positioned above the Opciones button (opens upward, aligned right) */
 .configDropdown {
   position: absolute;
-  top: calc(100% + 0.4rem);
+  bottom: calc(100% + 0.4rem);
+  top: auto;
   right: 0;
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
   border-radius: 1rem;
-  padding: 0.75rem;
+  padding: 1.75rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   min-width: 180px;
   z-index: 50;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  box-shadow:
+    0 0 2px var(--accent-warning),
+    inset 0 0 5px color-mix(in srgb, var(--accent-warning) 20%, transparent);
 }
 
 /* Transparent backdrop to close dropdown on outside click */
@@ -302,9 +305,16 @@
 /* Result card icon + nav arrows */
 .resultIconWithNav {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  flex-shrink: 0;
+}
+
+.resultNavRow {
+  display: flex;
   align-items: center;
   gap: 0.35rem;
-  flex-shrink: 0;
 }
 
 .resultNavArrow {
@@ -362,6 +372,29 @@
   flex-direction: column;
   gap: 1.5rem;
   position: relative;
+}
+
+.cancelFloatBtn {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 2rem;
+  border: 1px solid var(--accent-error);
+  background: color-mix(in srgb, var(--accent-error) 10%, transparent);
+  color: var(--accent-error);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+  z-index: 2;
+}
+
+.cancelFloatBtn:hover {
+  background: color-mix(in srgb, var(--accent-error) 22%, transparent);
 }
 
 .sideCol {
@@ -422,6 +455,12 @@
   font-size: 0.9rem;
   color: var(--text-secondary);
   line-height: 1.4;
+}
+
+.configSubtitle {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
   margin-bottom: 0.25rem;
 }
 
@@ -459,8 +498,8 @@
 
 .actionBtnDanger {
   background: transparent;
-  border: 1px solid #ff4d4f;
-  color: #ff4d4f;
+  border: 1px solid var(--accent-error);
+  color: var(--accent-error);
 }
 
 .actionBtnDanger:hover {
@@ -545,6 +584,30 @@
   min-height: 80px;
 }
 
+.trashBtn {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  opacity: 0.45;
+  cursor: pointer;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition:
+    opacity 0.15s,
+    color 0.15s;
+}
+
+.trashBtn:hover {
+  opacity: 1;
+  color: var(--accent-error);
+}
+
 .interactiveRowDisabled {
   opacity: 0.3;
   cursor: not-allowed;
@@ -626,21 +689,26 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
-  backdrop-filter: blur(4px);
   align-content: center;
   align-items: stretch;
-  padding: 2rem;
+  border-radius: 1rem;
+  padding: 0 3rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color-hover);
+  box-shadow:
+    0 0 2px var(--accent-color),
+    inset 0 0 5px color-mix(in srgb, var(--accent-color) 20%, transparent);
 }
 
 .gamePoeverBtn,
 .gamePoeverBtnTacha,
-.close {
-  background: var(--bg-card);
+.delete {
+  background: transparent;
   border: 1px solid var(--border-color-hover);
   color: var(--text-primary);
   padding: 1rem;
-  font-size: 1.3rem;
-  font-weight: 600;
+  font-size: 1.1rem;
+  font-weight: 500;
   cursor: pointer;
   border-radius: 1rem;
   transition: all 0.15s;
@@ -648,25 +716,52 @@
 }
 
 .gamePoeverBtn:hover {
-  background-color: var(--accent-color);
-  color: white;
+  border-color: var(--accent-color);
+  color: var(--text-primary);
 }
 
 .gamePoeverBtnTacha:hover {
   background-color: var(--accent-error);
   color: white;
 }
-
-.close {
+.delete {
+  background-color: color-mix(in srgb, var(--accent-error) 15%, transparent);
+  border-color: var(--accent-error);
+  color: var(--accent-error);
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem;
+}
+.delete:hover {
   background-color: var(--accent-error);
   color: white;
-  grid-column: 1 / -1;
-  font-size: 1rem;
-  font-weight: 400;
+}
+.close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  border: 1px solid var(--border-color-hover);
+  transition:
+    border-color 0.15s,
+    color 0.15s;
 }
 
 .close:hover {
-  opacity: 0.8;
+  border-color: var(--text-secondary);
+  color: var(--text-primary);
 }
 
 /* Result card (sidebar during game) */
@@ -737,6 +832,11 @@
   display: flex;
   gap: 0.5rem;
   margin-top: 0.75rem;
+}
+
+/* Only visible on mobile when there are no turn action buttons */
+.confirmRowMobileOnly {
+  display: none;
 }
 
 .clearTurnBtn {
@@ -849,6 +949,10 @@
     display: flex;
   }
 
+  .confirmRowMobileOnly {
+    display: flex;
+  }
+
   .configBackdrop {
     display: block;
   }
@@ -875,11 +979,24 @@
     opacity: 1;
   }
 
-  .resultWaiting .resultPoint { font-size: 2.25rem; line-height: 1.1; }
-  .resultWaiting .resultLabel { font-size: 0.75rem; }
-  .resultWaiting .resultName { font-size: 1rem; }
-  .resultWaiting .resultIconRing { width: 52px; height: 52px; }
-  .resultWaiting .resultIconInner { width: 40px; height: 40px; }
+  .resultWaiting .resultPoint {
+    font-size: 2.25rem;
+    line-height: 1.1;
+  }
+  .resultWaiting .resultLabel {
+    font-size: 0.75rem;
+  }
+  .resultWaiting .resultName {
+    font-size: 1rem;
+  }
+  .resultWaiting .resultIconRing {
+    width: 52px;
+    height: 52px;
+  }
+  .resultWaiting .resultIconInner {
+    width: 40px;
+    height: 40px;
+  }
 
   .resultPoint {
     font-size: 2.25rem;
