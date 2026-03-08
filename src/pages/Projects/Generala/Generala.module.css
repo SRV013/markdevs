@@ -755,49 +755,31 @@
 .gamePopover {
   position: absolute;
   inset: 0;
-  background: var(--bg-secondary);
-  border-radius: 1rem;
-  padding: 0.4rem;
-  z-index: 10;
+  background: var(--bg-color);
+  z-index: 1;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
+  gap: 5px;
   justify-content: center;
 }
-.gamePopeverGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.3rem;
-  width: 100%;
-}
-.gamePoeverBtn {
-  background: var(--bg-color);
-  border: 1px solid var(--border-color);
-  color: var(--text-primary);
-  border-radius: 6px;
-  padding: 0.35rem 0.2rem;
-  font-size: 0.8rem;
-  font-weight: 600;
-  cursor: pointer;
-  text-align: center;
-  transition: all 0.15s;
-}
-.gamePoeverBtn:hover {
-  background: var(--accent-color);
-  border-color: var(--accent-color);
-  color: var(--bg-color);
-}
+.gamePoeverBtn,
 .gamePoeverBtnTacha {
-  background: transparent;
-  border: 1px solid var(--accent-error);
-  color: var(--accent-error);
-  border-radius: 6px;
-  padding: 0.35rem 0.2rem;
-  font-size: 0.8rem;
-  font-weight: 600;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color-hover);
+  color: var(--text-primary);
+  padding: 0.25rem;
+  font-weight: 700;
   cursor: pointer;
-  text-align: center;
+  border-radius: 1rem;
   transition: all 0.15s;
+  min-width: 30px;
+}
+
+.gamePoeverBtn:hover {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
 }
 .gamePoeverBtnTacha:hover {
-  background: rgba(255, 77, 79, 0.1);
+  color: var(--accent-error);
 }

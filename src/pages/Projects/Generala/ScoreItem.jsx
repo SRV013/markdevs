@@ -53,14 +53,20 @@ export const ScoreItem = ({ cat, scoreValue, onSave, onModify }) => {
       onClick={() => toggleOpen(cat.id)}
     >
       {cat.icon && (
-        <span className={`${styles.gameIcon} ${isTrue ? styles.gameIconTrue : isFalse ? styles.gameIconFalse : ""}`}>
+        <span
+          className={`${styles.gameIcon} ${isTrue ? styles.gameIconTrue : isFalse ? styles.gameIconFalse : ""}`}
+        >
           <cat.icon />
         </span>
       )}
-      <span className={`${styles.gameName} ${isTrue ? styles.gameNameTrue : isFalse ? styles.gameNameFalse : ""}`}>
+      <span
+        className={`${styles.gameName} ${isTrue ? styles.gameNameTrue : isFalse ? styles.gameNameFalse : ""}`}
+      >
         {cat.name}
       </span>
-      <span className={`${styles.gameOption} ${isTrue ? styles.gameOptionTrue : isFalse ? styles.gameOptionFalse : ""}`}>
+      <span
+        className={`${styles.gameOption} ${isTrue ? styles.gameOptionTrue : isFalse ? styles.gameOptionFalse : ""}`}
+      >
         {isFalse ? "X" : isTrue ? scoreValue : cat.options[1]}
       </span>
 
@@ -69,40 +75,36 @@ export const ScoreItem = ({ cat, scoreValue, onSave, onModify }) => {
           className={styles.gamePopover}
           onClick={(e) => e.stopPropagation()}
         >
-          <div className={styles.gamePopeverGrid}>
-            {[...cat.options]
-              .sort((a, b) => {
-                if (a === 0) return 1;
-                if (b === 0) return -1;
-                return a - b;
-              })
-              .map((opt) => {
-                let label = opt;
+          {[...cat.options]
+            .sort((a, b) => {
+              if (a === 0) return 1;
+              if (b === 0) return -1;
+              return a - b;
+            })
+            .map((opt) => {
+              let label = opt;
 
-                if (opt === 0) {
-                  label = "0";
-                } else if (cat.id === "escalera" && opt === 25) {
-                  label = "25";
-                } else if (cat.id === "full" && opt === 35) {
-                  label = "35";
-                } else if (cat.id === "poker" && opt === 45) {
-                  label = "45";
-                }
-                return (
-                  <button
-                    key={opt}
-                    className={
-                      opt === 0
-                        ? styles.gamePoeverBtnTacha
-                        : styles.gamePoeverBtn
-                    }
-                    onClick={(e) => handleSelect(opt, e)}
-                  >
-                    {label}
-                  </button>
-                );
-              })}
-          </div>
+              if (opt === 0) {
+                label = "0";
+              } else if (cat.id === "escalera" && opt === 25) {
+                label = "25";
+              } else if (cat.id === "full" && opt === 35) {
+                label = "35";
+              } else if (cat.id === "poker" && opt === 45) {
+                label = "45";
+              }
+              return (
+                <button
+                  key={opt}
+                  className={
+                    opt === 0 ? styles.gamePoeverBtnTacha : styles.gamePoeverBtn
+                  }
+                  onClick={(e) => handleSelect(opt, e)}
+                >
+                  {label}
+                </button>
+              );
+            })}
         </div>
       )}
     </div>
