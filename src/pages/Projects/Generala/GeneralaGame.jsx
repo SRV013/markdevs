@@ -62,6 +62,12 @@ export const GeneralaGame = ({
     ...players.slice(0, turnIndex),
   ];
 
+  const activeIndex = orderedPlayers.findIndex((p) => p.id === activeTabId);
+  const goTo = (dir) => {
+    const next = (activeIndex + dir + orderedPlayers.length) % orderedPlayers.length;
+    setActiveTabId(orderedPlayers[next].id);
+  };
+
   return (
     <div className={styles.gameArea}>
       <div className={styles.grid}>
@@ -93,22 +99,23 @@ export const GeneralaGame = ({
         </div>
 
         <div className={styles.sideCol}>
-          {/* Mobile-only player switcher */}
-          <div className={styles.mobilePlayerTabs}>
-            {orderedPlayers.map((p) => {
-              const hasTurn = players[turnIndex]?.id === p.id;
-              const isActive = p.id === activeTabId;
-              return (
-                <button
-                  key={p.id}
-                  className={`${styles.mobilePlayerTab} ${isActive ? styles.mobilePlayerTabActive : ""} ${hasTurn ? styles.mobilePlayerTabTurn : ""}`}
-                  onClick={() => setActiveTabId(p.id)}
-                >
-                  {hasTurn && "▶ "}{p.name}
+          {/* Mobile: opciones button + dropdown */}
+          <div className={styles.mobileConfigBar}>
+            <button className={styles.mobileConfigBtn} onClick={() => setConfigOpen((v) => !v)}>
+              <SettingsIcon size={14} /> Opciones
+            </button>
+            {configOpen && (
+              <div className={styles.configDropdown}>
+                <button onClick={() => { handleResetGame(); setConfigOpen(false); }} className={styles.actionBtnSecondary}>
+                  <RefreshIcon size={16} /> Reiniciar
                 </button>
-              );
-            })}
+                <button onClick={handleAbandonGame} className={styles.actionBtnDanger}>
+                  <XCircleIcon size={16} /> Abandonar
+                </button>
+              </div>
+            )}
           </div>
+          {configOpen && <div className={styles.configBackdrop} onClick={() => setConfigOpen(false)} />}
 
           {orderedPlayers.map((p) => {
             const pScores = Object.values(p.scores).filter((v) => v != null);
@@ -125,46 +132,52 @@ export const GeneralaGame = ({
                 <div className={styles.resultLeft}>
                   <span className={styles.resultLabel}>Puntaje</span>
                   <span className={styles.resultPoint}>{pTotal}</span>
-                  {hasTurn && (
-                    <span className={styles.resultLabel}>
-                      Ronda <strong>{pMoves}</strong> / 11
-                    </span>
-                  )}
+                  <span className={styles.resultLabel}>
+                    Ronda <strong>{pMoves}</strong> / 11
+                  </span>
                   <span className={styles.resultName}>{p.name}</span>
                 </div>
-                <div
-                  className={styles.resultIconRing}
-                  style={{ "--progress": Math.round((pMoves / 11) * 100) }}
-                >
-                  <div className={styles.resultIconInner}>
-                    <UserIcon size={hasTurn ? 28 : 18} />
+                <div className={styles.resultIconWithNav}>
+                  <button className={styles.resultNavArrow} onClick={(e) => { e.stopPropagation(); goTo(-1); }}>‹</button>
+                  <div
+                    className={styles.resultIconRing}
+                    style={{ "--progress": Math.round((pMoves / 11) * 100) }}
+                  >
+                    <div className={styles.resultIconInner}>
+                      <UserIcon size={hasTurn ? 28 : 18} />
+                    </div>
                   </div>
+                  <button className={styles.resultNavArrow} onClick={(e) => { e.stopPropagation(); goTo(1); }}>›</button>
                 </div>
               </div>
             );
           })}
 
+          {/* Desktop config card */}
           <div className={styles.configCardWrapper}>
-            <div className={styles.configHeader}>
+            <button className={styles.configHeader} onClick={() => setConfigOpen((v) => !v)}>
               <div className={styles.iconWrapperTurn}>
                 <SettingsIcon size={20} />
               </div>
               <span className={styles.configTitle}>Opciones de Juego</span>
-            </div>
-            <p className={styles.configSubtitle}>
-              Administra el estado de la partida actual. Desde aquí puedes
-              reiniciar los puntajes o abandonar el juego por completo.
-            </p>
-            <div className={styles.actionsBox}>
-              <button onClick={handleResetGame} className={styles.actionBtnSecondary}>
-                <RefreshIcon size={18} />
-                Reiniciar partida
-              </button>
-              <button onClick={handleAbandonGame} className={styles.actionBtnDanger}>
-                <XCircleIcon size={18} />
-                Abandonar juego
-              </button>
-            </div>
+              <span className={styles.configChevron}>{configOpen ? "▲" : "▼"}</span>
+            </button>
+            {configOpen && (
+              <>
+                <p className={styles.configSubtitle}>
+                  Administra el estado de la partida actual. Desde aquí puedes
+                  reiniciar los puntajes o abandonar el juego por completo.
+                </p>
+                <div className={styles.actionsBox}>
+                  <button onClick={handleResetGame} className={styles.actionBtnSecondary}>
+                    <RefreshIcon size={18} /> Reiniciar partida
+                  </button>
+                  <button onClick={handleAbandonGame} className={styles.actionBtnDanger}>
+                    <XCircleIcon size={18} /> Abandonar juego
+                  </button>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>

@@ -138,15 +138,23 @@
   color: var(--text-secondary);
 }
 
-.leaderboardRow1 .leaderboardScore { color: var(--accent-warning); font-size: 1.25rem; }
-.leaderboardRow1 .leaderboardRankBadge { color: var(--accent-warning); }
+.leaderboardRow1 .leaderboardScore {
+  color: var(--accent-warning);
+  font-size: 1.25rem;
+}
+.leaderboardRow1 .leaderboardRankBadge {
+  color: var(--accent-warning);
+}
 .leaderboardRow1 .leaderboardAvatarCircle {
   border-color: var(--accent-warning);
   color: var(--accent-warning);
   box-shadow: 0 0 8px color-mix(in srgb, var(--accent-warning) 50%, transparent);
 }
 
-.leaderboardRowRest { opacity: 0.6; padding: 0.5rem 1rem; }
+.leaderboardRowRest {
+  opacity: 0.6;
+  padding: 0.5rem 1rem;
+}
 
 /* Setup Form */
 .addPlayerForm {
@@ -237,32 +245,89 @@
   width: 100%;
 }
 
-/* Mobile player switcher (hidden on desktop) */
-.mobilePlayerTabs {
+/* Mobile config bar (hidden on desktop) */
+.mobileConfigBar {
   display: none;
+  justify-content: flex-end;
+  position: relative;
 }
 
-.mobilePlayerTab {
-  padding: 0.4rem 0.9rem;
+.mobileConfigBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.85rem;
   border-radius: 2rem;
   border: 1px solid var(--border-color);
   background: var(--bg-secondary);
   color: var(--text-secondary);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.15s;
-  text-transform: capitalize;
+  transition:
+    border-color 0.15s,
+    color 0.15s;
 }
 
-.mobilePlayerTabActive {
+.mobileConfigBtn:hover {
   border-color: var(--accent-color);
   color: var(--accent-color);
-  background: color-mix(in srgb, var(--accent-color) 10%, transparent);
 }
 
-.mobilePlayerTabTurn {
-  font-weight: 800;
+/* Dropdown positioned below the Opciones button */
+.configDropdown {
+  position: absolute;
+  top: calc(100% + 0.4rem);
+  right: 0;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 1rem;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 180px;
+  z-index: 50;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Transparent backdrop to close dropdown on outside click */
+.configBackdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 49;
+}
+
+/* Result card icon + nav arrows */
+.resultIconWithNav {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-shrink: 0;
+}
+
+.resultNavArrow {
+  display: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background: var(--bg-color);
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition:
+    border-color 0.15s,
+    color 0.15s;
+}
+
+.resultNavArrow:hover {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
 }
 
 /* Game Area */
@@ -334,7 +399,18 @@
   align-items: center;
   gap: 0.75rem;
   color: var(--text-primary);
-  margin-bottom: -0.25rem;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+}
+
+.configChevron {
+  margin-left: auto;
+  font-size: 0.7rem;
+  color: var(--text-secondary);
 }
 
 .configTitle {
@@ -413,17 +489,45 @@
     "generala_doble generala_doble generala_doble generala_doble generala_doble generala_doble";
 }
 
-.uno { grid-area: uno; max-height: 95px; }
-.dos { grid-area: dos; max-height: 95px; }
-.tres { grid-area: tres; max-height: 95px; }
-.cuatro { grid-area: cuatro; max-height: 95px; }
-.cinco { grid-area: cinco; max-height: 95px; }
-.seis { grid-area: seis; max-height: 95px; }
-.escalera { grid-area: escalera; }
-.full { grid-area: full; }
-.poker { grid-area: poker; }
-.generala { grid-area: generala; }
-.generala_doble { grid-area: generala_doble; }
+.uno {
+  grid-area: uno;
+  max-height: 95px;
+}
+.dos {
+  grid-area: dos;
+  max-height: 95px;
+}
+.tres {
+  grid-area: tres;
+  max-height: 95px;
+}
+.cuatro {
+  grid-area: cuatro;
+  max-height: 95px;
+}
+.cinco {
+  grid-area: cinco;
+  max-height: 95px;
+}
+.seis {
+  grid-area: seis;
+  max-height: 95px;
+}
+.escalera {
+  grid-area: escalera;
+}
+.full {
+  grid-area: full;
+}
+.poker {
+  grid-area: poker;
+}
+.generala {
+  grid-area: generala;
+}
+.generala_doble {
+  grid-area: generala_doble;
+}
 
 .interactiveRow {
   background-color: var(--bg-color);
@@ -472,19 +576,47 @@
   text-transform: uppercase;
 }
 
-.gameIcon { color: var(--border-color-hover); }
-.gameIconTrue { color: var(--accent-color); }
-.gameIconTrue svg { filter: drop-shadow(0 0 10px var(--accent-color)); }
-.gameIconServida { color: var(--accent-warning); }
-.gameIconServida svg { filter: drop-shadow(0 0 8px var(--accent-warning)); }
-.gameNameServida { color: var(--accent-warning); }
-.gameOptionServida { font-weight: 800; }
-.gameIconFalse { color: var(--accent-error); }
-.gameIconFalse svg { filter: drop-shadow(0 0 4px var(--accent-error)); }
-.gameNameTrue { color: var(--accent-color); }
-.gameNameFalse { color: var(--accent-error); }
-.gameOptionTrue { font-weight: 800; color: var(--text-secondary); }
-.gameOptionFalse { font-weight: 800; color: var(--accent-error); }
+.gameIcon {
+  color: var(--border-color-hover);
+}
+.gameIconTrue {
+  color: var(--accent-color);
+}
+.gameIconTrue svg {
+  filter: drop-shadow(0 0 10px var(--accent-color));
+}
+.gameIconServida {
+  color: var(--accent-warning);
+}
+.gameIconServida svg {
+  filter: drop-shadow(0 0 8px var(--accent-warning));
+}
+.gameNameServida {
+  color: var(--accent-warning);
+}
+.gameOptionServida {
+  font-weight: 800;
+}
+.gameIconFalse {
+  color: var(--accent-error);
+}
+.gameIconFalse svg {
+  filter: drop-shadow(0 0 4px var(--accent-error));
+}
+.gameNameTrue {
+  color: var(--accent-color);
+}
+.gameNameFalse {
+  color: var(--accent-error);
+}
+.gameOptionTrue {
+  font-weight: 800;
+  color: var(--text-secondary);
+}
+.gameOptionFalse {
+  font-weight: 800;
+  color: var(--accent-error);
+}
 
 /* Score Popover */
 .gamePopover {
@@ -659,11 +791,24 @@
   gap: 0.5rem;
 }
 
-.resultWaiting .resultPoint { font-size: 1.25rem; line-height: 1; }
-.resultWaiting .resultLabel { font-size: 0.6rem; }
-.resultWaiting .resultName { font-size: 0.75rem; }
-.resultWaiting .resultIconRing { width: 36px; height: 36px; }
-.resultWaiting .resultIconInner { width: 26px; height: 26px; }
+.resultWaiting .resultPoint {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+.resultWaiting .resultLabel {
+  font-size: 0.6rem;
+}
+.resultWaiting .resultName {
+  font-size: 0.75rem;
+}
+.resultWaiting .resultIconRing {
+  width: 36px;
+  height: 36px;
+}
+.resultWaiting .resultIconInner {
+  width: 26px;
+  height: 26px;
+}
 
 .resultIconRing {
   flex-shrink: 0;
@@ -690,8 +835,8 @@
   color: var(--accent-color);
 }
 
-/* Mobile layout (< 500px) */
-@media (max-width: 500px) {
+/* Mobile layout (< 768px) */
+@media (max-width: 768px) {
   .controlsCol {
     order: 2;
   }
@@ -700,13 +845,53 @@
     order: 1;
   }
 
-  .mobilePlayerTabs {
+  .mobileConfigBar {
     display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
+  }
+
+  .configBackdrop {
+    display: block;
+  }
+
+  .configCardWrapper {
+    display: none;
   }
 
   .resultHiddenMobile {
     display: none;
+  }
+
+  .resultNavArrow {
+    display: flex;
+  }
+
+  /* Compact result card — always full-size on mobile (no shrinking) */
+  .result {
+    padding: 0.65rem 0.85rem;
+  }
+
+  .resultWaiting {
+    padding: 0.65rem 0.85rem;
+    opacity: 1;
+  }
+
+  .resultWaiting .resultPoint { font-size: 2.25rem; line-height: 1.1; }
+  .resultWaiting .resultLabel { font-size: 0.75rem; }
+  .resultWaiting .resultName { font-size: 1rem; }
+  .resultWaiting .resultIconRing { width: 52px; height: 52px; }
+  .resultWaiting .resultIconInner { width: 40px; height: 40px; }
+
+  .resultPoint {
+    font-size: 2.25rem;
+  }
+
+  .resultIconRing {
+    width: 52px;
+    height: 52px;
+  }
+
+  .resultIconInner {
+    width: 40px;
+    height: 40px;
   }
 }
