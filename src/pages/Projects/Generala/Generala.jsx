@@ -1,8 +1,9 @@
 import styles from "./Generala.module.css";
-import { Page, Card, Button, UserIcon } from "@/components";
+import { Page, Button, UserIcon } from "@/components";
 import { GeneralaSetup } from "./GeneralaSetup";
 import { GeneralaGame } from "./GeneralaGame";
 import { useGeneralaGame } from "./util/hook";
+import { General } from "./util/icon";
 export const Generala = () => {
   const {
     players,
@@ -19,6 +20,7 @@ export const Generala = () => {
     handleAbandonGame,
     handleSaveScore,
     handleModifyScore,
+    handleNextTurn,
     calculateTotal,
   } = useGeneralaGame();
 
@@ -51,6 +53,7 @@ export const Generala = () => {
             setActiveTabId={setActiveTabId}
             handleSaveScore={handleSaveScore}
             handleModifyScore={handleModifyScore}
+            handleNextTurn={handleNextTurn}
             handleResetGame={handleResetGame}
             handleAbandonGame={handleAbandonGame}
             activeTotal={activeTotal}
@@ -59,22 +62,40 @@ export const Generala = () => {
         )}
 
         {gameState === "finished" && (
-          <Card className={styles.finishedCard}>
-            <h2 className={styles.rankingTitle}>¡Partida Terminada!</h2>
-            <div className={styles.rankingList}>
-              {sortedPlayers.map((player, index) => (
-                <div key={player.id} className={styles.rankingRow}>
-                  <span className={styles.rankBadge}>{index + 1}</span>
-                  <span className={styles.rankName}>
-                    <UserIcon size={20} className={styles.iconSpaced} />
-                    {player.name}
-                  </span>
-                  <span className={styles.rankScore}>
-                    {calculateTotal(player.scores)} Pts
-                  </span>
-                </div>
-              ))}
+          <div className={styles.finishedArea}>
+            <h2 className={styles.leaderboardTitle}>Final de la Partida</h2>
+
+            <div className={styles.leaderboardList}>
+              {sortedPlayers.map((player, index) => {
+                const rank = index + 1;
+                const pTotal = calculateTotal(player.scores);
+                const isWinner = rank === 1;
+                const rankClass = rank <= 3 ? styles[`leaderboardRow${rank}`] : styles.leaderboardRowRest;
+                return (
+                  <div
+                    key={player.id}
+                    className={`${styles.leaderboardRow} ${rankClass}`}
+                  >
+                    <div className={styles.leaderboardLeft}>
+                      <div className={styles.leaderboardAvatarCircle}>
+                        <UserIcon size={22} />
+                      </div>
+                      <div className={styles.leaderboardInfo}>
+                        <span className={styles.leaderboardName}>{player.name.charAt(0).toUpperCase() + player.name.slice(1)}</span>
+                        <span className={styles.leaderboardScore}>{pTotal} PTS</span>
+                      </div>
+                    </div>
+                    <div className={styles.leaderboardRight}>
+                      {isWinner
+                        ? <span className={styles.leaderboardIconWinner}><General /></span>
+                        : <span className={styles.leaderboardRankBadge}>#{rank}</span>
+                      }
+                    </div>
+                  </div>
+                );
+              })}
             </div>
+
             <Button
               variant="primary"
               onClick={handleAbandonGame}
@@ -82,7 +103,7 @@ export const Generala = () => {
             >
               Terminar y Volver
             </Button>
-          </Card>
+          </div>
         )}
       </div>
     </Page>

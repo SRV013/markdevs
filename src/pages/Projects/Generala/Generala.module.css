@@ -1,4 +1,4 @@
-/* General Layout from QR App */
+/* Layout */
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -28,21 +28,8 @@
   margin: 0 auto;
 }
 
-/* Icons */
-.iconSpaced {
-  margin-right: 8px;
-  vertical-align: text-bottom;
-}
-
-.tabIcon {
-  margin-right: 6px;
-  color: var(--accent-color);
-}
-
-/* Setup & Finished Cards */
-
-.setupCard,
-.finishedCard {
+/* Setup Card */
+.setupCard {
   max-width: 500px;
   margin: 0 auto;
   width: 100%;
@@ -55,12 +42,113 @@
   font-size: 1.5rem;
 }
 
-.rankingTitle {
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
-  color: var(--accent-color);
+/* Finished / Leaderboard */
+.finishedArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
 }
 
+.leaderboardTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.leaderboardList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  width: 100%;
+}
+
+.leaderboardRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 1rem;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+}
+
+.leaderboardLeft {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+  color: var(--text-secondary);
+}
+
+.leaderboardAvatarCircle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+.leaderboardInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.leaderboardRight {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  flex-shrink: 0;
+}
+
+.leaderboardIconWinner {
+  color: var(--accent-warning);
+  display: flex;
+  filter: drop-shadow(0 0 6px var(--accent-warning));
+  transform: scale(1.7);
+}
+
+.leaderboardRankBadge {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--text-secondary);
+}
+
+.leaderboardName {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.leaderboardScore {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text-secondary);
+}
+
+.leaderboardRow1 .leaderboardScore { color: var(--accent-warning); font-size: 1.25rem; }
+.leaderboardRow1 .leaderboardRankBadge { color: var(--accent-warning); }
+.leaderboardRow1 .leaderboardAvatarCircle {
+  border-color: var(--accent-warning);
+  color: var(--accent-warning);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--accent-warning) 50%, transparent);
+}
+
+.leaderboardRowRest { opacity: 0.6; padding: 0.5rem 1rem; }
+
+/* Setup Form */
 .addPlayerForm {
   display: flex;
   gap: 1rem;
@@ -120,6 +208,7 @@
   font-weight: bold;
   padding: 0.2rem 0.5rem;
 }
+
 .iconWrapper {
   width: 45px;
   height: 45px;
@@ -133,9 +222,11 @@
   flex-shrink: 0;
   transition: border-color 0.2s;
 }
+
 .iconWrapper:hover {
   border-color: #ff4d4f;
 }
+
 .warningText {
   color: var(--text-muted);
   font-size: 0.9rem;
@@ -146,8 +237,35 @@
   width: 100%;
 }
 
-/* Game Area and Tabs Indicator */
+/* Mobile player switcher (hidden on desktop) */
+.mobilePlayerTabs {
+  display: none;
+}
 
+.mobilePlayerTab {
+  padding: 0.4rem 0.9rem;
+  border-radius: 2rem;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-transform: capitalize;
+}
+
+.mobilePlayerTabActive {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+  background: color-mix(in srgb, var(--accent-color) 10%, transparent);
+}
+
+.mobilePlayerTabTurn {
+  font-weight: 800;
+}
+
+/* Game Area */
 .gameArea {
   display: flex;
   flex-direction: column;
@@ -157,48 +275,9 @@
   max-width: 900px;
 }
 
-.tabs {
-  display: flex;
-  gap: 0.5rem;
-  border-bottom: 1px solid var(--border-color);
-  padding-bottom: 0;
-  overflow-y: auto;
-}
-
-.tab {
-  display: flex;
-  align-items: center;
-  padding: 0.6rem 1.25rem;
-  border: none;
-  background: transparent;
-  color: var(--text-secondary);
-  font-size: 1.2rem;
-  font-weight: 600;
-  cursor: pointer;
-  border-bottom: 4px solid transparent;
-  margin-bottom: -1px;
-  transition:
-    color 0.2s,
-    border-color 0.2s;
-  white-space: nowrap;
-  text-transform: capitalize;
-}
-
-.tab:hover {
-  color: var(--text-primary);
-}
-
-.tabActive {
-  color: var(--accent-color);
-  border-bottom-color: var(--accent-color);
-}
-
-/* 2 Columns Grid from QR app */
-
 .grid {
   display: grid;
   grid-template-columns: 1fr 1.5fr;
-  /* Left col wider for 2 internal columns */
   gap: 1.5rem;
   align-items: start;
 }
@@ -209,7 +288,6 @@
   }
 }
 
-/* Columns container */
 .controlsCol {
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
@@ -227,28 +305,6 @@
   gap: 1.5rem;
 }
 
-/* Custom Turn Card Styling (Matches "Desarrollo Frontend" aesthetic) */
-.turnCardWrapper {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: 24px;
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.turnCardWrapper:hover {
-  border-color: var(--accent-color);
-}
-
-.turnCardHeader {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-
 .iconWrapperTurn {
   width: 45px;
   height: 45px;
@@ -260,262 +316,6 @@
   color: var(--accent-color);
   border: 1px solid var(--border-color);
   flex-shrink: 0;
-}
-
-.turnContent {
-  display: flex;
-  flex-direction: column;
-}
-
-.turnName {
-  font-size: 1.25rem;
-  display: flex;
-  gap: 6px;
-  margin-bottom: 1.5rem;
-  flex-direction: column;
-}
-
-.activePlayerName {
-  font-weight: 800;
-  color: var(--text-primary);
-  text-transform: capitalize;
-}
-.activePlayerGame {
-  font-size: 1rem;
-  font-weight: 400;
-  color: var(--text-primary);
-  text-transform: capitalize;
-}
-
-.activePlayerExt {
-  position: absolute;
-  top: 2rem;
-  right: 2rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-  font-size: 1rem;
-}
-
-/* Warning for viewing other player */
-.viewingWarning {
-  background: rgba(var(--accent-rgb), 0.1);
-  border: 1px solid var(--accent-color);
-  color: var(--text-primary);
-  padding: 1rem;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: -0.5rem;
-}
-
-.returnToTurnBtn {
-  background: var(--accent-color);
-  color: var(--bg-color);
-  border: none;
-  padding: 0.4rem 0.8rem;
-  border-radius: 6px;
-  font-size: 0.8rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: opacity 0.2s;
-}
-
-.returnToTurnBtn:hover {
-  opacity: 0.8;
-}
-
-/* Left controls column (2 internal Categories columns) */
-
-.categoriesGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
-
-@media (max-width: 600px) {
-  .categoriesGrid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.categoriesGridCol {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-}
-
-.jugada {
-  position: absolute;
-  top: 2.5rem;
-  left: 0.5rem;
-  font-size: 1.5rem;
-  font-size: 0.9rem;
-  color: var(--accent-color);
-}
-
-.jugadaResult {
-  margin-top: 0.5rem;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--accent-color);
-}
-.jugadaIcon {
-  position: absolute;
-  top: 0.5rem;
-  left: 0.5rem;
-  color: var(--accent-color);
-  display: flex;
-  align-items: center;
-}
-.catInputName {
-  font-weight: 700;
-  font-size: 0.85rem;
-  color: var(--text-primary);
-}
-
-.addScoreHint {
-  font-size: 0.75rem;
-  color: var(--accent-color);
-  font-weight: 600;
-  opacity: 0.4;
-  transition: opacity 0.2s;
-}
-
-.scoredOpacity {
-  border: 1px solid var(--border-color-hover);
-  /* background-color: var(--accent-rgb); */
-  background-color: transparent;
-  /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); */
-}
-
-.crossedText {
-  text-decoration: line-through;
-  color: var(--text-muted);
-}
-
-.scoredData {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.deleteIconBtn {
-  background: none;
-  border: none;
-  color: var(--text-muted);
-  cursor: pointer;
-  transition: color 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.25rem;
-}
-
-.deleteIconBtn:hover {
-  color: #ff4d4f;
-}
-
-.emptyScoreLabel {
-  color: var(--text-muted);
-  font-size: 0.85rem;
-  font-weight: bold;
-}
-
-/* Score Popover Classes */
-.scorePopover {
-  position: absolute;
-  top: calc(100% + 4px);
-  left: 0;
-  right: 0;
-  background: var(--bg-color);
-  border: 1px solid var(--border-color-hover);
-
-  border-radius: 8px;
-  padding: 0.75rem;
-  z-index: 10;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-}
-
-.scoreOptionsGrid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  justify-content: center;
-}
-
-.scoreOptionBtn {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  color: var(--text-primary);
-  border-radius: 4px;
-  padding: 0.5rem 0.75rem;
-  font-size: 0.85rem;
-  cursor: pointer;
-  font-weight: 600;
-  transition: all 0.15s;
-  text-align: center;
-  flex: 1 1 auto;
-}
-
-.scoreOptionBtn:hover {
-  border-color: var(--accent-color);
-  color: var(--bg-color);
-  background: var(--accent-color);
-}
-
-.scoreOptionCross {
-  background: transparent;
-  border: 1px solid #ff4d4f;
-  color: #ff4d4f;
-}
-
-.scoreOptionCross:hover {
-  background: rgba(255, 77, 79, 0.1);
-  border-color: #ff4d4f;
-  color: #ff4d4f;
-}
-
-.scoreOptionServida {
-  border-color: #eae608;
-}
-
-.scoreOptionServida:hover {
-  background-color: transparent;
-  color: unset;
-  border-color: #eae608;
-  background: rgba(219, 255, 77, 0.1);
-}
-
-/* Right Column Points Box */
-.turnPointsBox {
-  display: flex;
-  flex-direction: column;
-}
-
-.turnPointsLabel {
-  font-size: 1rem;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-}
-
-.turnPointsData {
-  font-size: 3.5rem;
-  font-weight: 900;
-  color: var(--accent-color);
-  line-height: 1;
-}
-
-.activeScoreBox {
-  margin-top: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  padding-top: 1.5rem;
-  border-top: 1px dashed var(--border-color);
 }
 
 /* Config Card */
@@ -535,11 +335,6 @@
   gap: 0.75rem;
   color: var(--text-primary);
   margin-bottom: -0.25rem;
-}
-
-.configIcon {
-  color: var(--background-rgb);
-  color: var(--text-secondary);
 }
 
 .configTitle {
@@ -596,57 +391,20 @@
   background: rgba(255, 77, 79, 0.1);
 }
 
-/* Ranking */
-
-.rankingList {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.rankingRow {
-  display: flex;
-  align-items: center;
-  background-color: var(--bg-card-hover);
-  padding: 1rem;
-  border-radius: 8px;
-  gap: 1rem;
-}
-
-.rankBadge {
-  background-color: var(--accent-color);
-  color: var(--bg-color);
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  font-weight: 800;
-  font-size: 1.2rem;
-}
-
-.rankName {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  text-align: left;
-  font-weight: 600;
-  font-size: 1.1rem;
-  color: var(--text-primary);
-}
-
-.rankScore {
-  font-weight: 800;
-  font-size: 1.2rem;
-  color: var(--accent-color);
-}
-
+/* Jugadas Grid */
 .jugadasGrid {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 1rem;
+  grid-template-areas:
+    "uno uno dos dos tres tres"
+    "cuatro cuatro cinco cinco seis seis"
+    "escalera escalera escalera full full full"
+    "poker poker poker generala generala generala";
+}
+
+.jugadasGridWithDoble {
   grid-template-areas:
     "uno uno dos dos tres tres"
     "cuatro cuatro cinco cinco seis seis"
@@ -655,48 +413,19 @@
     "generala_doble generala_doble generala_doble generala_doble generala_doble generala_doble";
 }
 
-.uno {
-  grid-area: uno;
-  max-height: 95px;
-}
-.dos {
-  grid-area: dos;
-  max-height: 95px;
-}
-.tres {
-  grid-area: tres;
-  max-height: 95px;
-}
-.cuatro {
-  grid-area: cuatro;
-  max-height: 95px;
-}
-.cinco {
-  grid-area: cinco;
-  max-height: 95px;
-}
-.seis {
-  grid-area: seis;
-  max-height: 95px;
-}
-.escalera {
-  grid-area: escalera;
-}
-.full {
-  grid-area: full;
-}
-.poker {
-  grid-area: poker;
-}
-.generala {
-  grid-area: generala;
-}
-.generala_doble {
-  grid-area: generala_doble;
-}
+.uno { grid-area: uno; max-height: 95px; }
+.dos { grid-area: dos; max-height: 95px; }
+.tres { grid-area: tres; max-height: 95px; }
+.cuatro { grid-area: cuatro; max-height: 95px; }
+.cinco { grid-area: cinco; max-height: 95px; }
+.seis { grid-area: seis; max-height: 95px; }
+.escalera { grid-area: escalera; }
+.full { grid-area: full; }
+.poker { grid-area: poker; }
+.generala { grid-area: generala; }
+.generala_doble { grid-area: generala_doble; }
 
 .interactiveRow {
-  position: relative;
   background-color: var(--bg-color);
   color: var(--text-secondary);
   display: flex;
@@ -711,75 +440,273 @@
   overflow: hidden;
   min-height: 80px;
 }
+
+.interactiveRowDisabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 .interactiveRowTrue {
-  box-shadow: 0 0 4px var(--accent-color);
+  box-shadow:
+    0 0 2px var(--accent-color),
+    inset 0 0 5px color-mix(in srgb, var(--accent-color) 20%, transparent);
 }
+
+.interactiveRowServida {
+  box-shadow:
+    0 0 2px var(--accent-warning),
+    inset 0 0 5px color-mix(in srgb, var(--accent-warning) 20%, transparent);
+}
+
 .interactiveRowFalse {
-  box-shadow: 0 0 4px var(--accent-error);
+  box-shadow:
+    0 0 2px var(--accent-error),
+    inset 0 0 5px color-mix(in srgb, var(--accent-error) 20%, transparent);
 }
+
 .gameName {
   color: var(--text-secondary);
   font-size: 0.7rem;
   font-weight: 600;
   text-transform: uppercase;
 }
-.gameIcon {
-  color: var(--border-color-hover);
-}
-.gameIconTrue {
-  color: var(--accent-color);
-}
-.gameIconTrue svg {
-  filter: drop-shadow(0 0 10px var(--accent-color));
-}
-.gameIconFalse {
-  color: var(--accent-error);
-}
-.gameIconFalse svg {
-  filter: drop-shadow(0 0 4px var(--accent-error));
-}
 
-.gameNameFalse {
-  color: var(--accent-error);
-}
-.gameOptionTrue {
-  font-weight: 800;
-  color: var(--text-secondary);
-}
-.gameOptionFalse {
-  font-weight: 800;
-  color: var(--accent-error);
-}
+.gameIcon { color: var(--border-color-hover); }
+.gameIconTrue { color: var(--accent-color); }
+.gameIconTrue svg { filter: drop-shadow(0 0 10px var(--accent-color)); }
+.gameIconServida { color: var(--accent-warning); }
+.gameIconServida svg { filter: drop-shadow(0 0 8px var(--accent-warning)); }
+.gameNameServida { color: var(--accent-warning); }
+.gameOptionServida { font-weight: 800; }
+.gameIconFalse { color: var(--accent-error); }
+.gameIconFalse svg { filter: drop-shadow(0 0 4px var(--accent-error)); }
+.gameNameTrue { color: var(--accent-color); }
+.gameNameFalse { color: var(--accent-error); }
+.gameOptionTrue { font-weight: 800; color: var(--text-secondary); }
+.gameOptionFalse { font-weight: 800; color: var(--accent-error); }
 
-/* Popover */
+/* Score Popover */
 .gamePopover {
   position: absolute;
   inset: 0;
-  background: var(--bg-color);
   z-index: 1;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 5px;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  backdrop-filter: blur(4px);
+  align-content: center;
+  align-items: stretch;
+  padding: 2rem;
 }
+
 .gamePoeverBtn,
-.gamePoeverBtnTacha {
+.gamePoeverBtnTacha,
+.close {
   background: var(--bg-card);
   border: 1px solid var(--border-color-hover);
   color: var(--text-primary);
-  padding: 0.25rem;
-  font-weight: 700;
+  padding: 1rem;
+  font-size: 1.3rem;
+  font-weight: 600;
   cursor: pointer;
   border-radius: 1rem;
   transition: all 0.15s;
-  min-width: 30px;
+  background-color: var(--bg-color);
 }
 
 .gamePoeverBtn:hover {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.gamePoeverBtnTacha:hover {
+  background-color: var(--accent-error);
+  color: white;
+}
+
+.close {
+  background-color: var(--accent-error);
+  color: white;
+  grid-column: 1 / -1;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.close:hover {
+  opacity: 0.8;
+}
+
+/* Result card (sidebar during game) */
+.result {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 1rem;
+  padding: 1rem 1.25rem;
+  gap: 1rem;
+  cursor: pointer;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.resultActive {
   border-color: var(--accent-color);
+  box-shadow:
+    0 0 6px var(--accent-color),
+    inset 0 0 4px color-mix(in srgb, var(--accent-color) 25%, transparent);
+}
+
+.resultTurn {
+  border-color: var(--accent-color);
+}
+
+.resultTurn::before {
+  content: "▶";
+  position: absolute;
+  font-size: 0.6rem;
+  color: var(--accent-color);
+  left: -1rem;
+}
+
+.resultLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.resultLabel {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.resultPoint {
+  font-size: 3rem;
+  font-weight: 900;
+  color: var(--accent-color);
+  line-height: 1.1;
+}
+
+.resultName {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-transform: capitalize;
+  margin-top: 0.25rem;
+}
+
+.confirmRow {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.clearTurnBtn {
+  flex-shrink: 0;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.65rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--accent-error);
+  background: color-mix(in srgb, var(--accent-error) 12%, transparent);
+  color: var(--accent-error);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.clearTurnBtn:hover {
+  background: color-mix(in srgb, var(--accent-error) 25%, transparent);
+}
+
+.confirmTurnBtn {
+  flex: 1;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.65rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--accent-color);
+  background: color-mix(in srgb, var(--accent-color) 15%, transparent);
+  color: var(--accent-color);
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    box-shadow 0.15s;
+}
+
+.confirmTurnBtn:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--accent-color) 30%, transparent);
+  box-shadow:
+    0 0 10px var(--accent-color),
+    inset 0 0 6px color-mix(in srgb, var(--accent-color) 20%, transparent);
+}
+
+.confirmTurnBtnDisabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.resultWaiting {
+  padding: 0.4rem 0.75rem;
+  opacity: 0.55;
+  gap: 0.5rem;
+}
+
+.resultWaiting .resultPoint { font-size: 1.25rem; line-height: 1; }
+.resultWaiting .resultLabel { font-size: 0.6rem; }
+.resultWaiting .resultName { font-size: 0.75rem; }
+.resultWaiting .resultIconRing { width: 36px; height: 36px; }
+.resultWaiting .resultIconInner { width: 26px; height: 26px; }
+
+.resultIconRing {
+  flex-shrink: 0;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: conic-gradient(
+    var(--accent-color) calc(var(--progress) * 1%),
+    var(--border-color) 0%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.resultIconInner {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: var(--bg-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: var(--accent-color);
 }
-.gamePoeverBtnTacha:hover {
-  color: var(--accent-error);
+
+/* Mobile layout (< 500px) */
+@media (max-width: 500px) {
+  .controlsCol {
+    order: 2;
+  }
+
+  .sideCol {
+    order: 1;
+  }
+
+  .mobilePlayerTabs {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .resultHiddenMobile {
+    display: none;
+  }
 }

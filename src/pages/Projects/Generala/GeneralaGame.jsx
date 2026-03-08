@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import styles from "./Generala.module.css";
 import { UserIcon, RefreshIcon, XCircleIcon, SettingsIcon } from "@/components";
 import { ScoreItem } from "./ScoreItem";
@@ -8,67 +8,142 @@ export const GeneralaGame = ({
   players,
   turnIndex,
   activeTabId,
-  activeTotal,
-  playedMoves,
   setActiveTabId,
   handleSaveScore,
   handleModifyScore,
+  handleNextTurn,
   handleResetGame,
   handleAbandonGame,
 }) => {
   const activePlayer = players.find((p) => p.id === activeTabId) || players[0];
   const playerWithTurn = players[turnIndex];
+  const isViewingTurnPlayer = activePlayer?.id === playerWithTurn?.id;
+
+  // { playerId, categoryId } — tracks one edit per session regardless of which player is viewed
+  const [currentTurnCat, setCurrentTurnCat] = useState(null);
+  const [configOpen, setConfigOpen] = useState(false);
+
+  // Only "active" for the currently viewed player
+  const activeTurnCat =
+    currentTurnCat?.playerId === activePlayer?.id ? currentTurnCat.categoryId : null;
+
+  const handleSaveForTurn = (playerId, categoryId, value) => {
+    handleSaveScore(playerId, categoryId, value);
+    setCurrentTurnCat({ playerId, categoryId });
+  };
+
+  const handleConfirmTurn = () => {
+    setCurrentTurnCat(null);
+    if (isViewingTurnPlayer) {
+      handleNextTurn();
+    }
+  };
+
+  // Cancel removes the score that was just made
+  const handleCancelTurn = () => {
+    if (currentTurnCat) {
+      handleModifyScore(currentTurnCat.playerId, currentTurnCat.categoryId);
+      setCurrentTurnCat(null);
+    }
+  };
+
+  const handleClearItem = (playerId, categoryId) => {
+    handleModifyScore(playerId, categoryId);
+    if (currentTurnCat?.playerId === playerId && currentTurnCat?.categoryId === categoryId) {
+      setCurrentTurnCat(null);
+    }
+  };
+
+  // Show confirm row for turn player always, for others only when they have a pending change
+  const showConfirmRow = isViewingTurnPlayer || activeTurnCat !== null;
+
+  const orderedPlayers = [
+    ...players.slice(turnIndex),
+    ...players.slice(0, turnIndex),
+  ];
 
   return (
     <div className={styles.gameArea}>
-      {/* Mode tabs for players */}
-      <div className={styles.tabs}>
-        {players.map((p) => (
-          <button
-            key={p.id}
-            className={`${styles.tab} ${activeTabId === p.id ? styles.tabActive : ""}`}
-            onClick={() => setActiveTabId(p.id)}
-          >
-            {p.name}
-          </button>
-        ))}
-      </div>
-
       <div className={styles.grid}>
-        {/* Column 1: Play Form */}
         <div className={styles.controlsCol}>
           <JugasGrid
             jugadas={jugadas}
             activePlayer={activePlayer}
-            handleSaveScore={handleSaveScore}
+            activeTurnCat={activeTurnCat}
+            handleSaveScore={handleSaveForTurn}
             handleModifyScore={handleModifyScore}
+            handleClearItem={handleClearItem}
           />
+          {showConfirmRow && (
+            <div className={styles.confirmRow}>
+              {activeTurnCat && (
+                <button className={styles.clearTurnBtn} onClick={handleCancelTurn}>
+                  Cancelar
+                </button>
+              )}
+              <button
+                className={`${styles.confirmTurnBtn} ${!activeTurnCat ? styles.confirmTurnBtnDisabled : ""}`}
+                onClick={handleConfirmTurn}
+                disabled={!activeTurnCat}
+              >
+                {isViewingTurnPlayer ? "Confirmar jugada" : "Guardar cambio"}
+              </button>
+            </div>
+          )}
         </div>
-        {/* Column 2: Turn Info and Actions */}
+
         <div className={styles.sideCol}>
-          <div className={styles.turnCardWrapper}>
-            <div className={styles.turnCardHeader}>
-              <div className={styles.iconWrapperTurn}>
-                <UserIcon size={20} />
-              </div>
-              <span className={styles.configTitle}>Detalle del Juego</span>
-            </div>
-            <div className={styles.turnContent}>
-              <div className={styles.turnName}>
-                <span className={styles.activePlayerName}>
-                  {playerWithTurn?.name}
-                </span>
-                <span className={styles.activePlayerGame}>
-                  {" "}
-                  {playedMoves} / 11 jugadas
-                </span>
-              </div>
-              <div className={styles.turnPointsBox}>
-                <div className={styles.turnPointsLabel}>Pts</div>
-                <div className={styles.turnPointsData}>{activeTotal}</div>
-              </div>
-            </div>
+          {/* Mobile-only player switcher */}
+          <div className={styles.mobilePlayerTabs}>
+            {orderedPlayers.map((p) => {
+              const hasTurn = players[turnIndex]?.id === p.id;
+              const isActive = p.id === activeTabId;
+              return (
+                <button
+                  key={p.id}
+                  className={`${styles.mobilePlayerTab} ${isActive ? styles.mobilePlayerTabActive : ""} ${hasTurn ? styles.mobilePlayerTabTurn : ""}`}
+                  onClick={() => setActiveTabId(p.id)}
+                >
+                  {hasTurn && "▶ "}{p.name}
+                </button>
+              );
+            })}
           </div>
+
+          {orderedPlayers.map((p) => {
+            const pScores = Object.values(p.scores).filter((v) => v != null);
+            const pMoves = pScores.length;
+            const pTotal = pScores.filter((v) => v > 0).reduce((a, b) => a + b, 0);
+            const isViewing = p.id === activeTabId;
+            const hasTurn = players[turnIndex]?.id === p.id;
+            return (
+              <div
+                key={p.id}
+                className={`${styles.result} ${isViewing ? styles.resultActive : ""} ${hasTurn ? styles.resultTurn : ""} ${!hasTurn ? styles.resultWaiting : ""} ${!isViewing ? styles.resultHiddenMobile : ""}`}
+                onClick={() => setActiveTabId(p.id)}
+              >
+                <div className={styles.resultLeft}>
+                  <span className={styles.resultLabel}>Puntaje</span>
+                  <span className={styles.resultPoint}>{pTotal}</span>
+                  {hasTurn && (
+                    <span className={styles.resultLabel}>
+                      Ronda <strong>{pMoves}</strong> / 11
+                    </span>
+                  )}
+                  <span className={styles.resultName}>{p.name}</span>
+                </div>
+                <div
+                  className={styles.resultIconRing}
+                  style={{ "--progress": Math.round((pMoves / 11) * 100) }}
+                >
+                  <div className={styles.resultIconInner}>
+                    <UserIcon size={hasTurn ? 28 : 18} />
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+
           <div className={styles.configCardWrapper}>
             <div className={styles.configHeader}>
               <div className={styles.iconWrapperTurn}>
@@ -81,17 +156,11 @@ export const GeneralaGame = ({
               reiniciar los puntajes o abandonar el juego por completo.
             </p>
             <div className={styles.actionsBox}>
-              <button
-                onClick={handleResetGame}
-                className={styles.actionBtnSecondary}
-              >
+              <button onClick={handleResetGame} className={styles.actionBtnSecondary}>
                 <RefreshIcon size={18} />
                 Reiniciar partida
               </button>
-              <button
-                onClick={handleAbandonGame}
-                className={styles.actionBtnDanger}
-              >
+              <button onClick={handleAbandonGame} className={styles.actionBtnDanger}>
                 <XCircleIcon size={18} />
                 Abandonar juego
               </button>
@@ -106,27 +175,35 @@ export const GeneralaGame = ({
 function JugasGrid({
   jugadas,
   activePlayer,
+  activeTurnCat,
   handleSaveScore,
   handleModifyScore,
-  isViewingOtherPlayer,
+  handleClearItem,
 }) {
+  const generalaDobleAvailable = activePlayer.scores["generala"] > 0;
+  const gridClass = `${styles.jugadasGrid} ${generalaDobleAvailable ? styles.jugadasGridWithDoble : ""}`;
+
   return (
-    <div className={styles.jugadasGrid}>
-      {jugadas.map((e) => (
-        <ScoreItem
-          key={e.id}
-          id={e.id}
-          cat={e}
-          scoreValue={activePlayer.scores[e.id]}
-          onSave={(id, val) => handleSaveScore(activePlayer.id, id, val)}
-          onModify={
-            !isViewingOtherPlayer
-              ? (id) => handleModifyScore(activePlayer.id, id)
-              : undefined
-          }
-          isViewingOther={isViewingOtherPlayer}
-        />
-      ))}
+    <div className={gridClass}>
+      {jugadas.map((e) => {
+        const isScored = activePlayer.scores[e.id] != null;
+        // Lock unscored items once one is already selected this session
+        const isDisabled = activeTurnCat !== null && e.id !== activeTurnCat && !isScored;
+        // Generala doble: hide entirely until generala común is scored with value > 0
+        if (e.id === "generala_doble" && !generalaDobleAvailable) return null;
+
+        return (
+          <ScoreItem
+            key={e.id}
+            cat={e}
+            scoreValue={activePlayer.scores[e.id]}
+            isDisabled={isDisabled}
+            onSave={(id, val) => handleSaveScore(activePlayer.id, id, val)}
+            onModify={(id) => handleModifyScore(activePlayer.id, id)}
+            onClear={(id) => handleClearItem(activePlayer.id, id)}
+          />
+        );
+      })}
     </div>
   );
 }

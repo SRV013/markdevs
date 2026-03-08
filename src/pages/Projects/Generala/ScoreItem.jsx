@@ -10,11 +10,20 @@ const idToClass = {
   6: "seis",
 };
 
-export const ScoreItem = ({ cat, scoreValue, onSave, onModify }) => {
+const SERVIDA_VALUE = {
+  escalera: 25,
+  full: 35,
+  poker: 45,
+  generala: 50,
+  generala_doble: 100,
+};
+
+export const ScoreItem = ({ cat, scoreValue, isDisabled, onSave, onModify }) => {
   const areaClass = idToClass[cat.id] ?? cat.id;
   const isScored = scoreValue != null;
   const isTrue = isScored && scoreValue > 0;
   const isFalse = isScored && scoreValue === 0;
+  const isServida = isTrue && SERVIDA_VALUE[cat.id] === scoreValue;
   const [isOpen, setIsOpen] = useState(false);
   const contentRef = useRef(null);
 
@@ -24,57 +33,48 @@ export const ScoreItem = ({ cat, scoreValue, onSave, onModify }) => {
         setIsOpen(false);
       }
     };
-
-    if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    if (isOpen) document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isOpen]);
 
   const handleSelect = (val, e) => {
     e.stopPropagation();
-    onSave(cat.id, val);
+    onSave?.(cat.id, val);
     setIsOpen(false);
   };
 
-  const toggleOpen = (id) => {
+  const toggleOpen = () => {
+    if (isDisabled) return;
     if (!isOpen) setIsOpen(true);
-    onModify?.(id);
+    if (isScored) onModify?.(cat.id);
   };
 
+  const rowClass = [
+    styles.interactiveRow,
+    styles[areaClass],
+    isServida ? styles.interactiveRowServida
+      : isFalse ? styles.interactiveRowFalse
+      : isTrue ? styles.interactiveRowTrue
+      : "",
+    isDisabled ? styles.interactiveRowDisabled : "",
+  ].join(" ");
+
   return (
-    <div
-      key={cat.id}
-      className={`${styles.interactiveRow} ${styles[areaClass]} ${isFalse ? styles.interactiveRowFalse : isTrue ? styles.interactiveRowTrue : ""}`}
-      ref={contentRef}
-      onClick={() => toggleOpen(cat.id)}
-    >
+    <div className={rowClass} ref={contentRef} onClick={toggleOpen}>
       {cat.icon && (
-        <span
-          className={`${styles.gameIcon} ${isTrue ? styles.gameIconTrue : isFalse ? styles.gameIconFalse : ""}`}
-        >
+        <span className={`${styles.gameIcon} ${isServida ? styles.gameIconServida : isTrue ? styles.gameIconTrue : isFalse ? styles.gameIconFalse : ""}`}>
           <cat.icon />
         </span>
       )}
-      <span
-        className={`${styles.gameName} ${isTrue ? styles.gameNameTrue : isFalse ? styles.gameNameFalse : ""}`}
-      >
+      <span className={`${styles.gameName} ${isServida ? styles.gameNameServida : isTrue ? styles.gameNameTrue : isFalse ? styles.gameNameFalse : ""}`}>
         {cat.name}
       </span>
-      <span
-        className={`${styles.gameOption} ${isTrue ? styles.gameOptionTrue : isFalse ? styles.gameOptionFalse : ""}`}
-      >
+      <span className={`${styles.gameOption} ${isServida ? styles.gameOptionServida : isTrue ? styles.gameOptionTrue : isFalse ? styles.gameOptionFalse : ""}`}>
         {isFalse ? "X" : isTrue ? scoreValue : cat.options[1]}
       </span>
 
       {isOpen && (
-        <div
-          className={styles.gamePopover}
-          onClick={(e) => e.stopPropagation()}
-        >
+        <div className={styles.gamePopover} onClick={(e) => e.stopPropagation()}>
           {[...cat.options]
             .sort((a, b) => {
               if (a === 0) return 1;
@@ -83,28 +83,23 @@ export const ScoreItem = ({ cat, scoreValue, onSave, onModify }) => {
             })
             .map((opt) => {
               let label = opt;
-
-              if (opt === 0) {
-                label = "0";
-              } else if (cat.id === "escalera" && opt === 25) {
-                label = "25";
-              } else if (cat.id === "full" && opt === 35) {
-                label = "35";
-              } else if (cat.id === "poker" && opt === 45) {
-                label = "45";
-              }
+              if (opt === 0) label = "Tachar";
+              else if (cat.id === "escalera" && opt === 25) label = "Servida (25)";
+              else if (cat.id === "full" && opt === 35) label = "Servida (35)";
+              else if (cat.id === "poker" && opt === 45) label = "Servida (45)";
               return (
                 <button
                   key={opt}
-                  className={
-                    opt === 0 ? styles.gamePoeverBtnTacha : styles.gamePoeverBtn
-                  }
+                  className={opt === 0 ? styles.gamePoeverBtnTacha : styles.gamePoeverBtn}
                   onClick={(e) => handleSelect(opt, e)}
                 >
                   {label}
                 </button>
               );
             })}
+          <button className={styles.close} onClick={() => setIsOpen(false)}>
+            Cancelar
+          </button>
         </div>
       )}
     </div>

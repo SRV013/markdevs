@@ -11,9 +11,15 @@ export const resetPlayersScores = (players) => {
   }));
 };
 
+const getMaxScorableCount = (scores: Record<string, number>) => {
+  // generala_doble is only available if generala was scored with value > 0
+  const canPlayGeneralaDoble = scores["generala"] > 0;
+  return canPlayGeneralaDoble ? jugadas.length : jugadas.length - 1;
+};
+
 export const checkGameFinished = (players) => {
   return players.every(
-    (p) => Object.keys(p.scores).length === jugadas.length
+    (p) => Object.keys(p.scores).length >= getMaxScorableCount(p.scores)
   );
 };
 

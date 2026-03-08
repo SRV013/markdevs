@@ -58,17 +58,16 @@ export const useGeneralaGame = () => {
 
   const handleSaveScore = (playerId, categoryId, value) => {
     const newPlayers = saveScore(players, playerId, categoryId, value);
-
     setPlayers(newPlayers);
-
     if (checkGameFinished(newPlayers)) {
       setGameState("finished");
-    } else if (playerId === players[turnIndex]?.id) {
-      const nextTurn = (turnIndex + 1) % newPlayers.length;
-
-      setTurnIndex(nextTurn);
-      setActiveTabId(newPlayers[nextTurn].id);
     }
+  };
+
+  const handleNextTurn = () => {
+    const nextTurn = (turnIndex + 1) % players.length;
+    setTurnIndex(nextTurn);
+    setActiveTabId(players[nextTurn].id);
   };
 
   const handleModifyScore = (playerId, categoryId) => {
@@ -101,6 +100,7 @@ export const useGeneralaGame = () => {
     handleAbandonGame,
     handleSaveScore,
     handleModifyScore,
+    handleNextTurn,
     calculateTotal,
   };
 };

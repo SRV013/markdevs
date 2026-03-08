@@ -10,7 +10,8 @@
   --border-color: #eeeeee;
   --border-color-hover: #bababa;
   --accent-color: #8c00ff;
-  --accent-error:#ff4d4f;
+  --accent-error: #ff4d4f;
+  --accent-warning: #ffd700;
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
   --transition-speed: 0.3s;
 }
@@ -26,6 +27,7 @@
   --border-color-hover: #4d4d4d;
   --accent-color: #00ffc8;
   --accent-error: #ff4d4f;
+  --accent-warning: #ffd700;
   --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
