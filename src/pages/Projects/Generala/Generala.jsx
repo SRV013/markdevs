@@ -4,6 +4,7 @@ import { GeneralaSetup } from "./GeneralaSetup";
 import { GeneralaGame } from "./GeneralaGame";
 import { useGeneralaGame } from "./util/hook";
 import { General } from "./util/icon";
+import { calculateTotal } from "./util/functions";
 export const Generala = () => {
   const {
     players,
@@ -12,8 +13,6 @@ export const Generala = () => {
     turnIndex,
     activeTabId,
     setActiveTabId,
-    activeTotal,
-    playedMoves,
     sortedPlayers,
     handleStartGame,
     handleResetGame,
@@ -22,7 +21,6 @@ export const Generala = () => {
     handleModifyScore,
     handleRestoreScores,
     handleNextTurn,
-    calculateTotal,
   } = useGeneralaGame();
 
   return (
@@ -58,8 +56,6 @@ export const Generala = () => {
             handleNextTurn={handleNextTurn}
             handleResetGame={handleResetGame}
             handleAbandonGame={handleAbandonGame}
-            activeTotal={activeTotal}
-            playedMoves={playedMoves}
           />
         )}
 

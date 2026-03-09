@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import styles from "./Generala.module.css";
-import { Card, Button } from "@/components";
+import { Button } from "@/components";
 
 export const GeneralaSetup = ({ players, setPlayers, onStart }) => {
+  const [addingPlayer, setAddingPlayer] = useState(false);
   const [playerNameInput, setPlayerNameInput] = useState("");
+  const inputRef = useRef(null);
 
-  const handleAddPlayer = (e) => {
-    e.preventDefault();
+  useEffect(() => {
+    if (addingPlayer) inputRef.current?.focus();
+  }, [addingPlayer]);
+
+  const commitAdd = () => {
     if (playerNameInput.trim()) {
       setPlayers([
         ...players,
@@ -14,85 +19,74 @@ export const GeneralaSetup = ({ players, setPlayers, onStart }) => {
       ]);
       setPlayerNameInput("");
     }
+    setAddingPlayer(false);
+  };
+
+  const cancelAdd = () => {
+    setPlayerNameInput("");
+    setAddingPlayer(false);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") commitAdd();
+    if (e.key === "Escape") cancelAdd();
   };
 
   const handleRemovePlayer = (id) => {
     setPlayers(players.filter((p) => p.id !== id));
   };
 
-  const handleStartGame = () => {
-    if (players.length >= 2) {
-      onStart();
-    } else {
-      alert("Mínimo 2 jugadores para iniciar.");
-    }
-  };
-
   return (
-    <Card className={styles.setupCard}>
+    <div className={styles.setupCard}>
       <h3>Configuración de la Partida</h3>
-      <form onSubmit={handleAddPlayer} className={styles.addPlayerForm}>
-        <input
-          type="text"
-          value={playerNameInput}
-          onChange={(e) => setPlayerNameInput(e.target.value)}
-          placeholder="Nombre del jugador"
-          className={styles.input}
-        />
-        <Button type="submit" variant="primary">
-          Añadir
-        </Button>
-      </form>
 
-      <ul className={styles.playerList}>
+      <div className={styles.playerGrid}>
         {players.map((p, index) => (
-          <li key={p.id} className={styles.playerItem}>
-            <span className={styles.playerItemName}>
-              Jugador {index + 1}: <strong>{p.name}</strong>
-            </span>
-            <div className={styles.iconWrapper}>
-              <button
-                onClick={() => handleRemovePlayer(p.id)}
-                className={styles.removeBtn}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width={22}
-                  height={22}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={1}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="icon icon-tabler icons-tabler-outline icon-tabler-trash"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M4 7l16 0" />
-                  <path d="M10 11l0 6" />
-                  <path d="M14 11l0 6" />
-                  <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                  <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                </svg>
-              </button>
-            </div>
-          </li>
+          <div key={p.id} className={styles.playerChip}>
+            <span className={styles.playerChipIndex}>{index + 1}</span>
+            <span className={styles.playerChipName}>{p.name}</span>
+            <button className={styles.playerChipRemove} onClick={() => handleRemovePlayer(p.id)}>×</button>
+          </div>
         ))}
-      </ul>
+
+        {addingPlayer ? (
+          <div className={styles.playerChipAdding}>
+            <input
+              ref={inputRef}
+              type="text"
+              value={playerNameInput}
+              onChange={(e) => setPlayerNameInput(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder="Nombre del jugador..."
+              className={styles.playerChipInput}
+            />
+            <button className={styles.playerChipConfirm} onClick={commitAdd}>✓</button>
+            <button className={styles.playerChipCancel} onClick={cancelAdd}>×</button>
+          </div>
+        ) : (
+          <button className={styles.addPlayerBtn} onClick={() => setAddingPlayer(true)}>
+            <span className={styles.addPlayerBtnPlus}>+</span>
+            Agregar jugador
+          </button>
+        )}
+      </div>
 
       {players.length < 2 && (
         <p className={styles.warningText}>
-          Añade al menos {2 - players.length} jugador(es) más para comenzar.
+          {players.length === 0
+            ? "Añade al menos 2 jugadores para comenzar."
+            : "Añade 1 jugador más para comenzar."}
         </p>
       )}
+
       <Button
         variant="primary"
         className={styles.startBtn}
-        onClick={handleStartGame}
+        onClick={onStart}
         disabled={players.length < 2}
       >
         Comenzar Partida
       </Button>
-    </Card>
+    </div>
   );
 };

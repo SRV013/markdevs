@@ -62,36 +62,27 @@ export const ScoreItem = ({
     setIsOpen(false);
   };
 
+  const stateClass = (f) =>
+    isServida ? styles[`${f}Servida`] : isTrue ? styles[`${f}True`] : isFalse ? styles[`${f}False`] : "";
+
   const rowClass = [
     styles.interactiveRow,
     styles[areaClass],
-    isServida
-      ? styles.interactiveRowServida
-      : isFalse
-        ? styles.interactiveRowFalse
-        : isTrue
-          ? styles.interactiveRowTrue
-          : "",
+    stateClass("interactiveRow"),
     isDisabled ? styles.interactiveRowDisabled : "",
   ].join(" ");
 
   return (
     <div className={rowClass} ref={contentRef} onClick={toggleOpen}>
       {cat.icon && (
-        <span
-          className={`${styles.gameIcon} ${isServida ? styles.gameIconServida : isTrue ? styles.gameIconTrue : isFalse ? styles.gameIconFalse : ""}`}
-        >
+        <span className={`${styles.gameIcon} ${stateClass("gameIcon")}`}>
           <cat.icon />
         </span>
       )}
-      <span
-        className={`${styles.gameName} ${isServida ? styles.gameNameServida : isTrue ? styles.gameNameTrue : isFalse ? styles.gameNameFalse : ""}`}
-      >
+      <span className={`${styles.gameName} ${stateClass("gameName")}`}>
         {cat.name}
       </span>
-      <span
-        className={`${styles.gameOption} ${isServida ? styles.gameOptionServida : isTrue ? styles.gameOptionTrue : isFalse ? styles.gameOptionFalse : ""}`}
-      >
+      <span className={`${styles.gameOption} ${stateClass("gameOption")}`}>
         {isFalse ? "X" : isTrue ? scoreValue : cat.options[1]}
       </span>
 

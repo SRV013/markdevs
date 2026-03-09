@@ -157,7 +157,7 @@ export const GeneralaGame = ({
                     <button className={styles.resultNavArrow} onClick={(e) => { e.stopPropagation(); goTo(-1); }}>‹</button>
                     <div
                       className={styles.resultIconRing}
-                      style={{ "--progress": Math.round((pMoves / 11) * 100) }}
+                      style={{ "--progress": Math.round((pMoves / jugadas.length) * 100) }}
                     >
                       <div className={styles.resultIconInner}>
                         <UserIcon size={hasTurn ? 28 : 18} />
@@ -166,7 +166,7 @@ export const GeneralaGame = ({
                     <button className={styles.resultNavArrow} onClick={(e) => { e.stopPropagation(); goTo(1); }}>›</button>
                   </div>
                   <span className={styles.resultLabel}>
-                    Ronda <strong>{pMoves}</strong> / 11
+                    Ronda <strong>{pMoves}</strong> / {jugadas.length}
                   </span>
                 </div>
               </div>

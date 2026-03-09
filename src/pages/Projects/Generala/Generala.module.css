@@ -30,16 +30,23 @@
 
 /* Setup Card */
 .setupCard {
-  max-width: 500px;
+  max-width: 480px;
   margin: 0 auto;
   width: 100%;
-  text-align: center;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
 }
 
 .setupCard h3 {
-  margin-bottom: 1.5rem;
+  margin: 0;
   color: var(--text-primary);
-  font-size: 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 700;
 }
 
 /* Finished / Leaderboard */
@@ -156,68 +163,151 @@
   padding: 0.5rem 1rem;
 }
 
-/* Setup Form */
-.addPlayerForm {
+/* Setup: Player list */
+.playerGrid {
   display: flex;
-  gap: 1rem;
-  margin-bottom: 2rem;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
-.input {
-  flex: 1;
-  padding: 0.8rem 1rem;
-  border-radius: 8px;
+.playerChip {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: var(--bg-color);
   border: 1px solid var(--border-color);
-  background-color: var(--bg-card);
+  border-radius: 0.75rem;
+}
+
+.playerChipIndex {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  min-width: 1rem;
+}
+
+.playerChipName {
+  flex: 1;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text-primary);
+  text-transform: capitalize;
+}
+
+.playerChipRemove {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.playerChipRemove:hover {
+  border-color: var(--accent-error);
+  color: var(--accent-error);
+}
+
+.playerChipAdding {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  background: var(--bg-color);
+  border: 1px solid var(--accent-color);
+  border-radius: 0.75rem;
+  box-shadow: 0 0 6px color-mix(in srgb, var(--accent-color) 40%, transparent);
+}
+
+.playerChipInput {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
   color: var(--text-primary);
   font-size: 1rem;
-  outline: none;
-  transition: border-color 0.3s ease;
+  font-weight: 600;
 }
 
-.input:focus {
-  border-color: var(--accent-color);
+.playerChipInput::placeholder {
+  color: var(--text-secondary);
+  font-weight: 400;
 }
 
-.playerList {
-  list-style: none;
-  padding: 0;
-  margin-bottom: 1.5rem;
-  text-align: left;
-}
-
-.playerItem {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.8rem;
-  background-color: var(--bg-card-hover);
-  border-radius: 8px;
-  margin-bottom: 0.5rem;
-  color: var(--text-primary);
-}
-
-.playerItemName {
+.playerChipConfirm,
+.playerChipCancel {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
   display: flex;
   align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.playerChipConfirm {
+  border: 1px solid var(--accent-color);
+  background: color-mix(in srgb, var(--accent-color) 15%, transparent);
+  color: var(--accent-color);
+}
+
+.playerChipConfirm:hover {
+  background: color-mix(in srgb, var(--accent-color) 30%, transparent);
+}
+
+.playerChipCancel {
+  border: 1px solid var(--border-color);
+  background: transparent;
   color: var(--text-secondary);
 }
 
-.playerItemName strong {
-  color: var(--text-primary);
-  margin-left: 4px;
-}
-
-.removeBtn {
-  background: none;
-  border: none;
+.playerChipCancel:hover {
+  border-color: var(--accent-error);
   color: var(--accent-error);
-  cursor: pointer;
-  font-weight: bold;
-  padding: 0.2rem 0.5rem;
 }
 
-.iconWrapper {
+.addPlayerBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 1rem;
+  background: transparent;
+  border: 1px dashed var(--border-color);
+  border-radius: 0.75rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.addPlayerBtn:hover {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+}
+
+.addPlayerBtnPlus {
+  font-size: 1.5rem;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.iconWrapperTurn {
   width: 45px;
   height: 45px;
   background: var(--bg-color);
@@ -231,14 +321,10 @@
   transition: border-color 0.2s;
 }
 
-.iconWrapper:hover {
-  border-color: var(--accent-error);
-}
-
 .warningText {
   color: var(--text-muted);
-  font-size: 0.9rem;
-  margin-bottom: 1.5rem;
+  font-size: 0.85rem;
+  margin: 0;
 }
 
 .startBtn {
@@ -374,46 +460,10 @@
   position: relative;
 }
 
-.cancelFloatBtn {
-  position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-  padding: 0.3rem 0.7rem;
-  border-radius: 2rem;
-  border: 1px solid var(--accent-error);
-  background: color-mix(in srgb, var(--accent-error) 10%, transparent);
-  color: var(--accent-error);
-  font-size: 0.75rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.15s;
-  z-index: 2;
-}
-
-.cancelFloatBtn:hover {
-  background: color-mix(in srgb, var(--accent-error) 22%, transparent);
-}
-
 .sideCol {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-}
-
-.iconWrapperTurn {
-  width: 45px;
-  height: 45px;
-  background: var(--bg-color);
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--accent-color);
-  border: 1px solid var(--border-color);
-  flex-shrink: 0;
 }
 
 /* Config Card */
@@ -440,21 +490,9 @@
   text-align: left;
 }
 
-.configChevron {
-  margin-left: auto;
-  font-size: 0.7rem;
-  color: var(--text-secondary);
-}
-
 .configTitle {
   font-size: 1.05rem;
   font-weight: 700;
-}
-
-.configSubtitle {
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-  line-height: 1.4;
 }
 
 .configSubtitle {
@@ -582,30 +620,6 @@
   cursor: pointer;
   overflow: hidden;
   min-height: 80px;
-}
-
-.trashBtn {
-  position: absolute;
-  bottom: 4px;
-  right: 4px;
-  background: none;
-  border: none;
-  color: var(--text-secondary);
-  opacity: 0.45;
-  cursor: pointer;
-  padding: 2px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 4px;
-  transition:
-    opacity 0.15s,
-    color 0.15s;
-}
-
-.trashBtn:hover {
-  opacity: 1;
-  color: var(--accent-error);
 }
 
 .interactiveRowDisabled {

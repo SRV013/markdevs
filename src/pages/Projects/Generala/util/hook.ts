@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import {
-  calculateTotal,
   resetPlayersScores,
   checkGameFinished,
   hasRemainingMoves,
@@ -93,14 +92,6 @@ export const useGeneralaGame = () => {
     setPlayers((prev) => prev.map((p) => (p.id === playerId ? { ...p, scores } : p)));
   };
 
-  const activePlayer = players.find((p) => p.id === activeTabId);
-
-  const activeTotal = activePlayer ? calculateTotal(activePlayer.scores) : 0;
-
-  const playedMoves = activePlayer
-    ? Object.keys(activePlayer.scores).length
-    : 0;
-
   const sortedPlayers = sortPlayers(players);
 
   return {
@@ -110,8 +101,6 @@ export const useGeneralaGame = () => {
     turnIndex,
     activeTabId,
     setActiveTabId,
-    activeTotal,
-    playedMoves,
     sortedPlayers,
     handleStartGame,
     handleResetGame,
@@ -120,6 +109,5 @@ export const useGeneralaGame = () => {
     handleModifyScore,
     handleRestoreScores,
     handleNextTurn,
-    calculateTotal,
   };
 };
