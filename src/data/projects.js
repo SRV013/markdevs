@@ -57,11 +57,11 @@ export const projects = [
         link: '/proyectos/qr'
     },
     {
-        title: 'Anotador Generala',
+        title: 'Anotador Juegos',
         category: 'App',
-        description: 'Aplicación para llevar la cuenta de la Generala.',
+        description: 'Aplicación para llevar la cuenta de Juegos como la Generala, Truco, etc.',
         tags: ['JavaScript', 'React'],
         image: imgProyecto7,
-        link: '/proyectos/generala'
+        link: 'https://mark-scores.vercel.app'
     }
 ];
