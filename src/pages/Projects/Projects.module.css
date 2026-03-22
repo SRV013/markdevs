@@ -85,7 +85,10 @@
     border-color: var(--accent-color);
     color: var(--bg-secondary);
 }
+.categoryActive:hover {
+    background: var(--bg-secondary);
 
+}
 /* Grid */
 
 .projectsGrid {

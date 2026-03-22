@@ -65,7 +65,7 @@ export const projects = [
   },
   {
     title: "Anotador Truco",
-    category: "App",
+    category: "Game",
     description:
       "Cantá truco, retruco o vale cuatro… que de los puntos nos encargamos nosotros. Llevá la partida sin discusiones y concentrate en ganar.",
     tags: ["JavaScript", "React"],
@@ -74,7 +74,7 @@ export const projects = [
   },
   {
     title: "Anotador Generala",
-    category: "App",
+    category: "Game",
     description:
       "Tirá los dados y dejá que la app haga el resto. Anotá cada jugada de Generala fácil, rápido y sin errores.",
     tags: ["JavaScript", "React"],
@@ -83,7 +83,7 @@ export const projects = [
   },
   {
     title: "Anotador Neutro",
-    category: "App",
+    category: "Game",
     description:
       "Un anotador simple y flexible para cualquier juego. Sumá puntos, organizá partidas y evitá discusiones innecesarias.",
     tags: ["JavaScript", "React"],
