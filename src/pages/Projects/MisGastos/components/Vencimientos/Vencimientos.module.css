@@ -1,99 +1,41 @@
 .wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .empty {
-    padding: 2.5rem;
-    text-align: center;
-    background: var(--bg-secondary);
-    border: 1px dashed var(--border-color);
-    border-radius: 0.875rem;
-    color: var(--text-secondary);
-    font-size: 0.9rem;
+  padding: 2.5rem;
+  text-align: center;
+  background: var(--bg-secondary);
+  border: 1px dashed var(--border-color);
+  border-radius: 0.875rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
 }
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sectionTitle {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.titleDanger { color: #ef4444; }
 
 .list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 1rem 1.25rem;
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    border-radius: 0.75rem;
-}
-
-.itemLeft {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-}
-
-.name {
-    font-weight: 600;
-    color: var(--text-primary);
-    font-size: 0.95rem;
-}
-
-.category {
-    font-size: 0.8rem;
-    color: var(--text-secondary);
-}
-
-.itemRight {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    flex-shrink: 0;
-}
-
-.amount {
-    font-weight: 700;
-    color: var(--text-primary);
-    font-size: 1rem;
-}
-
-.badge {
-    font-size: 0.75rem;
-    font-weight: 700;
-    padding: 0.25rem 0.75rem;
-    border-radius: 999px;
-    white-space: nowrap;
-}
-
-.today {
-    background: #ef444422;
-    color: #ef4444;
-}
-
-.tomorrow {
-    background: #f9731622;
-    color: #f97316;
-}
-
-.urgent {
-    background: #f59e0b22;
-    color: #f59e0b;
-}
-
-.soon {
-    background: #eab30822;
-    color: #eab308;
-}
-
-.normal {
-    background: #22c55e22;
-    color: #22c55e;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }

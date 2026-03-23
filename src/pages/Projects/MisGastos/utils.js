@@ -8,13 +8,15 @@ export function getNextDueDate(diaCobro) {
   const year = today.getFullYear();
   const month = today.getMonth();
 
-  let due = new Date(year, month, diaCobro);
-  if (due < today) {
-    due = new Date(year, month + 1, diaCobro);
+  const due = new Date(year, month, diaCobro);
+  const days = Math.round((due - today) / (1000 * 60 * 60 * 24));
+
+  if (days < 0) {
+    // Ya venció este mes — días transcurridos desde el vencimiento
+    return { date: due, days: Math.abs(days), overdue: true };
   }
 
-  const days = Math.round((due - today) / (1000 * 60 * 60 * 24));
-  return { date: due, days };
+  return { date: due, days, overdue: false };
 }
 
 export function formatDate(isoString) {

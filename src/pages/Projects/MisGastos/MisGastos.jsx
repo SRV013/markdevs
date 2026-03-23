@@ -3,13 +3,12 @@ import { ProjectPage, PageHeader, PageTabs } from '@/components';
 import { useGastos } from './hooks/useGastos';
 import { formatMonto, getNextDueDate, isSameMonth } from './utils';
 import { Gastos } from './components/Gastos/Gastos';
-import { Vencimientos } from './components/Vencimientos/Vencimientos';
 import { Historial } from './components/Historial/Historial';
+import { GastoModal } from './components/GastoModal/GastoModal';
 import styles from './MisGastos.module.css';
 
 const TABS = [
   { id: 'gastos', label: 'Gastos' },
-  { id: 'vencimientos', label: 'Vencimientos' },
   { id: 'historial', label: 'Historial' },
 ];
 
@@ -103,7 +102,17 @@ function StatsStrip({ gastos, tab }) {
 
 export function MisGastos() {
   const [tab, setTab] = useState('gastos');
-  const { gastos, addGasto, editGasto, deleteGasto, toggleGasto } = useGastos();
+  const [modal, setModal] = useState({ open: false, editing: null });
+  const { gastos, addGasto, editGasto, deleteGasto } = useGastos();
+
+  const openAdd  = () => setModal({ open: true, editing: null });
+  const openEdit = (g) => setModal({ open: true, editing: g });
+  const closeModal = () => setModal({ open: false, editing: null });
+
+  const handleSave = (data) => {
+    if (modal.editing) editGasto(modal.editing.id, data);
+    else addGasto(data);
+  };
 
   return (
     <ProjectPage>
@@ -120,14 +129,19 @@ export function MisGastos() {
       {tab === 'gastos' && (
         <Gastos
           gastos={gastos}
-          onAdd={addGasto}
-          onEdit={editGasto}
-          onDelete={deleteGasto}
-          onToggle={toggleGasto}
+          onOpenAdd={openAdd}
+          onOpenEdit={openEdit}
         />
       )}
-      {tab === 'vencimientos' && <Vencimientos gastos={gastos} />}
-      {tab === 'historial' && <Historial gastos={gastos} />}
+{tab === 'historial' && <Historial gastos={gastos} />}
+
+      <GastoModal
+        open={modal.open}
+        onClose={closeModal}
+        onSave={handleSave}
+        onDelete={deleteGasto}
+        initial={modal.editing}
+      />
     </ProjectPage>
   );
 }

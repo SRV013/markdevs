@@ -1,15 +1,8 @@
-import { getNextDueDate, formatMonto } from '../../utils';
+import { getNextDueDate } from '../../utils';
+import { GastoRow } from '../GastoRow/GastoRow';
 import styles from './Vencimientos.module.css';
 
-function DaysBadge({ days }) {
-  if (days === 0) return <span className={`${styles.badge} ${styles.today}`}>Hoy</span>;
-  if (days === 1) return <span className={`${styles.badge} ${styles.tomorrow}`}>Mañana</span>;
-  if (days <= 3) return <span className={`${styles.badge} ${styles.urgent}`}>En {days} días</span>;
-  if (days <= 7) return <span className={`${styles.badge} ${styles.soon}`}>En {days} días</span>;
-  return <span className={`${styles.badge} ${styles.normal}`}>En {days} días</span>;
-}
-
-export function Vencimientos({ gastos }) {
+export function Vencimientos({ gastos, onEdit }) {
   const fijosActivos = gastos.filter(g => g.tipo === 'fijo' && g.activo);
 
   if (fijosActivos.length === 0) {
@@ -22,24 +15,38 @@ export function Vencimientos({ gastos }) {
 
   const withDue = fijosActivos
     .map(g => ({ ...g, ...getNextDueDate(g.diaCobro) }))
-    .sort((a, b) => a.days - b.days);
+    .sort((a, b) => {
+      if (a.overdue && !b.overdue) return -1;
+      if (!a.overdue && b.overdue) return 1;
+      return a.days - b.days;
+    });
+
+  const vencidos = withDue.filter(g => g.overdue);
+  const proximos = withDue.filter(g => !g.overdue);
 
   return (
     <div className={styles.wrapper}>
-      <ul className={styles.list}>
-        {withDue.map(g => (
-          <li key={g.id} className={styles.item}>
-            <div className={styles.itemLeft}>
-              <span className={styles.name}>{g.nombre}</span>
-              <span className={styles.category}>{g.categoria}</span>
-            </div>
-            <div className={styles.itemRight}>
-              <span className={styles.amount}>{formatMonto(g.monto)}</span>
-              <DaysBadge days={g.days} />
-            </div>
-          </li>
-        ))}
-      </ul>
+      {vencidos.length > 0 && (
+        <section className={styles.section}>
+          <h3 className={`${styles.sectionTitle} ${styles.titleDanger}`}>Vencidos este mes</h3>
+          <ul className={styles.list}>
+            {vencidos.map(g => (
+              <GastoRow key={g.id} gasto={g} onClick={() => onEdit?.(g)} />
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {proximos.length > 0 && (
+        <section className={styles.section}>
+          <h3 className={styles.sectionTitle}>Próximos vencimientos</h3>
+          <ul className={styles.list}>
+            {proximos.map(g => (
+              <GastoRow key={g.id} gasto={g} onClick={() => onEdit?.(g)} />
+            ))}
+          </ul>
+        </section>
+      )}
     </div>
   );
 }
