@@ -1,7 +1,7 @@
 import { GastoRow } from '../GastoRow/GastoRow';
 import styles from './Gastos.module.css';
 
-export function Gastos({ gastos, onOpenAdd, onOpenEdit }) {
+export function Gastos({ gastos, onOpenAdd, onOpenEdit, onPagar }) {
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
@@ -16,7 +16,7 @@ export function Gastos({ gastos, onOpenAdd, onOpenEdit }) {
       ) : (
         <ul className={styles.list}>
           {gastos.map((g) => (
-            <GastoRow key={g.id} gasto={g} onClick={() => onOpenEdit(g)} />
+            <GastoRow key={g.id} gasto={g} onClick={() => onOpenEdit(g)} onPagar={onPagar} />
           ))}
         </ul>
       )}

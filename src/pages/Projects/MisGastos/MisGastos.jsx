@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ProjectPage, PageHeader, PageTabs } from '@/components';
 import { useGastos } from './hooks/useGastos';
-import { formatMonto, getNextDueDate, isSameMonth } from './utils';
+import { formatMonto, getNextDueDate, isSameMonth, isPaidThisMonth } from './utils';
 import { Gastos } from './components/Gastos/Gastos';
 import { Historial } from './components/Historial/Historial';
 import { GastoModal } from './components/GastoModal/GastoModal';
@@ -103,7 +103,7 @@ function StatsStrip({ gastos, tab }) {
 export function MisGastos() {
   const [tab, setTab] = useState('gastos');
   const [modal, setModal] = useState({ open: false, editing: null });
-  const { gastos, addGasto, editGasto, deleteGasto } = useGastos();
+  const { gastos, addGasto, editGasto, deleteGasto, pagarGasto } = useGastos();
 
   const openAdd  = () => setModal({ open: true, editing: null });
   const openEdit = (g) => setModal({ open: true, editing: g });
@@ -131,6 +131,7 @@ export function MisGastos() {
           gastos={gastos}
           onOpenAdd={openAdd}
           onOpenEdit={openEdit}
+          onPagar={pagarGasto}
         />
       )}
 {tab === 'historial' && <Historial gastos={gastos} />}

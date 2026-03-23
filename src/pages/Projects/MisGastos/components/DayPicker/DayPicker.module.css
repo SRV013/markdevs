@@ -1,32 +1,38 @@
 .trigger {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.55rem 1rem;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.65rem 0.875rem;
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
   border-radius: 0.5rem;
-  color: var(--text-secondary);
-  font-size: 0.875rem;
   cursor: pointer;
-  transition: border-color 0.15s, color 0.15s;
+  transition: border-color 0.15s;
+  text-align: left;
 }
 
-.trigger:hover {
-  border-color: var(--accent-color);
-  color: var(--text-primary);
-}
+.trigger:hover { border-color: var(--accent-color); }
+.trigger:hover .triggerEdit { color: var(--accent-color); }
 
-.trigger strong {
-  color: var(--text-primary);
-  font-size: 1rem;
-  font-weight: 700;
-}
-
-.arrow {
-  font-size: 0.6rem;
+.triggerLabel {
+  flex: 1;
+  font-size: 0.85rem;
   color: var(--text-secondary);
-  margin-left: 0.15rem;
+}
+
+.triggerDay {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  min-width: 1.5rem;
+  text-align: center;
+}
+
+.triggerEdit {
+  color: var(--text-secondary);
+  flex-shrink: 0;
+  transition: color 0.15s;
 }
 
 /* Modal overlay */

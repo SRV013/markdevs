@@ -22,9 +22,13 @@ export function useGastos() {
 
   return {
     gastos,
-    addGasto:    (g) => set([...gastos, { ...g, id: uid(), activo: true }]),
+    addGasto:    (g) => set([...gastos, { ...g, id: uid(), activo: true, pagadoFecha: null }]),
     editGasto:   (id, g) => set(gastos.map(x => x.id === id ? { ...x, ...g } : x)),
     deleteGasto: (id) => set(gastos.filter(x => x.id !== id)),
     toggleGasto: (id) => set(gastos.map(x => x.id === id ? { ...x, activo: !x.activo } : x)),
+    pagarGasto:  (id) => set(gastos.map(x => x.id === id
+      ? { ...x, pagadoFecha: x.pagadoFecha ? null : new Date().toISOString() }
+      : x
+    )),
   };
 }

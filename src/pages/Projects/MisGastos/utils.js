@@ -29,3 +29,9 @@ export function isSameMonth(isoString, year, month) {
   const d = new Date(isoString);
   return d.getFullYear() === year && d.getMonth() === month;
 }
+
+export function isPaidThisMonth(pagadoFecha) {
+  if (!pagadoFecha) return false;
+  const now = new Date();
+  return isSameMonth(pagadoFecha, now.getFullYear(), now.getMonth());
+}
