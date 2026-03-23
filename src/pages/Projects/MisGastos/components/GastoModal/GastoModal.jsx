@@ -20,7 +20,7 @@ const EMPTY = {
   nota: '',
 };
 
-export function GastoModal({ open, onClose, onSave, initial }) {
+export function GastoModal({ open, onClose, onSave, onDelete, initial }) {
   const [form, setForm] = useState(EMPTY);
 
   useEffect(() => {
@@ -148,10 +148,17 @@ export function GastoModal({ open, onClose, onSave, initial }) {
           )}
 
           <div className={styles.actions}>
-            <button type="button" className={styles.cancelBtn} onClick={onClose}>Cancelar</button>
-            <button type="submit" className={styles.saveBtn}>
-              {initial ? 'Guardar cambios' : 'Agregar'}
-            </button>
+            {initial && onDelete && (
+              <button type="button" className={styles.deleteBtn} onClick={() => { onDelete(initial.id); onClose(); }}>
+                Eliminar
+              </button>
+            )}
+            <div className={styles.actionsRight}>
+              <button type="button" className={styles.cancelBtn} onClick={onClose}>Cancelar</button>
+              <button type="submit" className={styles.saveBtn}>
+                {initial ? 'Guardar cambios' : 'Agregar'}
+              </button>
+            </div>
           </div>
         </form>
       </div>

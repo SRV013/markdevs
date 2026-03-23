@@ -1,93 +1,66 @@
-import { formatMonto, isSameMonth } from '../../utils';
+import { formatMonto } from '../../utils';
 import styles from './Historial.module.css';
 
-const MONTH_NAMES = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+const PALETTE = [
+  '#6366f1', '#f59e0b', '#10b981', '#ef4444', '#3b82f6',
+  '#a855f7', '#f97316', '#14b8a6', '#ec4899', '#84cc16',
+];
 
-function getLast6Months() {
-  const now = new Date();
-  return Array.from({ length: 6 }, (_, i) => {
-    const d = new Date(now.getFullYear(), now.getMonth() - (5 - i), 1);
-    return {
-      year: d.getFullYear(),
-      month: d.getMonth(),
-      label: MONTH_NAMES[d.getMonth()],
-      yearLabel: String(d.getFullYear()).slice(2),
-      isCurrent: d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth(),
-    };
+function DonutChart({ slices, total }) {
+  const SIZE = 200;
+  const cx = SIZE / 2;
+  const cy = SIZE / 2;
+  const R = 80;
+  const r = 50;
+
+  let angle = -Math.PI / 2;
+
+  const paths = slices.map((s, i) => {
+    const sweep = (s.total / total) * 2 * Math.PI;
+    const end = angle + sweep;
+    const large = sweep > Math.PI ? 1 : 0;
+
+    const x1 = cx + R * Math.cos(angle);
+    const y1 = cy + R * Math.sin(angle);
+    const x2 = cx + R * Math.cos(end);
+    const y2 = cy + R * Math.sin(end);
+    const ix1 = cx + r * Math.cos(angle);
+    const iy1 = cy + r * Math.sin(angle);
+    const ix2 = cx + r * Math.cos(end);
+    const iy2 = cy + r * Math.sin(end);
+
+    const d = `M ${x1} ${y1} A ${R} ${R} 0 ${large} 1 ${x2} ${y2} L ${ix2} ${iy2} A ${r} ${r} 0 ${large} 0 ${ix1} ${iy1} Z`;
+    angle = end;
+    return { d, color: PALETTE[i % PALETTE.length] };
   });
-}
-
-function BarChart({ data }) {
-  const maxVal = Math.max(...data.map(d => d.value), 1);
-  const H = 150;
-  const barW = 38;
-  const gap = 14;
-  const cols = data.length;
-  const svgW = cols * (barW + gap) - gap + 16;
 
   return (
-    <svg viewBox={`0 0 ${svgW} ${H + 38}`} width="100%" style={{ display: 'block' }}>
-      {data.map((d, i) => {
-        const x = 8 + i * (barW + gap);
-        const barH = Math.max(d.value > 0 ? (d.value / maxVal) * H : 0, d.value > 0 ? 4 : 0);
-        const y = H - barH;
-        const kVal = d.value >= 1000 ? `${(d.value / 1000).toFixed(0)}k` : d.value > 0 ? String(d.value) : '';
-        return (
-          <g key={i}>
-            <rect
-              x={x} y={y} width={barW} height={barH}
-              fill="var(--accent-color)"
-              rx="5"
-              opacity={d.isCurrent ? 1 : 0.55}
-            />
-            {kVal && (
-              <text x={x + barW / 2} y={y - 5} textAnchor="middle" fontSize="9" fill="var(--text-secondary)">
-                {kVal}
-              </text>
-            )}
-            <text x={x + barW / 2} y={H + 16} textAnchor="middle" fontSize="11" fill="var(--text-secondary)">
-              {d.label}
-            </text>
-            <text
-              x={x + barW / 2} y={H + 30}
-              textAnchor="middle" fontSize="10"
-              fill={d.isCurrent ? 'var(--accent-color)' : 'var(--text-secondary)'}
-              fontWeight={d.isCurrent ? '700' : '400'}
-            >
-              {d.yearLabel}
-            </text>
-          </g>
-        );
-      })}
+    <svg viewBox={`0 0 ${SIZE} ${SIZE}`} className={styles.donut}>
+      {paths.map((p, i) => (
+        <path key={i} d={p.d} fill={p.color} stroke="var(--bg-color)" strokeWidth="2" />
+      ))}
+      <text x={cx} y={cy - 8} textAnchor="middle" fontSize="11" fill="var(--text-secondary)" fontWeight="600">
+        TOTAL
+      </text>
+      <text x={cx} y={cy + 10} textAnchor="middle" fontSize="12" fill="var(--text-primary)" fontWeight="800">
+        {slices.length} cat.
+      </text>
     </svg>
   );
 }
 
 export function Historial({ gastos }) {
-  const now = new Date();
-  const months = getLast6Months();
-
-  const chartData = months.map(m => ({
-    ...m,
-    value: gastos
-      .filter(g => g.tipo === 'variable' && isSameMonth(g.fecha, m.year, m.month))
-      .reduce((sum, g) => sum + g.monto, 0),
-  }));
-
   const byCat = {};
   gastos.forEach(g => {
     if (!byCat[g.categoria]) byCat[g.categoria] = 0;
     byCat[g.categoria] += g.monto;
   });
+
   const catList = Object.entries(byCat)
     .map(([cat, total]) => ({ cat, total }))
     .sort((a, b) => b.total - a.total);
-  const totalAll = catList.reduce((s, c) => s + c.total, 0);
 
-  const monthlyVals = chartData.map(d => d.value);
-  const avgMonthly = monthlyVals.reduce((s, v) => s + v, 0) / 6;
-  const maxMonthly = Math.max(...monthlyVals, 0);
-  const totalVariables = gastos.filter(g => g.tipo === 'variable').reduce((s, g) => s + g.monto, 0);
+  const totalAll = catList.reduce((s, c) => s + c.total, 0);
 
   if (gastos.length === 0) {
     return (
@@ -99,52 +72,31 @@ export function Historial({ gastos }) {
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.section}>
-        <h3 className={styles.sectionTitle}>Variables — últimos 6 meses</h3>
-        <div className={styles.chartCard}>
-          <BarChart data={chartData} />
-        </div>
-      </div>
-
-      <div className={styles.statsRow}>
-        <div className={styles.statCard}>
-          <span className={styles.statLabel}>Promedio mensual</span>
-          <span className={styles.statValue}>{formatMonto(avgMonthly)}</span>
-        </div>
-        <div className={styles.statCard}>
-          <span className={styles.statLabel}>Mes más alto</span>
-          <span className={styles.statValue}>{formatMonto(maxMonthly)}</span>
-        </div>
-        <div className={styles.statCard}>
-          <span className={styles.statLabel}>Total variables</span>
-          <span className={styles.statValue}>{formatMonto(totalVariables)}</span>
-        </div>
-      </div>
-
       {catList.length > 0 && (
         <div className={styles.section}>
-          <h3 className={styles.sectionTitle}>Por categoría — acumulado</h3>
-          <ul className={styles.catList}>
-            {catList.map(({ cat, total }) => (
-              <li key={cat} className={styles.catItem}>
-                <div className={styles.catInfo}>
-                  <span className={styles.catName}>{cat}</span>
-                  <span className={styles.catAmount}>{formatMonto(total)}</span>
-                </div>
-                <div className={styles.catBarRow}>
-                  <div className={styles.catBar}>
-                    <div
-                      className={styles.catBarFill}
-                      style={{ width: `${totalAll > 0 ? (total / totalAll) * 100 : 0}%` }}
+          <h3 className={styles.sectionTitle}>Distribución por categoría</h3>
+          <div className={styles.chartCard}>
+            <div className={styles.chartLayout}>
+              <div className={styles.donutWrapper}>
+                <DonutChart slices={catList} total={totalAll} />
+              </div>
+              <ul className={styles.legend}>
+                {catList.map(({ cat, total }, i) => (
+                  <li key={cat} className={styles.legendItem}>
+                    <span
+                      className={styles.legendDot}
+                      style={{ background: PALETTE[i % PALETTE.length] }}
                     />
-                  </div>
-                  <span className={styles.catPct}>
-                    {totalAll > 0 ? `${((total / totalAll) * 100).toFixed(1)}%` : '0%'}
-                  </span>
-                </div>
-              </li>
-            ))}
-          </ul>
+                    <span className={styles.legendName}>{cat}</span>
+                    <span className={styles.legendPct}>
+                      {totalAll > 0 ? `${((total / totalAll) * 100).toFixed(1)}%` : '0%'}
+                    </span>
+                    <span className={styles.legendAmount}>{formatMonto(total)}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </div>
       )}
     </div>

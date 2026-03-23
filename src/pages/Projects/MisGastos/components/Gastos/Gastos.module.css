@@ -39,134 +39,109 @@
   font-size: 0.9rem;
 }
 
-.tableWrapper {
-  overflow-x: auto;
-  border: 1px solid var(--border-color);
-  border-radius: 0.875rem;
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
-.table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.table th {
-  padding: 0.75rem 1rem;
-  text-align: left;
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--text-secondary);
+.item {
+  display: grid;
+  grid-template-columns: minmax(70px, auto) 1fr minmax(80px, auto) minmax(110px, auto);
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1rem 1.25rem;
   background: var(--bg-secondary);
-  border-bottom: 1px solid var(--border-color);
-  white-space: nowrap;
+  border: 1px solid var(--border-color);
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
 }
 
-.thNum {
-  width: 44px;
-  text-align: center !important;
+.item:hover {
+  border-color: var(--accent-color);
 }
-
-.table td {
-  padding: 0.875rem 1rem;
-  border-bottom: 1px solid var(--border-color);
-  vertical-align: middle;
-}
-
-.table tbody tr:last-child td { border-bottom: none; }
-.table tbody tr:hover td { background: var(--bg-secondary); }
 
 .inactive { opacity: 0.4; }
 
-.tdNum {
-  text-align: center;
-  color: var(--text-secondary);
-  font-size: 0.8rem;
-  width: 44px;
-}
-
-.vencCell {
+/* Col 1: Categoría + nombre */
+.col {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  white-space: nowrap;
-}
-
-.tipoBadge {
-  font-size: 0.7rem;
-  font-weight: 700;
-  padding: 0.15rem 0.5rem;
-  border-radius: 999px;
-}
-
-.fijoBadge { background: #3b82f622; color: #3b82f6; }
-.varBadge  { background: #a855f722; color: #a855f7; }
-
-.vencText {
-  font-size: 0.875rem;
-  color: var(--text-primary);
-}
-
-.catCell {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
+  min-width: 0;
   flex-wrap: wrap;
 }
 
 .catBadge {
   font-size: 0.7rem;
   font-weight: 600;
-  padding: 0.2rem 0.55rem;
+  padding: 0.2rem 0.6rem;
   background: var(--accent-color);
   color: #000;
   border-radius: 999px;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .nombre {
+  font-size: 0.95rem;
   font-weight: 600;
   color: var(--text-primary);
-  font-size: 0.9rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.monto {
+/* Col 2: Tipo */
+.tipoBadge {
+  font-size: 0.7rem;
   font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.fijoBadge { background: #3b82f622; color: #3b82f6; }
+.varBadge  { background: #a855f722; color: #a855f7; }
+
+.sub {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+/* Col 3: Precio */
+.monto {
+  font-size: 1rem;
+  font-weight: 800;
   color: var(--text-primary);
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
 }
 
-.actions {
+/* Col 4: Días / fecha */
+.colDays {
   display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  white-space: nowrap;
+  justify-content: flex-end;
 }
 
-.toggleBtn {
-  font-size: 0.7rem;
+.badge {
+  font-size: 0.75rem;
   font-weight: 700;
-  padding: 0.2rem 0.6rem;
+  padding: 0.25rem 0.75rem;
   border-radius: 999px;
-  border: none;
-  cursor: pointer;
-  transition: opacity 0.2s;
+  white-space: nowrap;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
 }
 
-.toggleBtn:hover { opacity: 0.75; }
-.on  { background: #22c55e22; color: #22c55e; }
-.off { background: #ef444422; color: #ef4444; }
-
-.iconBtn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 0.9rem;
-  opacity: 0.6;
-  transition: opacity 0.2s;
-  padding: 0.2rem;
-}
-
-.iconBtn:hover { opacity: 1; }
+.today    { background: #ef444422; color: #ef4444; border-color: transparent; }
+.tomorrow { background: #f9731622; color: #f97316; border-color: transparent; }
+.urgent   { background: #f59e0b22; color: #f59e0b; border-color: transparent; }
+.soon     { background: #eab30822; color: #eab308; border-color: transparent; }
+.normal   { background: #22c55e22; color: #22c55e; border-color: transparent; }
