@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ProjectPage, PageHeader, PageTabs } from '@/components';
 import { useGastos } from './hooks/useGastos';
-import { formatMonto, getNextDueDate, isSameMonth, isPaidThisMonth } from './utils';
+import { formatMonto, getNextDueDate, isPaidThisMonth } from './utils';
 import { Gastos } from './components/Gastos/Gastos';
 import { Historial } from './components/Historial/Historial';
 import { GastoModal } from './components/GastoModal/GastoModal';
@@ -26,7 +26,6 @@ function StripCard({ label, value, count, detail, mod }) {
 }
 
 function StatsStrip({ gastos, tab }) {
-  const now = new Date();
   const fijosActivos = gastos.filter(g => g.tipo === 'fijo' && g.activo);
   const variables = gastos.filter(g => g.tipo === 'variable');
 
@@ -60,41 +59,37 @@ function StatsStrip({ gastos, tab }) {
     );
   }
 
-  const variablesMes = gastos.filter(g => g.tipo === 'variable' && isSameMonth(g.fecha, now.getFullYear(), now.getMonth()));
-  const totalMes =
-    fijosActivos.reduce((s, g) => s + g.monto, 0) +
-    variablesMes.reduce((s, g) => s + g.monto, 0);
+  const activos = gastos.filter(g => g.activo);
+  const totalMes = activos.reduce((s, g) => s + g.monto, 0);
 
-  const atrasadosList = fijosActivos.filter(g => g.diaCobro < now.getDate());
-  const proximosList = fijosActivos.filter(g => getNextDueDate(g.diaCobro).days <= 7);
+  const pagados    = activos.filter(g => isPaidThisMonth(g.pagadoFecha));
+  const pendientes = activos.filter(g => !isPaidThisMonth(g.pagadoFecha));
+  const totalPagado    = pagados.reduce((s, g) => s + g.monto, 0);
+  const totalPendiente = pendientes.reduce((s, g) => s + g.monto, 0);
 
-  const toDetail = (list) => {
-    if (list.length === 0) return null;
-    const names = list.slice(0, 2).map(g => g.nombre).join(', ');
-    return list.length > 2 ? `${names} +${list.length - 2} más` : names;
-  };
+  const atrasadosList = activos.filter(g => getNextDueDate(g.diaCobro).overdue && !isPaidThisMonth(g.pagadoFecha));
 
   return (
     <div className={styles.strip}>
       <StripCard
         label="Total del mes"
         value={formatMonto(totalMes)}
-        count={`${fijosActivos.length + variablesMes.length} registros`}
-        detail={`${fijosActivos.length} fijos · ${variablesMes.length} variables`}
+        count={`${activos.length} gastos activos`}
+        detail={`${pagados.length} pagados · ${pendientes.length} pendientes`}
       />
       <StripCard
-        label="Vencidos este mes"
+        label="Resta pagar"
+        value={formatMonto(totalPendiente)}
+        count={`${pendientes.length} pendientes`}
+        detail={pagados.length > 0 ? `Ya pagaste ${formatMonto(totalPagado)}` : 'Ninguno pagado aún'}
+        mod={totalPendiente > 0 ? 'stripWarn' : ''}
+      />
+      <StripCard
+        label="Vencidos sin pagar"
         value={formatMonto(atrasadosList.reduce((s, g) => s + g.monto, 0))}
-        count={`${atrasadosList.length} de ${fijosActivos.length} fijos`}
-        detail={toDetail(atrasadosList)}
+        count={`${atrasadosList.length} gastos`}
+        detail={atrasadosList.slice(0, 2).map(g => g.nombre).join(', ') || null}
         mod={atrasadosList.length > 0 ? 'stripDanger' : ''}
-      />
-      <StripCard
-        label="Vencen en 7 días"
-        value={formatMonto(proximosList.reduce((s, g) => s + g.monto, 0))}
-        count={`${proximosList.length} de ${fijosActivos.length} fijos`}
-        detail={toDetail(proximosList)}
-        mod={proximosList.length > 0 ? 'stripWarn' : ''}
       />
     </div>
   );
