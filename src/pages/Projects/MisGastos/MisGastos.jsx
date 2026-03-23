@@ -2,22 +2,19 @@ import { useState } from 'react';
 import { ProjectPage, PageHeader, PageTabs } from '@/components';
 import { useGastos } from './hooks/useGastos';
 import { Resumen } from './components/Resumen/Resumen';
-import { GastosFijos } from './components/GastosFijos/GastosFijos';
-import { GastosVariables } from './components/GastosVariables/GastosVariables';
+import { Gastos } from './components/Gastos/Gastos';
 import { Vencimientos } from './components/Vencimientos/Vencimientos';
+import { Historial } from './components/Historial/Historial';
 
 const TABS = [
-  { id: 'fijos', label: 'Fijos' },
-  { id: 'variables', label: 'Variables' },
+  { id: 'gastos', label: 'Gastos' },
   { id: 'vencimientos', label: 'Vencimientos' },
+  { id: 'historial', label: 'Historial' },
 ];
 
 export function MisGastos() {
-  const [tab, setTab] = useState('fijos');
-  const {
-    fijos, addFijo, editFijo, deleteFijo, toggleFijo,
-    variables, addVariable, editVariable, deleteVariable,
-  } = useGastos();
+  const [tab, setTab] = useState('gastos');
+  const { gastos, addGasto, editGasto, deleteGasto, toggleGasto } = useGastos();
 
   return (
     <ProjectPage>
@@ -27,30 +24,21 @@ export function MisGastos() {
         subtitle="Organizá tus gastos fijos, variables y vencimientos en un solo lugar."
       />
 
-      <Resumen fijos={fijos} variables={variables} />
+      <Resumen gastos={gastos} />
 
       <PageTabs tabs={TABS} active={tab} onChange={setTab} />
 
-      {tab === 'fijos' && (
-        <GastosFijos
-          fijos={fijos}
-          onAdd={addFijo}
-          onEdit={editFijo}
-          onDelete={deleteFijo}
-          onToggle={toggleFijo}
+      {tab === 'gastos' && (
+        <Gastos
+          gastos={gastos}
+          onAdd={addGasto}
+          onEdit={editGasto}
+          onDelete={deleteGasto}
+          onToggle={toggleGasto}
         />
       )}
-      {tab === 'variables' && (
-        <GastosVariables
-          variables={variables}
-          onAdd={addVariable}
-          onEdit={editVariable}
-          onDelete={deleteVariable}
-        />
-      )}
-      {tab === 'vencimientos' && (
-        <Vencimientos fijos={fijos} />
-      )}
+      {tab === 'vencimientos' && <Vencimientos gastos={gastos} />}
+      {tab === 'historial' && <Historial gastos={gastos} />}
     </ProjectPage>
   );
 }

@@ -9,10 +9,10 @@ function DaysBadge({ days }) {
   return <span className={`${styles.badge} ${styles.normal}`}>En {days} días</span>;
 }
 
-export function Vencimientos({ fijos }) {
-  const activos = fijos.filter(f => f.activo);
+export function Vencimientos({ gastos }) {
+  const fijosActivos = gastos.filter(g => g.tipo === 'fijo' && g.activo);
 
-  if (activos.length === 0) {
+  if (fijosActivos.length === 0) {
     return (
       <div className={styles.empty}>
         <p>No hay gastos fijos activos para mostrar vencimientos.</p>
@@ -20,22 +20,22 @@ export function Vencimientos({ fijos }) {
     );
   }
 
-  const withDue = activos
-    .map(f => ({ ...f, ...getNextDueDate(f.diaCobro) }))
+  const withDue = fijosActivos
+    .map(g => ({ ...g, ...getNextDueDate(g.diaCobro) }))
     .sort((a, b) => a.days - b.days);
 
   return (
     <div className={styles.wrapper}>
       <ul className={styles.list}>
-        {withDue.map(f => (
-          <li key={f.id} className={styles.item}>
+        {withDue.map(g => (
+          <li key={g.id} className={styles.item}>
             <div className={styles.itemLeft}>
-              <span className={styles.name}>{f.nombre}</span>
-              <span className={styles.category}>{f.categoria}</span>
+              <span className={styles.name}>{g.nombre}</span>
+              <span className={styles.category}>{g.categoria}</span>
             </div>
             <div className={styles.itemRight}>
-              <span className={styles.amount}>{formatMonto(f.monto)}</span>
-              <DaysBadge days={f.days} />
+              <span className={styles.amount}>{formatMonto(g.monto)}</span>
+              <DaysBadge days={g.days} />
             </div>
           </li>
         ))}

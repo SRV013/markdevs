@@ -1,14 +1,14 @@
 import { useState } from 'react';
 
-const KEYS = { fijos: 'mg_fijos', variables: 'mg_variables' };
+const KEY = 'mg_gastos';
 
-function load(key) {
-  try { return JSON.parse(localStorage.getItem(key)) || []; }
+function load() {
+  try { return JSON.parse(localStorage.getItem(KEY)) || []; }
   catch { return []; }
 }
 
-function save(key, data) {
-  localStorage.setItem(key, JSON.stringify(data));
+function save(data) {
+  localStorage.setItem(KEY, JSON.stringify(data));
 }
 
 function uid() {
@@ -16,22 +16,15 @@ function uid() {
 }
 
 export function useGastos() {
-  const [fijos, setFijosState] = useState(() => load(KEYS.fijos));
-  const [variables, setVariablesState] = useState(() => load(KEYS.variables));
+  const [gastos, setGastosState] = useState(() => load());
 
-  const setFijos = (data) => { setFijosState(data); save(KEYS.fijos, data); };
-  const setVariables = (data) => { setVariablesState(data); save(KEYS.variables, data); };
+  const set = (data) => { setGastosState(data); save(data); };
 
   return {
-    fijos,
-    addFijo: (g) => setFijos([...fijos, { ...g, id: uid(), activo: true }]),
-    editFijo: (id, g) => setFijos(fijos.map(f => f.id === id ? { ...f, ...g } : f)),
-    deleteFijo: (id) => setFijos(fijos.filter(f => f.id !== id)),
-    toggleFijo: (id) => setFijos(fijos.map(f => f.id === id ? { ...f, activo: !f.activo } : f)),
-
-    variables,
-    addVariable: (g) => setVariables([...variables, { ...g, id: uid() }]),
-    editVariable: (id, g) => setVariables(variables.map(v => v.id === id ? { ...v, ...g } : v)),
-    deleteVariable: (id) => setVariables(variables.filter(v => v.id !== id)),
+    gastos,
+    addGasto:    (g) => set([...gastos, { ...g, id: uid(), activo: true }]),
+    editGasto:   (id, g) => set(gastos.map(x => x.id === id ? { ...x, ...g } : x)),
+    deleteGasto: (id) => set(gastos.filter(x => x.id !== id)),
+    toggleGasto: (id) => set(gastos.map(x => x.id === id ? { ...x, activo: !x.activo } : x)),
   };
 }

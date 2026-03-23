@@ -1,22 +1,42 @@
 import { useState, useEffect } from 'react';
+import { DayPicker } from '../DayPicker/DayPicker';
+import { MontoInput } from '../MontoInput/MontoInput';
 import styles from './GastoModal.module.css';
 
 const CATEGORIAS_FIJO = ['Alquiler', 'Servicios', 'Telefonía/Internet', 'Suscripciones', 'Seguros', 'Cuotas/Crédito', 'Gimnasio', 'Educación', 'Transporte', 'Otro'];
 const CATEGORIAS_VARIABLE = ['Supermercado', 'Restaurantes', 'Transporte', 'Salud/Farmacia', 'Ropa', 'Entretenimiento', 'Hogar', 'Regalos', 'Otro'];
+const ALL_STANDARD_CATS = [...new Set([...CATEGORIAS_FIJO, ...CATEGORIAS_VARIABLE])];
 
 const today = () => new Date().toISOString().slice(0, 10);
 
-export function GastoModal({ open, onClose, onSave, tipo, initial }) {
-  const emptyFijo = { nombre: '', monto: '', categoria: 'Servicios', diaCobro: 1 };
-  const emptyVar = { nombre: '', monto: '', categoria: 'Supermercado', fecha: today(), nota: '' };
+const EMPTY = {
+  tipo: 'fijo',
+  nombre: '',
+  monto: 0,
+  categoria: 'Servicios',
+  categoriaCustom: '',
+  diaCobro: 1,
+  fecha: today(),
+  nota: '',
+};
 
-  const [form, setForm] = useState(tipo === 'fijo' ? emptyFijo : emptyVar);
+export function GastoModal({ open, onClose, onSave, initial }) {
+  const [form, setForm] = useState(EMPTY);
 
   useEffect(() => {
-    if (open) {
-      setForm(initial ? { ...initial } : (tipo === 'fijo' ? emptyFijo : emptyVar));
+    if (!open) return;
+    if (initial) {
+      const isCustom = !ALL_STANDARD_CATS.includes(initial.categoria);
+      setForm({
+        ...EMPTY,
+        ...initial,
+        categoria: isCustom ? 'Otro' : initial.categoria,
+        categoriaCustom: isCustom ? initial.categoria : '',
+      });
+    } else {
+      setForm(EMPTY);
     }
-  }, [open, initial, tipo]);
+  }, [open, initial]);
 
   if (!open) return null;
 
@@ -25,23 +45,41 @@ export function GastoModal({ open, onClose, onSave, tipo, initial }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!form.nombre.trim() || !form.monto) return;
-    onSave({ ...form, monto: parseFloat(form.monto) });
+    const categoria = form.categoria === 'Otro' && form.categoriaCustom.trim()
+      ? form.categoriaCustom.trim()
+      : form.categoria;
+    onSave({ ...form, categoria });
     onClose();
   };
 
-  const categorias = tipo === 'fijo' ? CATEGORIAS_FIJO : CATEGORIAS_VARIABLE;
+  const categorias = form.tipo === 'fijo' ? CATEGORIAS_FIJO : CATEGORIAS_VARIABLE;
 
   return (
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.modal} onClick={e => e.stopPropagation()}>
         <div className={styles.header}>
-          <h3 className={styles.title}>
-            {initial ? 'Editar' : 'Agregar'} gasto {tipo === 'fijo' ? 'fijo' : 'variable'}
-          </h3>
+          <h3 className={styles.title}>{initial ? 'Editar' : 'Nuevo'} gasto</h3>
           <button className={styles.closeBtn} type="button" onClick={onClose}>✕</button>
         </div>
 
         <form className={styles.form} onSubmit={handleSubmit}>
+          <div className={styles.tipoRow}>
+            <button
+              type="button"
+              className={`${styles.tipoBtn} ${form.tipo === 'fijo' ? styles.tipoBtnActive : ''}`}
+              onClick={() => set('tipo', 'fijo')}
+            >
+              Fijo
+            </button>
+            <button
+              type="button"
+              className={`${styles.tipoBtn} ${form.tipo === 'variable' ? styles.tipoBtnActive : ''}`}
+              onClick={() => set('tipo', 'variable')}
+            >
+              Variable
+            </button>
+          </div>
+
           <div className={styles.field}>
             <label>Nombre</label>
             <input
@@ -56,14 +94,7 @@ export function GastoModal({ open, onClose, onSave, tipo, initial }) {
           <div className={styles.row}>
             <div className={styles.field}>
               <label>Monto ($)</label>
-              <input
-                type="number"
-                min="0"
-                step="0.01"
-                value={form.monto}
-                onChange={e => set('monto', e.target.value)}
-                placeholder="0"
-              />
+              <MontoInput key={`${initial?.id}-${open}`} value={form.monto} onChange={v => set('monto', v)} />
             </div>
             <div className={styles.field}>
               <label>Categoría</label>
@@ -73,20 +104,28 @@ export function GastoModal({ open, onClose, onSave, tipo, initial }) {
             </div>
           </div>
 
-          {tipo === 'fijo' && (
+          {form.categoria === 'Otro' && (
             <div className={styles.field}>
-              <label>Día de vencimiento (1-31)</label>
+              <label>Nombre de la categoría</label>
               <input
-                type="number"
-                min="1"
-                max="31"
-                value={form.diaCobro}
-                onChange={e => set('diaCobro', parseInt(e.target.value) || 1)}
+                type="text"
+                value={form.categoriaCustom}
+                onChange={e => set('categoriaCustom', e.target.value)}
+                placeholder="Ej: Mascotas, Hobby..."
               />
             </div>
           )}
 
-          {tipo === 'variable' && (
+          {form.tipo === 'fijo' && (
+            <div className={styles.field}>
+              <label>
+                Día de vencimiento — <strong>día {form.diaCobro}</strong> de cada mes
+              </label>
+              <DayPicker value={form.diaCobro} onChange={v => set('diaCobro', v)} />
+            </div>
+          )}
+
+          {form.tipo === 'variable' && (
             <>
               <div className={styles.field}>
                 <label>Fecha</label>
