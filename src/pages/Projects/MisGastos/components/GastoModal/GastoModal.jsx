@@ -3,11 +3,9 @@ import { DayPicker } from '../DayPicker/DayPicker';
 import { MontoInput } from '../MontoInput/MontoInput';
 import styles from './GastoModal.module.css';
 
-const CATEGORIAS_FIJO = ['Alquiler', 'Servicios', 'Telefonía/Internet', 'Suscripciones', 'Seguros', 'Cuotas/Crédito', 'Gimnasio', 'Educación', 'Transporte', 'Otro'];
-const CATEGORIAS_VARIABLE = ['Supermercado', 'Restaurantes', 'Transporte', 'Salud/Farmacia', 'Ropa', 'Entretenimiento', 'Hogar', 'Regalos', 'Otro'];
-const ALL_STANDARD_CATS = [...new Set([...CATEGORIAS_FIJO, ...CATEGORIAS_VARIABLE])];
-
-const today = () => new Date().toISOString().slice(0, 10);
+const CATEGORIAS = ['Alquiler', 'Servicios', 'Telefonía/Internet', 'Suscripciones', 'Seguros',
+  'Cuotas/Crédito', 'Gimnasio', 'Educación', 'Supermercado', 'Restaurantes',
+  'Transporte', 'Salud/Farmacia', 'Ropa', 'Entretenimiento', 'Hogar', 'Regalos', 'Otro'];
 
 const EMPTY = {
   tipo: 'fijo',
@@ -16,7 +14,6 @@ const EMPTY = {
   categoria: 'Servicios',
   categoriaCustom: '',
   diaCobro: 1,
-  fecha: today(),
   nota: '',
 };
 
@@ -26,11 +23,11 @@ export function GastoModal({ open, onClose, onSave, onDelete, initial }) {
   useEffect(() => {
     if (!open) return;
     if (initial) {
-      const isCustom = !ALL_STANDARD_CATS.includes(initial.categoria);
+      const isCustom = !CATEGORIAS.includes(initial.categoria);
       setForm({
         ...EMPTY,
         ...initial,
-        categoria: isCustom ? 'Otro' : initial.categoria,
+        categoria:       isCustom ? 'Otro' : initial.categoria,
         categoriaCustom: isCustom ? initial.categoria : '',
       });
     } else {
@@ -52,8 +49,6 @@ export function GastoModal({ open, onClose, onSave, onDelete, initial }) {
     onClose();
   };
 
-  const categorias = form.tipo === 'fijo' ? CATEGORIAS_FIJO : CATEGORIAS_VARIABLE;
-
   return (
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.modal} onClick={e => e.stopPropagation()}>
@@ -63,23 +58,14 @@ export function GastoModal({ open, onClose, onSave, onDelete, initial }) {
         </div>
 
         <form className={styles.form} onSubmit={handleSubmit}>
+
+          {/* Tipo */}
           <div className={styles.tipoRow}>
-            <button
-              type="button"
-              className={`${styles.tipoBtn} ${form.tipo === 'fijo' ? styles.tipoBtnActive : ''}`}
-              onClick={() => set('tipo', 'fijo')}
-            >
-              Fijo
-            </button>
-            <button
-              type="button"
-              className={`${styles.tipoBtn} ${form.tipo === 'variable' ? styles.tipoBtnActive : ''}`}
-              onClick={() => set('tipo', 'variable')}
-            >
-              Variable
-            </button>
+            <button type="button" className={`${styles.tipoBtn} ${form.tipo === 'fijo' ? styles.tipoBtnActive : ''}`} onClick={() => set('tipo', 'fijo')}>Fijo</button>
+            <button type="button" className={`${styles.tipoBtn} ${form.tipo === 'variable' ? styles.tipoBtnActive : ''}`} onClick={() => set('tipo', 'variable')}>Variable</button>
           </div>
 
+          {/* Nombre */}
           <div className={styles.field}>
             <label>Nombre</label>
             <input
@@ -91,6 +77,7 @@ export function GastoModal({ open, onClose, onSave, onDelete, initial }) {
             />
           </div>
 
+          {/* Monto + Categoría */}
           <div className={styles.row}>
             <div className={styles.field}>
               <label>Monto ($)</label>
@@ -99,7 +86,7 @@ export function GastoModal({ open, onClose, onSave, onDelete, initial }) {
             <div className={styles.field}>
               <label>Categoría</label>
               <select value={form.categoria} onChange={e => set('categoria', e.target.value)}>
-                {categorias.map(c => <option key={c} value={c}>{c}</option>)}
+                {CATEGORIAS.map(c => <option key={c} value={c}>{c}</option>)}
               </select>
             </div>
           </div>
@@ -116,36 +103,22 @@ export function GastoModal({ open, onClose, onSave, onDelete, initial }) {
             </div>
           )}
 
-          {form.tipo === 'fijo' && (
-            <div className={styles.field}>
-              <label>
-                Día de vencimiento — <strong>día {form.diaCobro}</strong> de cada mes
-              </label>
-              <DayPicker value={form.diaCobro} onChange={v => set('diaCobro', v)} />
-            </div>
-          )}
+          {/* Día de cobro — mismo para fijo y variable */}
+          <div className={styles.field}>
+            <label>Día de cobro</label>
+            <DayPicker value={form.diaCobro} onChange={v => set('diaCobro', v)} />
+          </div>
 
-          {form.tipo === 'variable' && (
-            <>
-              <div className={styles.field}>
-                <label>Fecha</label>
-                <input
-                  type="date"
-                  value={form.fecha}
-                  onChange={e => set('fecha', e.target.value)}
-                />
-              </div>
-              <div className={styles.field}>
-                <label>Nota (opcional)</label>
-                <textarea
-                  value={form.nota}
-                  onChange={e => set('nota', e.target.value)}
-                  placeholder="Detalles adicionales..."
-                  rows={2}
-                />
-              </div>
-            </>
-          )}
+          {/* Nota */}
+          <div className={styles.field}>
+            <label>Nota (opcional)</label>
+            <textarea
+              value={form.nota}
+              onChange={e => set('nota', e.target.value)}
+              placeholder="Detalles adicionales..."
+              rows={2}
+            />
+          </div>
 
           <div className={styles.actions}>
             {initial && onDelete && (
