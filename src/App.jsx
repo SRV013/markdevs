@@ -6,6 +6,7 @@ import { Projects } from '@/pages/Projects/Projects';
 import { Contact } from '@/pages/Contact/Contact';
 import { About } from '@/pages/About/About';
 import { QrGenerator } from '@/pages/Projects/QrGenerator/QrGenerator';
+import { MisGastos } from '@/pages/Projects/MisGastos/MisGastos';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/contacto" element={<Contact />} />
           <Route path="/sobre-mi" element={<About />} />
           <Route path="/proyectos/qr" element={<QrGenerator />} />
+          <Route path="/proyectos/misgastos" element={<MisGastos />} />
         </Routes>
       </MainLayout>
     </Router>

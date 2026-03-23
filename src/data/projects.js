@@ -1,10 +1,11 @@
 // src/data/projects.js
-import imgProyecto1 from "@/assets/projects/proyecto1.jpg";
-import imgProyecto2 from "@/assets/projects/proyecto2.jpg";
-import imgProyecto3 from "@/assets/projects/proyecto3.jpg";
-import imgProyecto4 from "@/assets/projects/proyecto4.jpg";
-import imgProyecto5 from "@/assets/projects/proyecto5.jpg";
-import imgProyecto6 from "@/assets/projects/proyecto6.png";
+import imgYamipc from "@/assets/projects/yamipc.jpg";
+import imgProvemix from "@/assets/projects/provemix.jpg";
+import imgEstudioRdb from "@/assets/projects/estudio-rdb.jpg";
+import imgPadelMach from "@/assets/projects/padel-mach.jpg";
+import imgCostaPigmento from "@/assets/projects/costa-pigmento.jpg";
+import imgGeneradorQr from "@/assets/projects/generador-qr.png";
+import imgMisGastos from "@/assets/projects/mis-gastos.png";
 import imgTruco from "@/assets/projects/game/truco.png";
 import imgGenerala from "@/assets/projects/game/generala.png";
 import imgNeutro from "@/assets/projects/game/neutro.jpeg";
@@ -16,7 +17,7 @@ export const projects = [
     description:
       "Tienda online especializada en hardware y servicios técnicos personalizados.",
     tags: ["JavaScript", "Node.js", "React", "MySQL"],
-    image: imgProyecto1,
+    image: imgYamipc,
     link: "https://yamipc.com",
   },
   {
@@ -25,7 +26,7 @@ export const projects = [
     description:
       "Plataforma institucional y catálogo completo para servicios de veterinaria.",
     tags: ["React", "JavaScript", "CSS Modules"],
-    image: imgProyecto2,
+    image: imgProvemix,
     link: "https://provemix.com.ar",
   },
   {
@@ -34,7 +35,7 @@ export const projects = [
     description:
       "Sitio institucional profesional para estudio contable y asesoría integral.",
     tags: ["Astro", "Tailwind"],
-    image: imgProyecto3,
+    image: imgEstudioRdb,
     link: "https://estudiordb.com.ar",
   },
   {
@@ -43,7 +44,7 @@ export const projects = [
     description:
       "Tienda online especializada en hardware y servicios técnicos personalizados.",
     tags: ["JavaScript", "Node.js", "React", "MySQL"],
-    image: imgProyecto4,
+    image: imgPadelMach,
     link: "https://padelmach.com.ar",
   },
   {
@@ -52,7 +53,7 @@ export const projects = [
     description:
       "Tienda online especializada en hardware y servicios técnicos personalizados.",
     tags: ["JavaScript", "Node.js", "React", "MySQL"],
-    image: imgProyecto5,
+    image: imgCostaPigmento,
     link: "https://costapigmento.com.ar",
   },
   {
@@ -60,8 +61,16 @@ export const projects = [
     category: "App",
     description: "Generador de códigos QR para eventos.",
     tags: ["JavaScript", "React"],
-    image: imgProyecto6,
+    image: imgGeneradorQr,
     link: "/proyectos/qr",
+  },
+  {
+    title: "Mis Gastos",
+    category: "App",
+    description: "Generador de códigos QR para eventos.",
+    tags: ["JavaScript", "React"],
+    image: imgMisGastos,
+    link: "/proyectos/misgastos",
   },
   {
     title: "Anotador Truco",
