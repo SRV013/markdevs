@@ -124,15 +124,15 @@
 /* Mobile */
 @media (max-width: 580px) {
   .item {
-    grid-template-columns: auto 1fr auto auto;
+    grid-template-columns: auto 1fr auto;
     grid-template-rows: auto auto;
     gap: 0.35rem 0.75rem;
   }
 
   .colTipo   { grid-column: 1; grid-row: 1; }
   .colDays   { grid-column: 1; grid-row: 2; justify-content: flex-start; }
-  .monto     { grid-column: 3; grid-row: 1 / 3; align-self: center; }
-  .payBtn    { grid-column: 4; grid-row: 1 / 3; align-self: center; }
+  .payBtn    { grid-column: 3; grid-row: 1; justify-self: end; }
+  .monto     { grid-column: 3; grid-row: 2; justify-self: end; align-self: center; }
   .colDetail { display: contents; }
   .catBadge  { grid-column: 2; grid-row: 1; align-self: end; }
   .nombre    { grid-column: 2; grid-row: 2; align-self: start; }

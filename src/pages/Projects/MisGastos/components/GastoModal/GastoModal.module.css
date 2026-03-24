@@ -172,7 +172,7 @@
     border: 1px solid var(--border-color);
     border-radius: 0.5rem;
     background: transparent;
-    color: var(--text-secondary);
+    color: var(--bg-secondary);
     font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;

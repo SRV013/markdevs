@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { DayPicker } from '../DayPicker/DayPicker';
 import { MontoInput } from '../MontoInput/MontoInput';
 import styles from './GastoModal.module.css';
@@ -17,23 +17,19 @@ const EMPTY = {
   nota: '',
 };
 
-export function GastoModal({ open, onClose, onSave, onDelete, initial }) {
-  const [form, setForm] = useState(EMPTY);
+function buildForm(initial) {
+  if (!initial) return EMPTY;
+  const isCustom = !CATEGORIAS.includes(initial.categoria);
+  return {
+    ...EMPTY,
+    ...initial,
+    categoria:       isCustom ? 'Otro' : initial.categoria,
+    categoriaCustom: isCustom ? initial.categoria : '',
+  };
+}
 
-  useEffect(() => {
-    if (!open) return;
-    if (initial) {
-      const isCustom = !CATEGORIAS.includes(initial.categoria);
-      setForm({
-        ...EMPTY,
-        ...initial,
-        categoria:       isCustom ? 'Otro' : initial.categoria,
-        categoriaCustom: isCustom ? initial.categoria : '',
-      });
-    } else {
-      setForm(EMPTY);
-    }
-  }, [open, initial]);
+export function GastoModal({ open, onClose, onSave, onDelete, initial }) {
+  const [form, setForm] = useState(() => buildForm(initial));
 
   if (!open) return null;
 

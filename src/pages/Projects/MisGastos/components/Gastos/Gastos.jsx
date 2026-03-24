@@ -1,21 +1,90 @@
+import { useState, useMemo } from 'react';
 import { GastoRow } from '../GastoRow/GastoRow';
+import { getNextDueDate, isPaidThisMonth } from '../../utils';
 import styles from './Gastos.module.css';
 
+const SORT_OPTIONS = [
+  { id: 'vencimiento', label: 'Vencimiento' },
+  { id: 'nombre',      label: 'Nombre' },
+  { id: 'tipo',        label: 'Tipo' },
+  { id: 'estado',      label: 'Estado' },
+];
+
 export function Gastos({ gastos, onOpenAdd, onOpenEdit, onPagar }) {
+  const [search, setSearch] = useState('');
+  const [sort,   setSort]   = useState('vencimiento');
+
+  const filtered = useMemo(() => {
+    const q = search.toLowerCase().trim();
+    let list = q
+      ? gastos.filter(g =>
+          g.nombre.toLowerCase().includes(q) ||
+          g.categoria.toLowerCase().includes(q) ||
+          g.tipo.toLowerCase().includes(q)
+        )
+      : [...gastos];
+
+    list.sort((a, b) => {
+      if (sort === 'nombre') return a.nombre.localeCompare(b.nombre);
+      if (sort === 'tipo')   return a.tipo.localeCompare(b.tipo);
+      if (sort === 'estado') {
+        const pa = isPaidThisMonth(a.pagadoFecha) ? 1 : 0;
+        const pb = isPaidThisMonth(b.pagadoFecha) ? 1 : 0;
+        return pa - pb;
+      }
+      return getNextDueDate(a.diaCobro).days - getNextDueDate(b.diaCobro).days;
+    });
+
+    return list;
+  }, [gastos, search, sort]);
+
   return (
     <div className={styles.wrapper}>
-      <div className={styles.header}>
-        <span className={styles.count}>{gastos.length} gastos registrados</span>
-        <button className={styles.addBtn} onClick={onOpenAdd}>+ Agregar gasto</button>
+      <div className={styles.toolbar}>
+
+        <div className={styles.searchRow}>
+          <div className={styles.searchBox}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={styles.searchIcon}>
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <input
+              className={styles.searchInput}
+              type="text"
+              placeholder="Buscar..."
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+            />
+            {search && (
+              <button className={styles.searchClear} onClick={() => setSearch('')}>✕</button>
+            )}
+          </div>
+          <button className={styles.addBtn} onClick={onOpenAdd}>+ Agregar</button>
+        </div>
+
+        <div className={styles.sortRow}>
+          {SORT_OPTIONS.map(o => (
+            <button
+              key={o.id}
+              className={`${styles.sortBtn} ${sort === o.id ? styles.sortBtnActive : ''}`}
+              onClick={() => setSort(o.id)}
+            >
+              {o.label}
+            </button>
+          ))}
+        </div>
+
       </div>
 
-      {gastos.length === 0 ? (
+      {filtered.length === 0 ? (
         <div className={styles.empty}>
-          <p>No hay gastos registrados. Agregá uno para empezar.</p>
+          {search
+            ? <p>Sin resultados para "<strong>{search}</strong>"</p>
+            : <p>No hay gastos registrados. Agregá uno para empezar.</p>
+          }
         </div>
       ) : (
         <ul className={styles.list}>
-          {gastos.map((g) => (
+          {filtered.map((g) => (
             <GastoRow key={g.id} gasto={g} onClick={() => onOpenEdit(g)} onPagar={onPagar} />
           ))}
         </ul>
