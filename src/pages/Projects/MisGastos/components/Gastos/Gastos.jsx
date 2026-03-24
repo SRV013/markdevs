@@ -11,7 +11,7 @@ const SORT_OPTIONS = [
   { id: 'estado',      label: 'Estado' },
 ];
 
-export function Gastos({ gastos, onOpenAdd, onOpenEdit, onPagar }) {
+export function Gastos({ gastos, onOpenAdd, onOpenEdit, onPagar, onPagarParcial }) {
   const [search,   setSearch]   = useState('');
   const [sort,     setSort]     = useState('vencimiento');
   const [sortOpen, setSortOpen] = useState(false);
@@ -118,7 +118,7 @@ export function Gastos({ gastos, onOpenAdd, onOpenEdit, onPagar }) {
       ) : (
         <ul className={styles.list}>
           {filtered.map((g) => (
-            <GastoRow key={g.id} gasto={g} onClick={() => onOpenEdit(g)} onPagar={onPagar} />
+            <GastoRow key={g.id} gasto={g} onClick={() => onOpenEdit(g)} onPagar={onPagar} onPagarParcial={onPagarParcial} />
           ))}
         </ul>
       )}

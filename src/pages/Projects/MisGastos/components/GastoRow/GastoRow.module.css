@@ -93,6 +93,7 @@
 .normal   { background: #22c55e22; color: #22c55e; border-color: transparent; }
 .overdueBadge { background: #ef444422; color: #ef4444; border-color: transparent; }
 .paidBadge    { background: #22c55e22; color: #22c55e; border-color: transparent; }
+.partialBadge { background: #f59e0b22; color: #f59e0b; border-color: transparent; }
 
 /* Pay button */
 .payBtn {
@@ -119,6 +120,35 @@
   border-color: #22c55e;
   background: #22c55e22;
   color: #22c55e;
+}
+
+/* Partial payment state */
+.partial { border-color: #f59e0b55; }
+
+.payBtnPartial {
+  border-color: #f59e0b;
+  background: #f59e0b22;
+  color: #f59e0b;
+}
+
+/* Progress bar (spans full grid width) */
+.progressWrap {
+  grid-column: 1 / -1;
+  padding-top: 0.1rem;
+}
+
+.progressBar {
+  height: 3px;
+  background: var(--border-color);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: #f59e0b;
+  border-radius: 999px;
+  transition: width 0.3s ease;
 }
 
 /* Mobile */

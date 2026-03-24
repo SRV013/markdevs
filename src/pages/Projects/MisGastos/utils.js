@@ -35,3 +35,11 @@ export function isPaidThisMonth(pagadoFecha) {
   const now = new Date();
   return isSameMonth(pagadoFecha, now.getFullYear(), now.getMonth());
 }
+
+export function getMontoPagadoMes(gasto) {
+  if (!gasto.pagos?.length) return 0;
+  const now = new Date();
+  return gasto.pagos
+    .filter(p => isSameMonth(p.fecha, now.getFullYear(), now.getMonth()))
+    .reduce((s, p) => s + p.monto, 0);
+}

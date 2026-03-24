@@ -120,7 +120,7 @@ function StatsStrip({ gastos, tab }) {
 export function MisGastos() {
   const [tab, setTab] = useState("gastos");
   const [modal, setModal] = useState({ open: false, editing: null, key: 0 });
-  const { gastos, addGasto, editGasto, deleteGasto, pagarGasto } = useGastos();
+  const { gastos, addGasto, editGasto, deleteGasto, pagarGasto, pagarParcial } = useGastos();
 
   const openAdd = () =>
     setModal((m) => ({ open: true, editing: null, key: m.key + 1 }));
@@ -151,6 +151,7 @@ export function MisGastos() {
           onOpenAdd={openAdd}
           onOpenEdit={openEdit}
           onPagar={pagarGasto}
+          onPagarParcial={pagarParcial}
         />
       )}
       {tab === "historial" && <Historial gastos={gastos} />}
