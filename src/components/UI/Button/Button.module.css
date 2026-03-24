@@ -12,6 +12,20 @@
     outline: none;
 }
 
+/* Tamaños */
+.sm {
+    padding: 0.4rem 0.9rem;
+    font-size: 0.75rem;
+    border-radius: 8px;
+}
+
+.md {
+    padding: 0.56rem 1.4rem;
+    font-size: 0.875rem;
+    border-radius: 9px;
+}
+
+
 .primary {
     background-color: var(--text-primary);
     color: var(--bg-color);
@@ -32,6 +46,29 @@
 .secondary:hover {
     background-color: var(--bg-secondary);
     border-color: var(--border-color-hover);
+    transform: translateY(-2px);
+}
+
+.neutral {
+    background-color: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.neutral:hover {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    transform: translateY(-2px);
+}
+
+.danger {
+    background-color: transparent;
+    color: #ef4444;
+    border: 1px solid #ef444455;
+}
+
+.danger:hover {
+    background-color: #ef444415;
     transform: translateY(-2px);
 }
 

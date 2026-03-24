@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Button, ToggleGroup } from '@/components';
 import { DayPicker } from '../DayPicker/DayPicker';
 import { MontoInput } from '../MontoInput/MontoInput';
 import styles from './GastoModal.module.css';
@@ -56,10 +57,11 @@ export function GastoModal({ open, onClose, onSave, onDelete, initial }) {
         <form className={styles.form} onSubmit={handleSubmit}>
 
           {/* Tipo */}
-          <div className={styles.tipoRow}>
-            <button type="button" className={`${styles.tipoBtn} ${form.tipo === 'fijo' ? styles.tipoBtnActive : ''}`} onClick={() => set('tipo', 'fijo')}>Fijo</button>
-            <button type="button" className={`${styles.tipoBtn} ${form.tipo === 'variable' ? styles.tipoBtnActive : ''}`} onClick={() => set('tipo', 'variable')}>Variable</button>
-          </div>
+          <ToggleGroup
+            options={[{ id: 'fijo', label: 'Fijo' }, { id: 'variable', label: 'Variable' }]}
+            value={form.tipo}
+            onChange={v => set('tipo', v)}
+          />
 
           {/* Nombre */}
           <div className={styles.field}>
@@ -118,15 +120,15 @@ export function GastoModal({ open, onClose, onSave, onDelete, initial }) {
 
           <div className={styles.actions}>
             {initial && onDelete && (
-              <button type="button" className={styles.deleteBtn} onClick={() => { onDelete(initial.id); onClose(); }}>
+              <Button type="button" variant="danger" size="md" onClick={() => { onDelete(initial.id); onClose(); }}>
                 Eliminar
-              </button>
+              </Button>
             )}
             <div className={styles.actionsRight}>
-              <button type="button" className={styles.cancelBtn} onClick={onClose}>Cancelar</button>
-              <button type="submit" className={styles.saveBtn}>
+              <Button type="button" variant="neutral" size="md" onClick={onClose}>Cancelar</Button>
+              <Button type="submit" size="md">
                 {initial ? 'Guardar cambios' : 'Agregar'}
-              </button>
+              </Button>
             </div>
           </div>
         </form>

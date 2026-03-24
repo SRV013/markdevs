@@ -15,26 +15,6 @@
   color: var(--text-secondary);
 }
 
-.addBtn {
-  padding: 0.55rem 1.1rem;
-  background: var(--accent-color);
-  color: #000;
-  border: none;
-  border-radius: 0.5rem;
-  font-size: 0.875rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: opacity 0.2s;
-}
-
-.addBtn:hover { opacity: 0.85; }
-
-/* Toolbar */
-.toolbar {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
 
 .searchRow {
   display: flex;
@@ -82,32 +62,68 @@
 }
 .searchClear:hover { color: var(--text-primary); }
 
-.sortRow {
-  display: flex;
-  gap: 0.35rem;
-  flex-wrap: wrap;
+/* Sort dentro del search */
+.sortWrap {
+  position: relative;
+  flex-shrink: 0;
 }
 
-.sortBtn {
-  padding: 0.3rem 0.75rem;
-  border: 1px solid var(--border-color);
-  border-radius: 999px;
-  background: transparent;
+.sortTrigger {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: none;
+  border: none;
   color: var(--text-secondary);
   font-size: 0.75rem;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
-  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  padding: 0.2rem 0.35rem;
+  border-radius: 0.35rem;
+  transition: color 0.15s, background 0.15s;
   white-space: nowrap;
 }
 
-.sortBtn:hover { border-color: var(--accent-color); color: var(--text-primary); }
+.sortTrigger:hover,
+.sortTriggerOpen { color: var(--text-primary); background: var(--bg-color); }
 
-.sortBtnActive {
-  background: var(--accent-color);
-  color: #000;
-  border-color: var(--accent-color);
+.sortLabel { font-size: 0.72rem; }
+
+.sortDropdown {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.5rem);
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 0.625rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  z-index: 50;
+  min-width: 10rem;
+  padding: 0.3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
 }
+
+.sortOption {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.75rem;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 0.4rem;
+  text-align: left;
+  transition: background 0.12s, color 0.12s;
+}
+
+.sortOption:hover { background: var(--bg-secondary); color: var(--text-primary); }
+
+.sortOptionActive { color: var(--accent-color); font-weight: 700; }
 
 .empty {
   padding: 2.5rem;

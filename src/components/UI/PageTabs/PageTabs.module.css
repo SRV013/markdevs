@@ -23,6 +23,7 @@
 
 .tab:hover {
     color: var(--text-primary);
+    
 }
 
 .tabActive {

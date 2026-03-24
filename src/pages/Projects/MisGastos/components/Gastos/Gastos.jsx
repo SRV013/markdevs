@@ -1,4 +1,5 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef, useEffect } from 'react';
+import { Button } from '@/components';
 import { GastoRow } from '../GastoRow/GastoRow';
 import { getNextDueDate, isPaidThisMonth } from '../../utils';
 import styles from './Gastos.module.css';
@@ -11,8 +12,18 @@ const SORT_OPTIONS = [
 ];
 
 export function Gastos({ gastos, onOpenAdd, onOpenEdit, onPagar }) {
-  const [search, setSearch] = useState('');
-  const [sort,   setSort]   = useState('vencimiento');
+  const [search,   setSearch]   = useState('');
+  const [sort,     setSort]     = useState('vencimiento');
+  const [sortOpen, setSortOpen] = useState(false);
+  const sortRef = useRef(null);
+
+  // Cerrar al click fuera
+  useEffect(() => {
+    if (!sortOpen) return;
+    const handler = (e) => { if (!sortRef.current?.contains(e.target)) setSortOpen(false); };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [sortOpen]);
 
   const filtered = useMemo(() => {
     const q = search.toLowerCase().trim();
@@ -38,41 +49,63 @@ export function Gastos({ gastos, onOpenAdd, onOpenEdit, onPagar }) {
     return list;
   }, [gastos, search, sort]);
 
+  const sortLabel = SORT_OPTIONS.find(o => o.id === sort)?.label;
+
   return (
     <div className={styles.wrapper}>
-      <div className={styles.toolbar}>
+      <div className={styles.searchRow}>
+        <div className={styles.searchBox}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={styles.searchIcon}>
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input
+            className={styles.searchInput}
+            type="text"
+            placeholder="Buscar..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+          />
+          {search && (
+            <button className={styles.searchClear} onClick={() => setSearch('')}>✕</button>
+          )}
 
-        <div className={styles.searchRow}>
-          <div className={styles.searchBox}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={styles.searchIcon}>
-              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-            </svg>
-            <input
-              className={styles.searchInput}
-              type="text"
-              placeholder="Buscar..."
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-            />
-            {search && (
-              <button className={styles.searchClear} onClick={() => setSearch('')}>✕</button>
+          {/* Sort button inside search */}
+          <div className={styles.sortWrap} ref={sortRef}>
+            <button
+              className={`${styles.sortTrigger} ${sortOpen ? styles.sortTriggerOpen : ''}`}
+              onClick={() => setSortOpen(o => !o)}
+              title={`Ordenar por: ${sortLabel}`}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="3" y1="6"  x2="21" y2="6"/>
+                <line x1="6" y1="12" x2="18" y2="12"/>
+                <line x1="9" y1="18" x2="15" y2="18"/>
+              </svg>
+              <span className={styles.sortLabel}>{sortLabel}</span>
+            </button>
+
+            {sortOpen && (
+              <div className={styles.sortDropdown}>
+                {SORT_OPTIONS.map(o => (
+                  <button
+                    key={o.id}
+                    className={`${styles.sortOption} ${sort === o.id ? styles.sortOptionActive : ''}`}
+                    onClick={() => { setSort(o.id); setSortOpen(false); }}
+                  >
+                    {o.label}
+                    {sort === o.id && (
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{marginLeft:'auto'}}>
+                        <polyline points="20 6 9 17 4 12"/>
+                      </svg>
+                    )}
+                  </button>
+                ))}
+              </div>
             )}
           </div>
-          <button className={styles.addBtn} onClick={onOpenAdd}>+ Agregar</button>
         </div>
 
-        <div className={styles.sortRow}>
-          {SORT_OPTIONS.map(o => (
-            <button
-              key={o.id}
-              className={`${styles.sortBtn} ${sort === o.id ? styles.sortBtnActive : ''}`}
-              onClick={() => setSort(o.id)}
-            >
-              {o.label}
-            </button>
-          ))}
-        </div>
-
+        <Button size="md" onClick={onOpenAdd}>+ Agregar</Button>
       </div>
 
       {filtered.length === 0 ? (

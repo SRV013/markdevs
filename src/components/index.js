@@ -8,6 +8,7 @@ export { ProjectPage } from './UI/ProjectPage/ProjectPage';
 export { ProjectCard } from './UI/ProjectCard/ProjectCard';
 export { SectionHeader } from './UI/SectionHeader/SectionHeader';
 export { Tag } from './UI/Tag/Tag';
+export { ToggleGroup } from './UI/ToggleGroup/ToggleGroup';
 
 // Layout Components
 export { Header } from './Header/Header';

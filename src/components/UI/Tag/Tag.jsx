@@ -1,11 +1,12 @@
-import React from 'react';
 import styles from './Tag.module.css';
 
-const Tag = ({ children, className }) => {
+const Tag = ({ children, className, onClick, active }) => {
+    const cls = `${styles.tag} ${active ? styles.active : ''} ${onClick ? styles.clickable : ''} ${className || ''}`.trim();
+    const El = onClick ? 'button' : 'span';
     return (
-        <span className={`${styles.tag} ${className || ''}`}>
+        <El type={onClick ? 'button' : undefined} className={cls} onClick={onClick}>
             {children}
-        </span>
+        </El>
     );
 };
 

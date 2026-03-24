@@ -1,20 +1,20 @@
-import { useState } from 'react';
-import { ProjectPage, PageHeader, PageTabs } from '@/components';
-import { useGastos } from './hooks/useGastos';
-import { formatMonto, getNextDueDate, isPaidThisMonth } from './utils';
-import { Gastos } from './components/Gastos/Gastos';
-import { Historial } from './components/Historial/Historial';
-import { GastoModal } from './components/GastoModal/GastoModal';
-import styles from './MisGastos.module.css';
+import { useState } from "react";
+import { ProjectPage, PageHeader, PageTabs } from "@/components";
+import { useGastos } from "./hooks/useGastos";
+import { formatMonto, getNextDueDate, isPaidThisMonth } from "./utils";
+import { Gastos } from "./components/Gastos/Gastos";
+import { Historial } from "./components/Historial/Historial";
+import { GastoModal } from "./components/GastoModal/GastoModal";
+import styles from "./MisGastos.module.css";
 
 const TABS = [
-  { id: 'gastos', label: 'Gastos' },
-  { id: 'historial', label: 'Historial' },
+  { id: "gastos", label: "Gastos" },
+  { id: "historial", label: "Historial" },
 ];
 
 function StripCard({ label, value, count, detail, mod }) {
   return (
-    <div className={`${styles.stripCard} ${mod ? styles[mod] : ''}`}>
+    <div className={`${styles.stripCard} ${mod ? styles[mod] : ""}`}>
       <div className={styles.stripTop}>
         <span className={styles.stripLabel}>{label}</span>
         <span className={styles.stripCount}>{count}</span>
@@ -26,14 +26,16 @@ function StripCard({ label, value, count, detail, mod }) {
 }
 
 function StatsStrip({ gastos, tab }) {
-  const fijosActivos = gastos.filter(g => g.tipo === 'fijo' && g.activo);
-  const variables = gastos.filter(g => g.tipo === 'variable');
+  const fijosActivos = gastos.filter((g) => g.tipo === "fijo" && g.activo);
+  const variables = gastos.filter((g) => g.tipo === "variable");
 
-  if (tab === 'historial') {
+  if (tab === "historial") {
     const totalFijos = fijosActivos.reduce((s, g) => s + g.monto, 0);
     const totalVariables = variables.reduce((s, g) => s + g.monto, 0);
     const totalAll = totalFijos + totalVariables;
-    const fijosPausados = gastos.filter(g => g.tipo === 'fijo' && !g.activo).length;
+    const fijosPausados = gastos.filter(
+      (g) => g.tipo === "fijo" && !g.activo,
+    ).length;
 
     return (
       <div className={styles.strip}>
@@ -41,13 +43,21 @@ function StatsStrip({ gastos, tab }) {
           label="Fijos activos / mes"
           value={formatMonto(totalFijos)}
           count={`${fijosActivos.length} registros`}
-          detail={fijosPausados > 0 ? `${fijosPausados} pausado${fijosPausados > 1 ? 's' : ''}` : 'Todos activos'}
+          detail={
+            fijosPausados > 0
+              ? `${fijosPausados} pausado${fijosPausados > 1 ? "s" : ""}`
+              : "Todos activos"
+          }
         />
         <StripCard
           label="Variables registrado"
           value={formatMonto(totalVariables)}
           count={`${variables.length} registros`}
-          detail={variables.length > 0 ? `Promedio ${formatMonto(Math.round(totalVariables / variables.length))}` : 'Sin registros'}
+          detail={
+            variables.length > 0
+              ? `Promedio ${formatMonto(Math.round(totalVariables / variables.length))}`
+              : "Sin registros"
+          }
         />
         <StripCard
           label="Total acumulado"
@@ -59,15 +69,18 @@ function StatsStrip({ gastos, tab }) {
     );
   }
 
-  const activos = gastos.filter(g => g.activo);
+  const activos = gastos.filter((g) => g.activo);
   const totalMes = activos.reduce((s, g) => s + g.monto, 0);
 
-  const pagados    = activos.filter(g => isPaidThisMonth(g.pagadoFecha));
-  const pendientes = activos.filter(g => !isPaidThisMonth(g.pagadoFecha));
-  const totalPagado    = pagados.reduce((s, g) => s + g.monto, 0);
+  const pagados = activos.filter((g) => isPaidThisMonth(g.pagadoFecha));
+  const pendientes = activos.filter((g) => !isPaidThisMonth(g.pagadoFecha));
+  const totalPagado = pagados.reduce((s, g) => s + g.monto, 0);
   const totalPendiente = pendientes.reduce((s, g) => s + g.monto, 0);
 
-  const atrasadosList = activos.filter(g => getNextDueDate(g.diaCobro).overdue && !isPaidThisMonth(g.pagadoFecha));
+  const atrasadosList = activos.filter(
+    (g) =>
+      getNextDueDate(g.diaCobro).overdue && !isPaidThisMonth(g.pagadoFecha),
+  );
 
   return (
     <div className={styles.strip}>
@@ -81,27 +94,38 @@ function StatsStrip({ gastos, tab }) {
         label="Resta pagar"
         value={formatMonto(totalPendiente)}
         count={`${pendientes.length} pendientes`}
-        detail={pagados.length > 0 ? `Ya pagaste ${formatMonto(totalPagado)}` : 'Ninguno pagado aún'}
-        mod={totalPendiente > 0 ? 'stripWarn' : ''}
+        detail={
+          pagados.length > 0
+            ? `Ya pagaste ${formatMonto(totalPagado)}`
+            : "Ninguno pagado aún"
+        }
+        mod={totalPendiente > 0 ? "stripWarn" : ""}
       />
       <StripCard
         label="Vencidos sin pagar"
         value={formatMonto(atrasadosList.reduce((s, g) => s + g.monto, 0))}
         count={`${atrasadosList.length} gastos`}
-        detail={atrasadosList.slice(0, 2).map(g => g.nombre).join(', ') || null}
-        mod={atrasadosList.length > 0 ? 'stripDanger' : ''}
+        detail={
+          atrasadosList
+            .slice(0, 2)
+            .map((g) => g.nombre)
+            .join(", ") || null
+        }
+        mod={atrasadosList.length > 0 ? "stripDanger" : ""}
       />
     </div>
   );
 }
 
 export function MisGastos() {
-  const [tab, setTab] = useState('gastos');
+  const [tab, setTab] = useState("gastos");
   const [modal, setModal] = useState({ open: false, editing: null, key: 0 });
   const { gastos, addGasto, editGasto, deleteGasto, pagarGasto } = useGastos();
 
-  const openAdd  = () => setModal(m => ({ open: true, editing: null,  key: m.key + 1 }));
-  const openEdit = (g) => setModal(m => ({ open: true, editing: g,    key: m.key + 1 }));
+  const openAdd = () =>
+    setModal((m) => ({ open: true, editing: null, key: m.key + 1 }));
+  const openEdit = (g) =>
+    setModal((m) => ({ open: true, editing: g, key: m.key + 1 }));
   const closeModal = () => setModal({ open: false, editing: null });
 
   const handleSave = (data) => {
@@ -121,7 +145,7 @@ export function MisGastos() {
 
       <StatsStrip gastos={gastos} tab={tab} />
 
-      {tab === 'gastos' && (
+      {tab === "gastos" && (
         <Gastos
           gastos={gastos}
           onOpenAdd={openAdd}
@@ -129,7 +153,7 @@ export function MisGastos() {
           onPagar={pagarGasto}
         />
       )}
-{tab === 'historial' && <Historial gastos={gastos} />}
+      {tab === "historial" && <Historial gastos={gastos} />}
 
       <GastoModal
         key={modal.key}
