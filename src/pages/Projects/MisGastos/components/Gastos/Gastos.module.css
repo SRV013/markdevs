@@ -87,7 +87,13 @@
 .sortTrigger:hover,
 .sortTriggerOpen { color: var(--text-primary); background: var(--bg-color); }
 
-.sortLabel { font-size: 0.72rem; }
+.sortLabel {
+  font-size: 0.72rem;
+}
+
+@media (max-width: 580px) {
+  .sortLabel { display: none; }
+}
 
 .sortDropdown {
   position: absolute;

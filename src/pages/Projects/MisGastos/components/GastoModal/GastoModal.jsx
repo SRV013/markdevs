@@ -127,7 +127,7 @@ export function GastoModal({ open, onClose, onSave, onDelete, initial }) {
             <div className={styles.actionsRight}>
               <Button type="button" variant="neutral" size="md" onClick={onClose}>Cancelar</Button>
               <Button type="submit" size="md">
-                {initial ? 'Guardar cambios' : 'Agregar'}
+                {initial ? 'Guardar' : 'Agregar'}
               </Button>
             </div>
           </div>
