@@ -117,8 +117,8 @@ export function Gastos({ gastos, onOpenAdd, onOpenEdit, onPagar, onPagarParcial 
         </div>
       ) : (
         <ul className={styles.list}>
-          {filtered.map((g) => (
-            <GastoRow key={g.id} gasto={g} onClick={() => onOpenEdit(g)} onPagar={onPagar} onPagarParcial={onPagarParcial} />
+          {filtered.map((g, i) => (
+            <GastoRow key={g.id} gasto={g} index={i} onClick={() => onOpenEdit(g)} onPagar={onPagar} onPagarParcial={onPagarParcial} />
           ))}
         </ul>
       )}

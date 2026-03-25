@@ -12,7 +12,7 @@ function DaysBadge({ days, overdue }) {
   return <span className={`${styles.badge} ${styles.normal}`}>En {days} días</span>;
 }
 
-export function GastoRow({ gasto: g, onClick, onPagar, onPagarParcial }) {
+export function GastoRow({ gasto: g, index = 0, onClick, onPagar, onPagarParcial }) {
   const [pagoOpen, setPagoOpen] = useState(false);
   const isFijo      = g.tipo === 'fijo';
   const dueInfo     = getNextDueDate(g.diaCobro);
@@ -25,6 +25,7 @@ export function GastoRow({ gasto: g, onClick, onPagar, onPagarParcial }) {
     <>
       <li
         className={`${styles.item} ${!g.activo ? styles.inactive : ''} ${paid ? styles.paid : hasPartial ? styles.partial : dueInfo.overdue ? styles.overdue : ''}`}
+        style={{ animationDelay: `${index * 35}ms` }}
         onClick={onClick}
       >
         <div className={styles.colTipo}>

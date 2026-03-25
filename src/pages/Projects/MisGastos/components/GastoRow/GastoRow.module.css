@@ -1,3 +1,8 @@
+@keyframes rowIn {
+  from { opacity: 0; transform: translateX(-8px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
 .item {
   display: grid;
   grid-template-columns: 0.75rem 1fr minmax(80px, auto) minmax(100px, auto) 2rem;
@@ -6,17 +11,33 @@
   padding: 0.9rem 1.25rem;
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
+  border-left: 3px solid var(--border-color);
   border-radius: 0.75rem;
   cursor: pointer;
-  transition: background 0.15s, border-color 0.15s;
+  transition: background 0.15s, border-color 0.15s, border-left-color 0.15s;
+  animation: rowIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.item:hover { border-color: var(--accent-color); }
+.item:hover {
+  border-color: var(--accent-color);
+  border-left-color: var(--accent-color);
+}
 
+/* Estados — solo el borde izquierdo muestra la urgencia */
 .inactive { opacity: 0.4; }
-.overdue  { border-color: #ef444455; }
-.partial  { border-color: #f59e0b55; }
-.paid     { opacity: 0.6; }
+
+.overdue {
+  border-left-color: var(--status-overdue);
+}
+
+.partial {
+  border-left-color: var(--status-warn);
+}
+
+.paid {
+  opacity: 0.55;
+  border-left-color: var(--status-paid);
+}
 
 /* Col 1: Tipo dot */
 .colTipo {
@@ -45,11 +66,11 @@
 }
 
 .catBadge {
-  font-size: 0.68rem;
+  font-size: 0.65rem;
   font-weight: 500;
   color: var(--text-secondary);
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -64,13 +85,15 @@
   text-overflow: ellipsis;
 }
 
-/* Col 3: Monto */
+/* Col 3: Monto — DM Mono para datos financieros */
 .monto {
-  font-size: 1rem;
-  font-weight: 800;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 500;
   color: var(--text-primary);
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
 }
 
 /* Col 4: Badge días */
@@ -80,9 +103,9 @@
 }
 
 .badge {
-  font-size: 0.75rem;
-  font-weight: 700;
-  padding: 0.25rem 0.75rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.22rem 0.65rem;
   border-radius: 999px;
   white-space: nowrap;
   background: var(--bg-color);
@@ -135,11 +158,11 @@
 /* Barra de progreso pago parcial */
 .progressWrap {
   grid-column: 1 / -1;
-  padding-top: 0.15rem;
+  padding-top: 0.2rem;
 }
 
 .progressBar {
-  height: 3px;
+  height: 2px;
   background: var(--border-color);
   border-radius: 999px;
   overflow: hidden;
@@ -149,7 +172,7 @@
   height: 100%;
   background: var(--status-warn);
   border-radius: 999px;
-  transition: width 0.3s ease;
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Mobile */
@@ -162,7 +185,7 @@
 
   .colTipo   { grid-column: 1; grid-row: 1 / 3; align-self: center; }
   .colDetail { grid-column: 2; grid-row: 1 / 3; justify-content: center; }
-  .monto     { grid-column: 3; grid-row: 1; align-self: end; font-size: 0.9rem; }
+  .monto     { grid-column: 3; grid-row: 1; align-self: end; font-size: 0.85rem; }
   .colDays   { grid-column: 3; grid-row: 2; justify-content: flex-end; align-self: start; }
   .payBtn    { grid-column: 4; grid-row: 1 / 3; align-self: center; }
   .progressWrap { grid-column: 1 / -1; }

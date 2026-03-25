@@ -1,5 +1,6 @@
 :root {
-  --font-main: "Inter", system-ui, -apple-system, sans-serif;
+  --font-main: "Outfit", system-ui, -apple-system, sans-serif;
+  --font-mono: "DM Mono", "Fira Mono", monospace;
 
   /* Ligh Mode - Grays & Whites */
   --bg-color: #ffffff;
