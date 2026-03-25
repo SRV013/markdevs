@@ -1,9 +1,9 @@
 .item {
   display: grid;
-  grid-template-columns: minmax(70px, auto) 1fr minmax(80px, auto) minmax(110px, auto) 2rem;
+  grid-template-columns: 0.75rem 1fr minmax(80px, auto) minmax(100px, auto) 2rem;
   align-items: center;
   gap: 1.25rem;
-  padding: 1rem 1.25rem;
+  padding: 0.9rem 1.25rem;
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
   border-radius: 0.75rem;
@@ -14,46 +14,50 @@
 .item:hover { border-color: var(--accent-color); }
 
 .inactive { opacity: 0.4; }
-.overdue  { border-color: #ef444466; }
+.overdue  { border-color: #ef444455; }
+.partial  { border-color: #f59e0b55; }
 .paid     { opacity: 0.6; }
 
-/* Col 1: Tipo */
+/* Col 1: Tipo dot */
 .colTipo {
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
-.tipoBadge {
-  font-size: 0.7rem;
-  font-weight: 700;
-  padding: 0.2rem 0.6rem;
-  border-radius: 999px;
-  white-space: nowrap;
+.tipoDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: block;
 }
 
-.fijoBadge { background: #3b82f622; color: #3b82f6; }
-.varBadge  { background: #a855f722; color: #a855f7; }
+.fijoDot { background: var(--status-fijo); }
+.varDot  { background: var(--status-variable); }
 
-/* Col 2: Categoría + nombre (misma fila en desktop) */
+/* Col 2: Categoría + nombre (apilados) */
 .colDetail {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 0.6rem;
+  flex-direction: column;
+  gap: 0.1rem;
   min-width: 0;
-  flex-wrap: wrap;
 }
 
 .catBadge {
-  font-size: 0.75rem;
+  font-size: 0.68rem;
   font-weight: 500;
   color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .nombre {
   font-size: 0.95rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-primary);
   white-space: nowrap;
   overflow: hidden;
@@ -86,14 +90,14 @@
   color: var(--text-secondary);
 }
 
-.today    { background: #ef444422; color: #ef4444; border-color: transparent; }
-.tomorrow { background: #f9731622; color: #f97316; border-color: transparent; }
-.urgent   { background: #f59e0b22; color: #f59e0b; border-color: transparent; }
-.soon     { background: #eab30822; color: #eab308; border-color: transparent; }
-.normal   { background: #22c55e22; color: #22c55e; border-color: transparent; }
-.overdueBadge { background: #ef444422; color: #ef4444; border-color: transparent; }
-.paidBadge    { background: #22c55e22; color: #22c55e; border-color: transparent; }
-.partialBadge { background: #f59e0b22; color: #f59e0b; border-color: transparent; }
+.today        { background: var(--status-overdue-bg); color: var(--status-overdue); border-color: transparent; }
+.tomorrow     { background: var(--status-urgent-bg);  color: var(--status-urgent);  border-color: transparent; }
+.urgent       { background: var(--status-warn-bg);    color: var(--status-warn);    border-color: transparent; }
+.soon         { background: var(--status-soon-bg);    color: var(--status-soon);    border-color: transparent; }
+.normal       { background: var(--status-normal-bg);  color: var(--status-normal);  border-color: transparent; }
+.overdueBadge { background: var(--status-overdue-bg); color: var(--status-overdue); border-color: transparent; }
+.paidBadge    { background: var(--status-paid-bg);    color: var(--status-paid);    border-color: transparent; }
+.partialBadge { background: var(--status-warn-bg);    color: var(--status-warn);    border-color: transparent; }
 
 /* Pay button */
 .payBtn {
@@ -112,29 +116,26 @@
 }
 
 .payBtn:hover {
-  border-color: #22c55e;
-  color: #22c55e;
+  border-color: var(--status-paid);
+  color: var(--status-paid);
 }
 
 .payBtnPaid {
-  border-color: #22c55e;
-  background: #22c55e22;
-  color: #22c55e;
+  border-color: var(--status-paid);
+  background: var(--status-paid-bg);
+  color: var(--status-paid);
 }
-
-/* Partial payment state */
-.partial { border-color: #f59e0b55; }
 
 .payBtnPartial {
-  border-color: #f59e0b;
-  background: #f59e0b22;
-  color: #f59e0b;
+  border-color: var(--status-warn);
+  background: var(--status-warn-bg);
+  color: var(--status-warn);
 }
 
-/* Progress bar (spans full grid width) */
+/* Barra de progreso pago parcial */
 .progressWrap {
   grid-column: 1 / -1;
-  padding-top: 0.1rem;
+  padding-top: 0.15rem;
 }
 
 .progressBar {
@@ -146,7 +147,7 @@
 
 .progressFill {
   height: 100%;
-  background: #f59e0b;
+  background: var(--status-warn);
   border-radius: 999px;
   transition: width 0.3s ease;
 }
@@ -154,16 +155,15 @@
 /* Mobile */
 @media (max-width: 580px) {
   .item {
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: 0.75rem 1fr auto auto;
     grid-template-rows: auto auto;
-    gap: 0.35rem 0.75rem;
+    gap: 0.2rem 0.65rem;
   }
 
-  .colTipo   { grid-column: 1; grid-row: 1; }
-  .colDays   { grid-column: 1; grid-row: 2; justify-content: flex-start; }
-  .payBtn    { grid-column: 3; grid-row: 1; justify-self: end; }
-  .monto     { grid-column: 3; grid-row: 2; justify-self: end; align-self: center; }
-  .colDetail { display: contents; }
-  .catBadge  { grid-column: 2; grid-row: 1; align-self: end; }
-  .nombre    { grid-column: 2; grid-row: 2; align-self: start; }
+  .colTipo   { grid-column: 1; grid-row: 1 / 3; align-self: center; }
+  .colDetail { grid-column: 2; grid-row: 1 / 3; justify-content: center; }
+  .monto     { grid-column: 3; grid-row: 1; align-self: end; font-size: 0.9rem; }
+  .colDays   { grid-column: 3; grid-row: 2; justify-content: flex-end; align-self: start; }
+  .payBtn    { grid-column: 4; grid-row: 1 / 3; align-self: center; }
+  .progressWrap { grid-column: 1 / -1; }
 }

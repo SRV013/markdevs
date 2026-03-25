@@ -22,7 +22,7 @@
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
   border-radius: 0.875rem;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, background 0.2s;
 }
 
 .stripTop {
@@ -55,15 +55,13 @@
 }
 
 .stripDanger {
-  /* border-color: #ef4444; */
-    border: 1px solid var(--border-color);
-
+  border-color: var(--status-overdue);
+  background: #ef44440a;
 }
 
 .stripWarn {
-  /* border-color: #f59e0b; */
-    border: 1px solid var(--border-color);
-
+  border-color: var(--status-warn);
+  background: #f59e0b0a;
 }
 
 .stripLabel {
@@ -82,9 +80,9 @@
 }
 
 .stripDanger .stripValue {
-  color: #ef4444;
+  color: var(--status-overdue);
 }
 
 .stripWarn .stripValue {
-  color: #f59e0b;
+  color: var(--status-warn);
 }

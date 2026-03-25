@@ -28,9 +28,7 @@ export function GastoRow({ gasto: g, onClick, onPagar, onPagarParcial }) {
         onClick={onClick}
       >
         <div className={styles.colTipo}>
-          <span className={`${styles.tipoBadge} ${isFijo ? styles.fijoBadge : styles.varBadge}`}>
-            {isFijo ? 'Fijo' : 'Variable'}
-          </span>
+          <span className={`${styles.tipoDot} ${isFijo ? styles.fijoDot : styles.varDot}`} title={isFijo ? 'Fijo' : 'Variable'} />
         </div>
 
         <div className={styles.colDetail}>
