@@ -1,14 +1,14 @@
 // src/data/projects.js
-import imgYamipc from "@/assets/projects/yamipc.jpg";
-import imgProvemix from "@/assets/projects/provemix.jpg";
-import imgEstudioRdb from "@/assets/projects/estudio-rdb.jpg";
-import imgPadelMach from "@/assets/projects/padel-mach.jpg";
-import imgCostaPigmento from "@/assets/projects/costa-pigmento.jpg";
-import imgGeneradorQr from "@/assets/projects/generador-qr.png";
-import imgMisGastos from "@/assets/projects/mis-gastos.png";
-import imgTruco from "@/assets/projects/game/truco.png";
-import imgGenerala from "@/assets/projects/game/generala.png";
-import imgNeutro from "@/assets/projects/game/neutro.jpeg";
+import imgYamipc from "@/assets/web/yamipc.jpg";
+import imgProvemix from "@/assets/web/provemix.jpg";
+import imgEstudioRdb from "@/assets/web/estudio-rdb.jpg";
+import imgCostaPigmento from "@/assets/web/costa-pigmento.jpg";
+import imgGeneradorQr from "@/assets/app/generador-qr.png";
+import imgMisGastos from "@/assets/app/mis-gastos.png";
+import imgTruco from "@/assets/game/truco.png";
+import imgGenerala from "@/assets/game/generala.png";
+import imgNeutro from "@/assets/game/neutro.jpeg";
+import imgMundiales from "@/assets/web/mundiales.webp";
 
 export const projects = [
   {
@@ -39,22 +39,22 @@ export const projects = [
     link: "https://estudiordb.com.ar",
   },
   {
-    title: "Padel Mach",
-    category: "E-commerce",
-    description:
-      "Tienda online especializada en hardware y servicios técnicos personalizados.",
-    tags: ["JavaScript", "Node.js", "React", "MySQL"],
-    image: imgPadelMach,
-    link: "https://padelmach.com.ar",
-  },
-  {
     title: "Costa Pigmento",
-    category: "E-commerce",
+    category: "Web",
     description:
       "Tienda online especializada en hardware y servicios técnicos personalizados.",
     tags: ["JavaScript", "Node.js", "React", "MySQL"],
     image: imgCostaPigmento,
     link: "https://costapigmento.com.ar",
+  },
+  {
+    title: "Fixture Mundial",
+    category: "Web",
+    description:
+      "Tienda online especializada en hardware y servicios técnicos personalizados.",
+    tags: ["JavaScript", "Node.js", "React", "MySQL"],
+    image: imgMundiales,
+    link: "/proyectos/mundiales",
   },
   {
     title: "Generador QR",
