@@ -51,10 +51,10 @@ export const projects = [
     title: "Fixture Mundial",
     category: "Web",
     description:
-      "Tienda online especializada en hardware y servicios técnicos personalizados.",
+      "Explorá estadísticas, historias y resultados de todos los Mundiales en un solo lugar.Reviví momentos históricos y analizá el rendimiento de selecciones y jugadores a lo largo del tiempo.",
     tags: ["JavaScript", "Node.js", "React", "MySQL"],
     image: imgMundiales,
-    link: "/proyectos/mundiales",
+    link: "https://markworlds.vercel.app/",
   },
   {
     title: "Generador QR",
