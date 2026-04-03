@@ -17,21 +17,21 @@
   --transition-speed: 0.3s;
 
   /* Status tokens — usados en toda la app */
-  --status-paid:        #22c55e;
-  --status-paid-bg:     #22c55e15;
-  --status-overdue:     #ef4444;
-  --status-overdue-bg:  #ef444415;
-  --status-warn:        #f59e0b;
-  --status-warn-bg:     #f59e0b15;
-  --status-urgent:      #f97316;
-  --status-urgent-bg:   #f9731615;
-  --status-soon:        #eab308;
-  --status-soon-bg:     #eab30815;
-  --status-normal:      #22c55e;
-  --status-normal-bg:   #22c55e15;
-  --status-fijo:        #3b82f6;
-  --status-fijo-bg:     #3b82f615;
-  --status-variable:    #a855f7;
+  --status-paid: #22c55e;
+  --status-paid-bg: #22c55e15;
+  --status-overdue: #ef4444;
+  --status-overdue-bg: #ef444415;
+  --status-warn: #f59e0b;
+  --status-warn-bg: #f59e0b15;
+  --status-urgent: #f97316;
+  --status-urgent-bg: #f9731615;
+  --status-soon: #eab308;
+  --status-soon-bg: #eab30815;
+  --status-normal: #22c55e;
+  --status-normal-bg: #22c55e15;
+  --status-fijo: #3b82f6;
+  --status-fijo-bg: #3b82f615;
+  --status-variable: #a855f7;
   --status-variable-bg: #a855f715;
 }
 
@@ -86,7 +86,9 @@ a {
 
 /* Evita zoom automático en iOS al hacer focus en inputs */
 @media (max-width: 768px) {
-  input, select, textarea {
+  input,
+  select,
+  textarea {
     font-size: 1rem !important;
   }
 }
