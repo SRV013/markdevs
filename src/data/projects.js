@@ -74,9 +74,9 @@ export const projects = [
     link: "/proyectos/misgastos",
   },
   {
-    title: "Puzzle Captura",
+    title: "Capsicum Challenge",
     category: "Game",
-    description: "Juego de captura.",
+    description: "El juego viral que viste en redes ahora en tu celular. Esquivá, elegí bien y superá cada nivel usando lógica, velocidad y precisión.",
     tags: ["JavaScript", "React"],
     image: imgCaptura,
     link: "https://mark-scores.vercel.app/captura",
