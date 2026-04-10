@@ -6,7 +6,7 @@ import imgCostaPigmento from "@/assets/web/costa-pigmento.jpg";
 import imgGeneradorQr from "@/assets/app/generador-qr.png";
 import imgMisGastos from "@/assets/app/mis-gastos.png";
 import imgTruco from "@/assets/game/truco.png";
-import imgCaptura from "@/assets/game/captura.jpg";
+import imgCaptura from "@/assets/game/tomato.png";
 import imgGenerala from "@/assets/game/generala.png";
 import imgNeutro from "@/assets/game/neutro.jpeg";
 import imgMundiales from "@/assets/web/mundiales.webp";
