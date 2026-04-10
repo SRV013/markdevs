@@ -6,6 +6,7 @@ import imgCostaPigmento from "@/assets/web/costa-pigmento.jpg";
 import imgGeneradorQr from "@/assets/app/generador-qr.png";
 import imgMisGastos from "@/assets/app/mis-gastos.png";
 import imgTruco from "@/assets/game/truco.png";
+import imgCaptura from "@/assets/game/captura.jpg";
 import imgGenerala from "@/assets/game/generala.png";
 import imgNeutro from "@/assets/game/neutro.jpeg";
 import imgMundiales from "@/assets/web/mundiales.webp";
@@ -48,11 +49,11 @@ export const projects = [
     link: "https://costapigmento.com.ar",
   },
   {
-    title: "Fixture Mundial",
+    title: "Historia Mundiales",
     category: "Web",
     description:
       "Explorá estadísticas, historias y resultados de todos los Mundiales en un solo lugar.Reviví momentos históricos y analizá el rendimiento de selecciones y jugadores a lo largo del tiempo.",
-    tags: ["JavaScript", "Node.js", "React", "MySQL"],
+    tags: ["JavaScript", "React", "Firebase"],
     image: imgMundiales,
     link: "https://markworlds.vercel.app/",
   },
@@ -71,6 +72,14 @@ export const projects = [
     tags: ["JavaScript", "React"],
     image: imgMisGastos,
     link: "/proyectos/misgastos",
+  },
+  {
+    title: "Puzzle Captura",
+    category: "Game",
+    description: "Juego de captura.",
+    tags: ["JavaScript", "React"],
+    image: imgCaptura,
+    link: "https://mark-scores.vercel.app/captura",
   },
   {
     title: "Anotador Truco",
