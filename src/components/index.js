@@ -13,6 +13,7 @@ export { ToggleGroup } from './UI/ToggleGroup/ToggleGroup';
 // Layout Components
 export { Header } from './Header/Header';
 export { Footer } from './Footer/Footer';
+export { SEO } from './SEO/SEO';
 
 // Icons
 export * from './Icons/Icons';

@@ -2,7 +2,7 @@
     background: var(--bg-secondary);
     border: 1px solid var(--border-color);
     border-radius: 24px;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     width: 100%;
     overflow: hidden;
 }
@@ -52,14 +52,14 @@
 }
 
 .cardTitle {
-    font-size: 1.5rem;
-    font-weight: 700;
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-bold);
     color: var(--text-primary);
     margin-bottom: 1rem;
 }
 
 .cardDescription {
-    font-size: 1rem;
+    font-size: var(--text-base);
     color: var(--text-secondary);
     line-height: 1.6;
 }
@@ -67,10 +67,11 @@
 /* Hover Effects */
 .hoverable:hover {
     border-color: var(--accent-color);
+    box-shadow: var(--shadow-sm);
 }
 
 .hover-up:hover {
-    transform: translateY(-12px);
+    transform: translateY(-6px);
 }
 
 .hover-right:hover {

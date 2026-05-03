@@ -1,8 +1,16 @@
 import React from 'react';
 import styles from './Home.module.css';
-import { Link } from 'react-router-dom';
-import { Button, Card, SectionHeader, Page, ProjectCard, FrontendIcon, BackendIcon, FullStackIcon } from '@/components';
+import { Button, Card, SectionHeader, Page, ProjectCard, FrontendIcon, BackendIcon, FullStackIcon, SEO } from '@/components';
 import { projects, homeData } from '@/data';
+
+const personJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'markdevs',
+    jobTitle: 'Desarrollador Full-Stack',
+    description: 'Analista de Sistemas con más de 20 años de experiencia en desarrollo de software.',
+    knowsAbout: ['React', 'Node.js', 'TypeScript', 'PostgreSQL', 'AWS', 'Docker', 'PHP', 'MySQL'],
+};
 
 const Home = () => {
     const { services } = homeData;
@@ -19,6 +27,11 @@ const Home = () => {
 
     return (
         <Page>
+            <SEO
+                path="/"
+                description="Desarrollador full-stack especializado en construir experiencias digitales excepcionales. Más de 20 años de experiencia y 50 proyectos completados."
+                jsonLd={personJsonLd}
+            />
             <section className={styles.hero}>
                 <h1 className={styles.title}>
                     Creando Experiencias Digitales <span className={styles.accent}>No Solo Sitios Web.</span>
@@ -31,11 +44,9 @@ const Home = () => {
                     <Button variant="primary" onClick={() => scrollToSection('proyectos')}>
                         Ver proyectos
                     </Button>
-                    <Link to="/contacto">
-                        <Button variant="secondary">
-                            Contactar
-                        </Button>
-                    </Link>
+                    <Button variant="secondary" to="/contacto">
+                        Contactar
+                    </Button>
                 </div>
             </section>
 
@@ -68,9 +79,7 @@ const Home = () => {
                 </div>
 
                 <div className={styles.viewMoreContainer}>
-                    <Link to="/proyectos">
-                        <Button variant="primary">Ver todos los proyectos</Button>
-                    </Link>
+                    <Button variant="primary" to="/proyectos">Ver todos los proyectos</Button>
                 </div>
             </section>
         </Page>

@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
 import styles from './Contact.module.css';
-import { Button, Card, SectionHeader, Page } from '@/components';
+import { Button, Card, SectionHeader, Page, SEO } from '@/components';
 import { contactData } from '@/data';
 
 const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
@@ -32,6 +32,11 @@ const Contact = () => {
 
     return (
         <Page>
+            <SEO
+                title="Contacto"
+                path="/contacto"
+                description="¿Tenés un proyecto en mente? Contactame y construimos juntos la solución digital que necesitás."
+            />
             <div className={styles.twoColumnLayout}>
                 <div className={styles.leftCol}>
                     <div className={styles.contactContainer}>

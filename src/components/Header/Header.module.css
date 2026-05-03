@@ -26,12 +26,10 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  /* font-size: 1.5rem; */
-  /* font-weight: 900; */
   color: var(--text-primary);
   text-decoration: none;
   letter-spacing: -0.05em;
-  transition: all var(--transition-speed);
+  transition: transform var(--transition-speed);
 }
 
 .logoBracket {
@@ -64,9 +62,9 @@
 .navLink {
   text-decoration: none;
   color: var(--text-secondary);
-  font-weight: 500;
-  font-size: 0.95rem;
-  transition: all 0.2s ease;
+  font-weight: var(--weight-medium);
+  font-size: var(--text-base);
+  transition: color 0.2s ease;
   padding: 0.5rem 0;
   position: relative;
 }
@@ -103,13 +101,14 @@
   background: transparent;
   color: var(--text-secondary);
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: color 0.2s, background-color 0.2s, transform 0.2s;
   padding: 0;
 }
 
 .menuButton {
   z-index: 11;
 }
+
 .themeToggle:hover {
   color: var(--accent-color);
   background: var(--bg-secondary);
@@ -156,7 +155,7 @@
   }
 
   .navLink {
-    font-size: 1.25rem;
+    font-size: var(--text-xl);
     width: 100%;
     text-align: left;
     color: var(--text-primary);

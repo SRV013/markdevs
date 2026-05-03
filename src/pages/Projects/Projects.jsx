@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import styles from './Projects.module.css';
-import { ProjectCard, SectionHeader, Page } from '@/components';
+import { ProjectCard, SectionHeader, Page, SEO } from '@/components';
 import { projects } from '@/data';
 
 const ALL = 'Todos';
@@ -33,6 +33,11 @@ const Projects = () => {
 
     return (
         <Page>
+            <SEO
+                title="Proyectos"
+                path="/proyectos"
+                description="Explorá mis proyectos de desarrollo web: aplicaciones full-stack, herramientas y soluciones digitales a medida."
+            />
             <SectionHeader
                 title="Mis Proyectos"
                 subtitle="Una selección de mis trabajos más recientes en desarrollo web, aplicaciones y soluciones digitales."

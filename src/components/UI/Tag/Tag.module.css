@@ -3,11 +3,11 @@
     color: var(--text-secondary);
     padding: 0.3rem 0.8rem;
     border-radius: 8px;
-    font-size: 0.8rem;
-    font-weight: 500;
+    font-size: var(--text-xs);
+    font-weight: var(--weight-medium);
     border: 1px solid var(--border-color);
     display: inline-block;
-    transition: all 0.3s ease;
+    transition: color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
 }
 
 .tag:hover {
@@ -23,8 +23,8 @@
 }
 
 .active {
-    color: #000;
+    color: var(--bg-color);
     border-color: var(--accent-color);
     background: var(--accent-color);
-    font-weight: 600;
+    font-weight: var(--weight-semibold);
 }

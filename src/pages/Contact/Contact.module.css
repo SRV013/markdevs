@@ -23,7 +23,6 @@
     align-items: center;
     gap: 1.25rem;
     border-radius: 16px;
-    /* Keeping specific radius if needed, though Card uses 24px by default */
 }
 
 .iconWrapper {
@@ -40,7 +39,7 @@
 }
 
 .infoText h3 {
-    font-size: 0.8rem;
+    font-size: var(--text-xs);
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: var(--text-secondary);
@@ -48,7 +47,7 @@
 }
 
 .infoText p {
-    font-size: 1rem;
+    font-size: var(--text-base);
     color: var(--text-primary);
 }
 
@@ -70,8 +69,8 @@
 }
 
 .formGroup label {
-    font-size: 0.9rem;
-    font-weight: 600;
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
     color: var(--text-secondary);
 }
 
@@ -83,8 +82,8 @@
     border-radius: 12px;
     color: var(--text-primary);
     font-family: inherit;
-    font-size: 1rem;
-    transition: all 0.3s ease;
+    font-size: var(--text-base);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .formGroup input:focus,
@@ -101,13 +100,13 @@
 
 .successMsg {
     color: var(--accent-color);
-    font-size: 0.9rem;
+    font-size: var(--text-sm);
     text-align: center;
 }
 
 .errorMsg {
     color: var(--accent-error);
-    font-size: 0.9rem;
+    font-size: var(--text-sm);
     text-align: center;
 }
 

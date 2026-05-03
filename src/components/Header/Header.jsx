@@ -9,6 +9,18 @@ const navItems = [
     { label: 'Contacto', href: '/contacto' }
 ];
 
+const SunIcon = (
+    <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="5" /><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+    </svg>
+);
+
+const MoonIcon = (
+    <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+    </svg>
+);
+
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
@@ -37,8 +49,8 @@ const Header = () => {
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, [isMenuOpen]);
 
-    const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-    const toggleTheme = () => setTheme(theme === 'light' ? 'dark' : 'light');
+    const toggleMenu = () => setIsMenuOpen(prev => !prev);
+    const toggleTheme = () => setTheme(prev => prev === 'light' ? 'dark' : 'light');
 
     const scrollToSection = (id) => {
         setIsMenuOpen(false);
@@ -86,19 +98,20 @@ const Header = () => {
 
             <div className={styles.right}>
                 <button className={styles.themeToggle} onClick={toggleTheme} aria-label="Cambiar tema">
-                    {theme === 'dark' ? (
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5" /><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" /></svg>
-                    ) : (
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" /></svg>
-                    )}
+                    {theme === 'dark' ? SunIcon : MoonIcon}
                 </button>
 
-                <button ref={menuButtonRef} className={styles.menuButton} onClick={toggleMenu} aria-label="Menú">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <button
+                    ref={menuButtonRef}
+                    className={styles.menuButton}
+                    onClick={toggleMenu}
+                    aria-label="Menú"
+                    aria-expanded={isMenuOpen}
+                >
+                    <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         {isMenuOpen ? <path d="M18 6L6 18M6 6l12 12" /> : <path d="M3 12h18M3 6h18M3 18h18" />}
                     </svg>
                 </button>
-
             </div>
         </div>
     );

@@ -9,8 +9,8 @@
 }
 
 .title {
-  font-size: clamp(2.5rem, 8vw, 4.8rem);
-  font-weight: 900;
+  font-size: var(--text-hero);
+  font-weight: var(--weight-black);
   margin-bottom: 2rem;
   letter-spacing: -0.04em;
   color: var(--text-primary);

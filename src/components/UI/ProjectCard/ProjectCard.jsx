@@ -8,7 +8,7 @@ const ProjectCard = ({ image, category, title, description, tags = [], link = '#
     return (
         <Card padding="none" hoverEffect="up" className={styles.projectCard}>
             <div className={styles.imageWrapper}>
-                <img src={image} alt={title} className={styles.image} />
+                <img src={image} alt={title} className={styles.image} loading="lazy" />
                 <div className={styles.categoryBadge}>{category}</div>
             </div>
             <div className={styles.content}>
@@ -19,7 +19,13 @@ const ProjectCard = ({ image, category, title, description, tags = [], link = '#
                         <Tag key={index}>{tag}</Tag>
                     ))}
                 </div>
-                <Button variant="secondary" className={styles.detailsBtn} onClick={() => window.open(link, '_blank', 'noopener,noreferrer')}>
+                <Button
+                    href={link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    variant="secondary"
+                    className={styles.detailsBtn}
+                >
                     Ver detalles
                 </Button>
             </div>

@@ -20,14 +20,14 @@
 }
 
 .bio p {
-    font-size: 1.1rem;
+    font-size: var(--text-lg);
     line-height: 1.7;
     color: var(--text-secondary);
 }
 
 .bioHighlight {
     font-size: 1.4rem !important;
-    font-weight: 600;
+    font-weight: var(--weight-semibold) !important;
     color: var(--text-primary) !important;
     line-height: 1.4 !important;
 }
@@ -37,8 +37,8 @@
 }
 
 .cardTitle {
-    font-size: 1.5rem;
-    font-weight: 700;
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-bold);
     color: var(--text-primary);
     margin-bottom: 1.5rem;
 }
@@ -63,19 +63,19 @@
 }
 
 .role {
-    font-size: 1.1rem;
-    font-weight: 600;
+    font-size: var(--text-lg);
+    font-weight: var(--weight-semibold);
     color: var(--text-primary);
 }
 
 .detail {
     margin-top: 0.5rem;
-    font-size: .9rem;
+    font-size: var(--text-sm);
     color: var(--text-secondary);
 }
 
 .period {
-    font-size: 1rem;
+    font-size: var(--text-base);
     color: var(--text-secondary);
 }
 
@@ -99,14 +99,14 @@
 }
 
 .statValue {
-    font-size: 3.5rem;
-    font-weight: 800;
+    font-size: var(--text-5xl);
+    font-weight: var(--weight-extrabold);
     color: var(--accent-color);
     line-height: 1;
 }
 
 .statLabel {
-    font-size: 1rem;
+    font-size: var(--text-base);
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: var(--text-secondary);

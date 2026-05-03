@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './About.module.css';
-import { Tag, Card, SectionHeader, Page } from '@/components';
+import { Tag, Card, SectionHeader, Page, SEO } from '@/components';
 import { aboutData } from '@/data';
 
 const About = () => {
@@ -8,6 +8,11 @@ const About = () => {
 
     return (
         <Page>
+            <SEO
+                title="Sobre Mí"
+                path="/sobre-mi"
+                description="Analista de Sistemas con más de 20 años de experiencia en desarrollo full-stack. Conocé mi trayectoria, habilidades y proyectos."
+            />
             <div className={styles.topSection}>
                 <div className={styles.leftCol}>
                     <SectionHeader
