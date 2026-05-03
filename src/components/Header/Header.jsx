@@ -1,37 +1,54 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styles from './Header.module.css';
 
+const navItems = [
+    { label: 'Inicio', href: '/' },
+    { label: 'Proyectos', href: '/#proyectos' },
+    { label: 'Sobre mí', href: '/sobre-mi' },
+    { label: 'Contacto', href: '/contacto' }
+];
+
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+    const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
     const location = useLocation();
+    const navRef = useRef(null);
+    const menuButtonRef = useRef(null);
 
     useEffect(() => {
         document.documentElement.setAttribute('data-theme', theme);
         localStorage.setItem('theme', theme);
     }, [theme]);
 
-    const navItems = [
-        { label: 'Inicio', href: '/' },
-        { label: 'Proyectos', href: '/#proyectos' },
-        { label: 'Sobre mí', href: '/sobre-mi' },
-        { label: 'Contacto', href: '/contacto' }
-    ];
+    useEffect(() => {
+        if (!isMenuOpen) return;
+        const handleClickOutside = (e) => {
+            if (
+                navRef.current &&
+                !navRef.current.contains(e.target) &&
+                menuButtonRef.current &&
+                !menuButtonRef.current.contains(e.target)
+            ) {
+                setIsMenuOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, [isMenuOpen]);
 
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
     const toggleTheme = () => setTheme(theme === 'light' ? 'dark' : 'light');
 
     const scrollToSection = (id) => {
+        setIsMenuOpen(false);
         const element = document.getElementById(id);
         if (element) {
             element.scrollIntoView({ behavior: 'smooth' });
-            setIsMenuOpen(false);
         }
     };
 
     const handleNavClick = (e, item) => {
-        // Solo anclas del Home
         if (location.pathname === '/' && item.href.includes('#')) {
             const anchorId = item.href.split('#')[1];
             scrollToSection(anchorId);
@@ -54,7 +71,7 @@ const Header = () => {
                 </Link>
             </div>
 
-            <nav className={`${styles.nav} ${isMenuOpen ? styles.navOpen : ''}`}>
+            <nav ref={navRef} className={`${styles.nav} ${isMenuOpen ? styles.navOpen : ''}`}>
                 {navItems.map((item) => (
                     <Link
                         key={item.label}
@@ -76,7 +93,7 @@ const Header = () => {
                     )}
                 </button>
 
-                <button className={styles.menuButton} onClick={toggleMenu} aria-label="Menú">
+                <button ref={menuButtonRef} className={styles.menuButton} onClick={toggleMenu} aria-label="Menú">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         {isMenuOpen ? <path d="M18 6L6 18M6 6l12 12" /> : <path d="M3 12h18M3 6h18M3 18h18" />}
                     </svg>
