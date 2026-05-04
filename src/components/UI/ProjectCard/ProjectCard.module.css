@@ -30,7 +30,7 @@
     background-color: var(--accent-color);
     color: var(--bg-color);
     padding: 0.4rem 1rem;
-    border-radius: 100px;
+    border-radius: var(--radius-tag);
     font-size: var(--text-xs);
     font-weight: var(--weight-bold);
     text-transform: uppercase;

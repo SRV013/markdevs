@@ -1,5 +1,5 @@
 :root {
-  --font-main: "Outfit", system-ui, -apple-system, sans-serif;
+  --font-main: "Space Grotesk", system-ui, -apple-system, sans-serif;
   --font-mono: "DM Mono", "Fira Mono", monospace;
 
   /* Ligh Mode - Grays & Whites */
@@ -37,6 +37,33 @@
   --weight-extrabold: 800;
   --weight-black:     900;
 
+  /* Tokens de estilo — default: brutalist */
+  --radius-btn:   4px;
+  --radius-card:  4px;
+  --radius-tag:   4px;
+  --radius-input: 4px;
+  --radius-icon:  4px;
+
+  --btn-border-width:          2px;
+  --btn-primary-hover-bg:      var(--text-primary);
+  --btn-secondary-hover-bg:    transparent;
+  --btn-secondary-hover-border: var(--border-color);
+  --btn-neutral-hover-bg:      transparent;
+  --btn-hover-transform:       translate(-3px, -3px);
+  --btn-primary-hover-shadow:  4px 4px 0 var(--accent-color);
+  --btn-secondary-hover-shadow: 4px 4px 0 var(--text-primary);
+  --btn-neutral-hover-shadow:  4px 4px 0 var(--border-color-hover);
+  --btn-danger-hover-shadow:   4px 4px 0 #ef4444;
+
+  --card-transition:      0.15s ease;
+  --card-hover-border:    var(--border-color-hover);
+  --card-hover-transform: translate(-3px, -3px);
+  --card-hover-shadow:    4px 4px 0 var(--border-color-hover);
+
+  --nav-underline-width:  50%;
+  --nav-underline-left:   25%;
+  --nav-underline-origin: center;
+
   /* Status tokens — usados en toda la app */
   --status-paid: #22c55e;
   --status-paid-bg: #22c55e15;
@@ -71,6 +98,34 @@
   --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.5);
   --shadow-neon: 0 0 12px rgba(0, 255, 200, 0.5);
   --accent-rgb: 0, 255, 200;
+}
+
+[data-style="rounded"] {
+  --radius-btn:   12px;
+  --radius-card:  24px;
+  --radius-tag:   8px;
+  --radius-input: 12px;
+  --radius-icon:  12px;
+
+  --btn-border-width:          1px;
+  --btn-primary-hover-bg:      var(--accent-color);
+  --btn-secondary-hover-bg:    var(--bg-secondary);
+  --btn-secondary-hover-border: var(--border-color-hover);
+  --btn-neutral-hover-bg:      var(--bg-secondary);
+  --btn-hover-transform:       translateY(-2px);
+  --btn-primary-hover-shadow:  var(--shadow-neon);
+  --btn-secondary-hover-shadow: none;
+  --btn-neutral-hover-shadow:  none;
+  --btn-danger-hover-shadow:   none;
+
+  --card-transition:      0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  --card-hover-border:    var(--accent-color);
+  --card-hover-transform: translateY(-6px);
+  --card-hover-shadow:    var(--shadow-sm);
+
+  --nav-underline-width:  100%;
+  --nav-underline-left:   0%;
+  --nav-underline-origin: left;
 }
 
 * {

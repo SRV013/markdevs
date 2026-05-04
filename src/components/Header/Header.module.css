@@ -65,20 +65,21 @@
   font-weight: var(--weight-medium);
   font-size: var(--text-base);
   transition: color 0.2s ease;
-  padding: 0.5rem 0;
+  padding: 0.25rem 0;
   position: relative;
 }
 
 .navLink::after {
-  content: "";
+  content: '';
   position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
+  bottom: -10px;
+  left: var(--nav-underline-left);
+  width: var(--nav-underline-width);
   height: 2px;
-  background-color: var(--accent-color);
-  box-shadow: var(--shadow-neon);
-  transition: width 0.3s ease;
+  background-color: var(--text-primary);
+  transform: scaleX(0);
+  transform-origin: var(--nav-underline-origin);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .navLink:hover {
@@ -86,10 +87,21 @@
 }
 
 .navLink:hover::after {
-  width: 100%;
+  transform: scaleX(1);
+}
+
+.active {
+  color: var(--text-primary);
+  font-weight: var(--weight-semibold);
+}
+
+.active::after {
+  background-color: var(--accent-color);
+  transform: scaleX(1);
 }
 
 .themeToggle,
+.styleToggle,
 .menuButton {
   display: flex;
   align-items: center;
@@ -109,10 +121,18 @@
   z-index: 11;
 }
 
-.themeToggle:hover {
+.themeToggle:hover,
+.styleToggle:hover {
   color: var(--accent-color);
   background: var(--bg-secondary);
+}
+
+.themeToggle:hover {
   transform: rotate(15deg) scale(1.1);
+}
+
+.styleToggle:hover {
+  transform: scale(1.1);
 }
 
 .themeToggle:active {
@@ -125,7 +145,7 @@
 
 @media (max-width: 900px) {
   .nav {
-    gap: 1.5rem;
+    gap: 2.5rem;
   }
 }
 
@@ -154,10 +174,14 @@
     transform: translateX(0);
   }
 
+  .nav {
+    align-items: flex-start;
+  }
+
   .navLink {
     font-size: var(--text-xl);
-    width: 100%;
     text-align: left;
     color: var(--text-primary);
+    padding: 0.75rem 0;
   }
 }

@@ -18,7 +18,7 @@
     width: 100%;
     padding: 0.85rem 1rem 0.85rem 2.75rem;
     border: 1px solid var(--border-color);
-    border-radius: 0.75rem;
+    border-radius: var(--radius-input);
     background: var(--bg-secondary);
     color: var(--text-primary);
     font-family: inherit;
@@ -65,7 +65,7 @@
 
 .categoryTag {
     padding: 0.4rem 1rem;
-    border-radius: 2rem;
+    border-radius: var(--radius-tag);
     border: 1px solid var(--border-color);
     background: transparent;
     color: var(--text-secondary);

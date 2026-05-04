@@ -4,10 +4,22 @@ import styles from './Header.module.css';
 
 const navItems = [
     { label: 'Inicio', href: '/' },
-    { label: 'Proyectos', href: '/#proyectos' },
+    { label: 'Proyectos', href: '/proyectos' },
     { label: 'Sobre mí', href: '/sobre-mi' },
     { label: 'Contacto', href: '/contacto' }
 ];
+
+const SharpIcon = (
+    <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="2" y="2" width="14" height="14" rx="0" />
+    </svg>
+);
+
+const RoundedIcon = (
+    <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="2" y="2" width="14" height="14" rx="5" />
+    </svg>
+);
 
 const SunIcon = (
     <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -24,6 +36,7 @@ const MoonIcon = (
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
+    const [style, setStyle] = useState(() => localStorage.getItem('style') || 'brutalist');
     const location = useLocation();
     const navRef = useRef(null);
     const menuButtonRef = useRef(null);
@@ -32,6 +45,15 @@ const Header = () => {
         document.documentElement.setAttribute('data-theme', theme);
         localStorage.setItem('theme', theme);
     }, [theme]);
+
+    useEffect(() => {
+        if (style === 'rounded') {
+            document.documentElement.setAttribute('data-style', 'rounded');
+        } else {
+            document.documentElement.removeAttribute('data-style');
+        }
+        localStorage.setItem('style', style);
+    }, [style]);
 
     useEffect(() => {
         if (!isMenuOpen) return;
@@ -51,6 +73,7 @@ const Header = () => {
 
     const toggleMenu = () => setIsMenuOpen(prev => !prev);
     const toggleTheme = () => setTheme(prev => prev === 'light' ? 'dark' : 'light');
+    const toggleStyle = () => setStyle(prev => prev === 'brutalist' ? 'rounded' : 'brutalist');
 
     const scrollToSection = (id) => {
         setIsMenuOpen(false);
@@ -97,6 +120,10 @@ const Header = () => {
             </nav>
 
             <div className={styles.right}>
+                <button className={styles.styleToggle} onClick={toggleStyle} aria-label="Cambiar estilo">
+                    {style === 'brutalist' ? RoundedIcon : SharpIcon}
+                </button>
+
                 <button className={styles.themeToggle} onClick={toggleTheme} aria-label="Cambiar tema">
                     {theme === 'dark' ? SunIcon : MoonIcon}
                 </button>
