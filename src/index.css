@@ -101,6 +101,8 @@
 }
 
 [data-style="rounded"] {
+  --font-main: "Outfit", system-ui, -apple-system, sans-serif;
+
   --radius-btn:   12px;
   --radius-card:  24px;
   --radius-tag:   8px;
