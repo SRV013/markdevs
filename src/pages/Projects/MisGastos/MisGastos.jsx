@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ProjectPage, PageHeader, PageTabs } from "@/components";
 import { useGastos } from "./hooks/useGastos";
-import { formatMonto, getNextDueDate, isPaidThisMonth } from "./utils";
+import { formatMonto, getNextDueDate, isPaidThisMonth, getMontoPagadoMes } from "./utils";
 import { Gastos } from "./components/Gastos/Gastos";
 import { Historial } from "./components/Historial/Historial";
 import { GastoModal } from "./components/GastoModal/GastoModal";
@@ -74,8 +74,15 @@ function StatsStrip({ gastos, tab }) {
 
   const pagados = activos.filter((g) => isPaidThisMonth(g.pagadoFecha));
   const pendientes = activos.filter((g) => !isPaidThisMonth(g.pagadoFecha));
-  const totalPagado = pagados.reduce((s, g) => s + g.monto, 0);
-  const totalPendiente = pendientes.reduce((s, g) => s + g.monto, 0);
+  // monto ya abonado: ítems completos + pagos parciales de los pendientes
+  const totalPagado =
+    pagados.reduce((s, g) => s + g.monto, 0) +
+    pendientes.reduce((s, g) => s + getMontoPagadoMes(g), 0);
+  // saldo real pendiente descontando pagos parciales
+  const totalPendiente = pendientes.reduce(
+    (s, g) => s + (g.monto - getMontoPagadoMes(g)),
+    0,
+  );
 
   const atrasadosList = activos.filter(
     (g) =>
@@ -95,7 +102,7 @@ function StatsStrip({ gastos, tab }) {
         value={formatMonto(totalPendiente)}
         count={`${pendientes.length} pendientes`}
         detail={
-          pagados.length > 0
+          totalPagado > 0
             ? `Ya pagaste ${formatMonto(totalPagado)}`
             : "Ninguno pagado aún"
         }
@@ -103,7 +110,7 @@ function StatsStrip({ gastos, tab }) {
       />
       <StripCard
         label="Vencidos sin pagar"
-        value={formatMonto(atrasadosList.reduce((s, g) => s + g.monto, 0))}
+        value={formatMonto(atrasadosList.reduce((s, g) => s + (g.monto - getMontoPagadoMes(g)), 0))}
         count={`${atrasadosList.length} gastos`}
         detail={
           atrasadosList

@@ -1,20 +1,33 @@
-import { getNextDueDate } from '../../utils';
+import { getNextDueDate, getMontoPagadoMes, isPaidThisMonth } from '../../utils';
 import { GastoRow } from '../GastoRow/GastoRow';
 import styles from './Vencimientos.module.css';
 
 export function Vencimientos({ gastos, onEdit }) {
-  const fijosActivos = gastos.filter(g => g.tipo === 'fijo' && g.activo);
+  const pendientes = gastos.filter(
+    g => g.tipo === 'fijo' && g.activo && !isPaidThisMonth(g.pagadoFecha)
+  );
 
-  if (fijosActivos.length === 0) {
+  if (pendientes.length === 0) {
     return (
       <div className={styles.empty}>
-        <p>No hay gastos fijos activos para mostrar vencimientos.</p>
+        <p>No hay vencimientos pendientes este mes.</p>
       </div>
     );
   }
 
-  const withDue = fijosActivos
-    .map(g => ({ ...g, ...getNextDueDate(g.diaCobro) }))
+  const withDue = pendientes
+    .map(g => {
+      const pagado = getMontoPagadoMes(g);
+      return {
+        ...g,
+        ...getNextDueDate(g.diaCobro),
+        // saldo restante a pagar
+        monto: g.monto - pagado,
+        // limpiar para que GastoRow no muestre barra de progreso parcial
+        pagos: [],
+        pagadoFecha: null,
+      };
+    })
     .sort((a, b) => {
       if (a.overdue && !b.overdue) return -1;
       if (!a.overdue && b.overdue) return 1;
@@ -31,7 +44,11 @@ export function Vencimientos({ gastos, onEdit }) {
           <h3 className={`${styles.sectionTitle} ${styles.titleDanger}`}>Vencidos este mes</h3>
           <ul className={styles.list}>
             {vencidos.map(g => (
-              <GastoRow key={g.id} gasto={g} onClick={() => onEdit?.(g)} />
+              <GastoRow
+                key={g.id}
+                gasto={g}
+                onClick={() => onEdit?.(gastos.find(x => x.id === g.id))}
+              />
             ))}
           </ul>
         </section>
@@ -42,7 +59,11 @@ export function Vencimientos({ gastos, onEdit }) {
           <h3 className={styles.sectionTitle}>Próximos vencimientos</h3>
           <ul className={styles.list}>
             {proximos.map(g => (
-              <GastoRow key={g.id} gasto={g} onClick={() => onEdit?.(g)} />
+              <GastoRow
+                key={g.id}
+                gasto={g}
+                onClick={() => onEdit?.(gastos.find(x => x.id === g.id))}
+              />
             ))}
           </ul>
         </section>
