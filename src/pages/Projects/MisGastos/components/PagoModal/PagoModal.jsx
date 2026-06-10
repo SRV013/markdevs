@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Button } from '@/components';
 import { formatMonto, getMontoPagadoMes, isPaidThisMonth } from '../../utils';
 import { MontoInput } from '../MontoInput/MontoInput';
 import styles from './PagoModal.module.css';
@@ -34,13 +35,14 @@ export function PagoModal({ gasto, onClose, onPagar, onPagarParcial }) {
         {paid ? (
           <div className={styles.paidSection}>
             <span className={styles.paidBadge}>Pagado completo ✓</span>
-            <button
-              className={styles.btnDanger}
+            <Button
+              variant="danger"
+              size="md"
               type="button"
               onClick={() => { onPagar(gasto.id); onClose(); }}
             >
               Desmarcar como pagado
-            </button>
+            </Button>
           </div>
         ) : (
           <>
@@ -67,21 +69,25 @@ export function PagoModal({ gasto, onClose, onPagar, onPagarParcial }) {
             </div>
 
             <div className={styles.actions}>
-              <button
-                className={styles.btnSecondary}
+              <Button
+                variant="secondary"
+                size="md"
                 type="button"
+                className={styles.fullBtn}
                 onClick={() => { onPagar(gasto.id); onClose(); }}
               >
                 Pagar completo
-              </button>
-              <button
-                className={styles.btnPrimary}
+              </Button>
+              <Button
+                variant="primary"
+                size="md"
                 type="button"
+                className={styles.fullBtn}
                 onClick={handleRegistrar}
                 disabled={!amount || amount <= 0}
               >
                 Registrar pago
-              </button>
+              </Button>
             </div>
           </>
         )}

@@ -141,36 +141,7 @@
   gap: 0.6rem;
 }
 
-.btnPrimary {
-  flex: 1;
-  padding: 0.65rem 1rem;
-  border-radius: 0.6rem;
-  border: none;
-  background: var(--accent-color);
-  color: var(--bg-color);
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: opacity 0.15s;
-}
-
-.btnPrimary:disabled { opacity: 0.4; cursor: not-allowed; }
-.btnPrimary:not(:disabled):hover { opacity: 0.85; }
-
-.btnSecondary {
-  flex: 1;
-  padding: 0.65rem 1rem;
-  border-radius: 0.6rem;
-  border: 1px solid var(--border-color);
-  background: transparent;
-  color: var(--text-primary);
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: border-color 0.15s, background 0.15s;
-}
-
-.btnSecondary:hover { border-color: var(--accent-color); }
+.fullBtn { flex: 1; }
 
 /* Paid state */
 .paidSection {
@@ -187,16 +158,3 @@
   color: var(--status-paid);
 }
 
-.btnDanger {
-  padding: 0.6rem 1.2rem;
-  border-radius: 0.6rem;
-  border: 1px solid var(--status-overdue-bg);
-  background: var(--status-overdue-bg);
-  color: var(--status-overdue);
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-
-.btnDanger:hover { background: #ef444422; }
