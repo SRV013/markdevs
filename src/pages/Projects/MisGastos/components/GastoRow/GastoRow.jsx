@@ -12,7 +12,7 @@ function DaysBadge({ days, overdue }) {
   return <span className={`${styles.badge} ${styles.normal}`}>En {days} días</span>;
 }
 
-export function GastoRow({ gasto: g, index = 0, onClick, onPagar, onPagarParcial }) {
+export function GastoRow({ gasto: g, index = 0, onClick, onPagar, onPagarParcial, onCorregirParcial }) {
   const [pagoOpen, setPagoOpen] = useState(false);
   const isFijo      = g.tipo === 'fijo';
   const dueInfo     = getNextDueDate(g.diaCobro);
@@ -76,6 +76,7 @@ export function GastoRow({ gasto: g, index = 0, onClick, onPagar, onPagarParcial
           onClose={() => setPagoOpen(false)}
           onPagar={onPagar}
           onPagarParcial={onPagarParcial}
+          onCorregirParcial={onCorregirParcial}
         />
       )}
     </>

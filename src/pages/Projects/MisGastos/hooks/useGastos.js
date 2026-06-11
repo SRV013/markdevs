@@ -48,5 +48,16 @@ export function useGastos() {
       const pagadoFecha = totalMes >= x.monto ? now.toISOString() : x.pagadoFecha;
       return { ...x, pagos, pagadoFecha };
     })),
+    corregirParcial: (id, nuevoMonto) => set(gastos.map(x => {
+      if (x.id !== id) return x;
+      const now = new Date();
+      const pagosOtros = (x.pagos || []).filter(p => {
+        const d = new Date(p.fecha);
+        return !(d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth());
+      });
+      const pagos = [...pagosOtros, { monto: nuevoMonto, fecha: now.toISOString() }];
+      const pagadoFecha = nuevoMonto >= x.monto ? now.toISOString() : null;
+      return { ...x, pagos, pagadoFecha };
+    })),
   };
 }
